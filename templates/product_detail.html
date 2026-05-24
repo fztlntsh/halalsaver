@@ -1,0 +1,217 @@
+﻿{% extends 'base.html' %}
+{% set active_page = 'products' %}
+{% block title %}{{ product.product_name }} — HalalSaver MY{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper product-detail-page">
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-bar section-container">
+    <a href="/">Home</a>
+    <i class="fas fa-chevron-right breadcrumb-sep"></i>
+    <a href="/products">Products</a>
+    <i class="fas fa-chevron-right breadcrumb-sep"></i>
+    <a href="/products?category={{ product.category | urlencode }}">{{ product.category }}</a>
+    <i class="fas fa-chevron-right breadcrumb-sep"></i>
+    <span class="breadcrumb-current">{{ product.product_name }}</span>
+  </div>
+
+  <!-- ── PRODUCT DETAIL CARD ─────────────────────────────────────────── -->
+  <div class="product-detail-container section-container">
+    <div class="product-detail-layout">
+
+      <!-- Left: Image -->
+      <div class="product-detail-img-col">
+        <div class="product-detail-img-wrap">
+          <img
+            src="https://placehold.co/400x320/ecfdf5/059669?text={{ product.product_name[:15] | urlencode }}"
+            alt="{{ product.product_name }}"
+            class="product-detail-img"
+          />
+          {% if product.halal_certified %}
+          <div class="detail-halal-badge">
+            <i class="fas fa-certificate"></i> JAKIM Certified
+          </div>
+          {% endif %}
+          {% if product.discount_percent and product.discount_percent > 0 %}
+          <div class="detail-discount-badge">
+            -{{ product.discount_percent | int }}%
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Action buttons for mobile (shown below image) -->
+        <div class="product-detail-actions-mobile mobile-only">
+          <button class="btn-add-fav" onclick="toggleFav('{{ product.product_id }}')">
+            <i class="fas fa-heart"></i> Save to Favourites
+          </button>
+          <button class="btn-add-compare" onclick="addToCompare('{{ product.product_id }}')">
+            <i class="fas fa-balance-scale"></i> Compare
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Details -->
+      <div class="product-detail-info-col">
+        <div class="detail-store-row">
+          <span class="store-badge store-{{ product.store | lower | replace("'","") | replace(" ","") }}">
+            {{ product.store }}
+          </span>
+          <span class="detail-category-chip">{{ product.category }}</span>
+          {% if product.in_stock %}
+          <span class="in-stock-badge"><i class="fas fa-circle-check"></i> In Stock</span>
+          {% else %}
+          <span class="out-stock-badge"><i class="fas fa-circle-xmark"></i> Out of Stock</span>
+          {% endif %}
+        </div>
+
+        <h1 class="product-detail-name">{{ product.product_name }}</h1>
+
+        {% if product.brand %}
+        <p class="product-detail-brand"><strong>Brand:</strong> {{ product.brand }}</p>
+        {% endif %}
+
+        {% if product.unit %}
+        <p class="product-detail-unit"><i class="fas fa-weight-hanging"></i> {{ product.unit }}</p>
+        {% endif %}
+
+        <!-- Price Block -->
+        <div class="detail-price-block">
+          <div class="detail-price-main">
+            RM {{ "%.2f" | format(product.price_after_discount) }}
+          </div>
+          {% if product.discount_percent and product.discount_percent > 0 %}
+          <div class="detail-price-original">
+            RM {{ "%.2f" | format(product.price_myr) }}
+          </div>
+          <div class="detail-savings">
+            Save RM {{ "%.2f" | format(product.price_myr - product.price_after_discount) }}
+            ({{ product.discount_percent | int }}% OFF)
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Halal Info Block -->
+        <div class="detail-halal-block {% if not product.halal_certified %}detail-not-halal{% endif %}">
+          {% if product.halal_certified %}
+          <i class="fas fa-certificate"></i>
+          <div>
+            <strong>JAKIM Halal Certified</strong>
+            {% if product.halal_body %}
+            <div class="halal-body-text">{{ product.halal_body }}</div>
+            {% endif %}
+          </div>
+          {% else %}
+          <i class="fas fa-circle-info"></i>
+          <div>
+            <strong>Halal Status Unknown</strong>
+            <div class="halal-body-text">No JAKIM certification on record for this product.</div>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Product Meta -->
+        <div class="detail-meta-grid">
+          <div class="meta-item">
+            <span class="meta-label"><i class="fas fa-barcode"></i> Product ID</span>
+            <span class="meta-value">{{ product.product_id }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label"><i class="fas fa-store"></i> Store</span>
+            <span class="meta-value">{{ product.store }}</span>
+          </div>
+          {% if product.source_website %}
+          <div class="meta-item">
+            <span class="meta-label"><i class="fas fa-globe"></i> Source</span>
+            <span class="meta-value">
+              <a href="https://{{ product.source_website }}" target="_blank" rel="noopener">
+                {{ product.source_website }}
+              </a>
+            </span>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Action Buttons (web) -->
+        <div class="detail-action-btns web-only">
+          <button class="btn-detail-primary" onclick="toggleFav('{{ product.product_id }}')">
+            <i class="fas fa-heart"></i> Save to Favourites
+          </button>
+          <button class="btn-detail-secondary" onclick="addToCompare('{{ product.product_id }}')">
+            <i class="fas fa-balance-scale"></i> Add to Compare
+          </button>
+          <a href="/comparison?ids={{ product.product_id }}" class="btn-detail-outline">
+            <i class="fas fa-columns"></i> Compare Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RELATED PRODUCTS ──────────────────────────────────────────────── -->
+  {% if related %}
+  <section class="related-products-section section-container">
+    <div class="section-header">
+      <h3 class="section-title">Related Products</h3>
+      <a href="/products?category={{ product.category | urlencode }}" class="see-all-link">
+        View all {{ product.category }} <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+    <div class="product-grid">
+      {% for p in related %}
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img
+            src="https://placehold.co/200x160/ecfdf5/059669?text={{ p.product_name[:10] | urlencode }}"
+            alt="{{ p.product_name }}"
+            loading="lazy"
+          />
+          {% if p.halal_certified %}
+          <span class="halal-badge"><i class="fas fa-certificate"></i> JAKIM</span>
+          {% endif %}
+          <span class="store-badge store-{{ p.store | lower | replace("'","") | replace(" ","") }}">{{ p.store }}</span>
+        </div>
+        <div class="product-card-body">
+          <div class="product-name">{{ p.product_name }}</div>
+          <div class="product-price">RM {{ "%.2f" | format(p.price_after_discount) }}</div>
+          {% if p.discount_percent and p.discount_percent > 0 %}
+          <span class="discount-badge">-{{ p.discount_percent | int }}%</span>
+          {% endif %}
+          <div class="product-actions">
+            <button class="icon-btn fav-btn" onclick="toggleFav('{{ p.product_id }}')">
+              <i class="fas fa-heart"></i>
+            </button>
+            <a href="/products/{{ p.product_id }}" class="btn-view">View</a>
+            <button class="icon-btn" onclick="addToCompare('{{ p.product_id }}')">
+              <i class="fas fa-balance-scale"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Share button
+function shareProduct() {
+  if (navigator.share) {
+    navigator.share({
+      title: '{{ product.product_name }}',
+      text: 'Check out this halal product on HalalSaver MY!',
+      url: window.location.href
+    });
+  } else {
+    navigator.clipboard.writeText(window.location.href);
+    alert('Link copied to clipboard!');
+  }
+}
+</script>
+{% endblock %}

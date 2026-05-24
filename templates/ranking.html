@@ -1,0 +1,273 @@
+﻿{% extends 'base.html' %}
+{% set active_page = 'ranking' %}
+{% block title %}Top Rankings — HalalSaver MY{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper ranking-page">
+
+  <!-- ── Hero Banner ─────────────────────────────────────────────────────── -->
+  <section class="ranking-hero">
+    <div class="ranking-hero-inner">
+      <div class="ranking-hero-icon"><i class="fas fa-trophy"></i></div>
+      <h1>Top Ranked Products</h1>
+      <p>The best-rated halal grocery products across all stores, ranked by popularity and value.</p>
+      <div class="ranking-hero-stats">
+        <div class="ranking-stat">
+          <strong>{{ ranked_products | length }}</strong>
+          <span>Products Ranked</span>
+        </div>
+        <div class="ranking-stat">
+          <strong>{{ ranked_products | selectattr('halal_certified') | list | length }}</strong>
+          <span>Halal Certified</span>
+        </div>
+        <div class="ranking-stat">
+          <strong>{{ stores | length }}</strong>
+          <span>Stores</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-container ranking-body">
+
+    <!-- ── Tab Filters ──────────────────────────────────────────────────── -->
+    <div class="ranking-tabs">
+      <button class="ranking-tab active" data-filter="all" onclick="filterRanking('all', this)">
+        <i class="fas fa-th-large"></i> All
+      </button>
+      <button class="ranking-tab" data-filter="store" onclick="filterRanking('store', this)">
+        <i class="fas fa-store"></i> By Store
+      </button>
+      <button class="ranking-tab" data-filter="category" onclick="filterRanking('category', this)">
+        <i class="fas fa-tags"></i> By Category
+      </button>
+      <button class="ranking-tab" data-filter="value" onclick="filterRanking('value', this)">
+        <i class="fas fa-star"></i> Best Value
+      </button>
+    </div>
+
+    <!-- Sub-filter (shows when By Store or By Category is active) -->
+    <div class="ranking-subfilter" id="rankingSubfilter" style="display:none;">
+      <div id="storeSubfilter" style="display:none;">
+        {% for store in stores %}
+        <button class="subfilter-chip" onclick="subfilterStore('{{ store }}')">{{ store }}</button>
+        {% endfor %}
+        <button class="subfilter-chip active" onclick="subfilterStore('')">All Stores</button>
+      </div>
+      <div id="categorySubfilter" style="display:none;">
+        {% for cat in categories %}
+        <button class="subfilter-chip" onclick="subfilterCategory('{{ cat }}')">{{ cat }}</button>
+        {% endfor %}
+        <button class="subfilter-chip active" onclick="subfilterCategory('')">All Categories</button>
+      </div>
+    </div>
+
+    <!-- ── Top 3 Podium ─────────────────────────────────────────────────── -->
+    {% if ranked_products | length >= 3 %}
+    <div class="ranking-podium web-only">
+      {% set p2 = ranked_products[1] %}
+      {% set p1 = ranked_products[0] %}
+      {% set p3 = ranked_products[2] %}
+
+      <!-- 2nd place -->
+      <div class="podium-item podium-2">
+        <div class="podium-medal medal-silver"><i class="fas fa-medal"></i></div>
+        <img src="https://placehold.co/100x80/ecfdf5/059669?text={{ p2.product_name[:6] | urlencode }}" alt="{{ p2.product_name }}" />
+        <div class="podium-name">{{ p2.product_name }}</div>
+        <div class="podium-price">RM {{ "%.2f" | format(p2.price_after_discount) }}</div>
+        <div class="podium-rank">#2</div>
+      </div>
+
+      <!-- 1st place -->
+      <div class="podium-item podium-1">
+        <div class="podium-crown"><i class="fas fa-crown"></i></div>
+        <div class="podium-medal medal-gold"><i class="fas fa-medal"></i></div>
+        <img src="https://placehold.co/120x96/ecfdf5/059669?text={{ p1.product_name[:6] | urlencode }}" alt="{{ p1.product_name }}" />
+        <div class="podium-name">{{ p1.product_name }}</div>
+        <div class="podium-price">RM {{ "%.2f" | format(p1.price_after_discount) }}</div>
+        <div class="podium-rank">#1</div>
+      </div>
+
+      <!-- 3rd place -->
+      <div class="podium-item podium-3">
+        <div class="podium-medal medal-bronze"><i class="fas fa-medal"></i></div>
+        <img src="https://placehold.co/100x80/ecfdf5/059669?text={{ p3.product_name[:6] | urlencode }}" alt="{{ p3.product_name }}" />
+        <div class="podium-name">{{ p3.product_name }}</div>
+        <div class="podium-price">RM {{ "%.2f" | format(p3.price_after_discount) }}</div>
+        <div class="podium-rank">#3</div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- ── Full Ranking List ─────────────────────────────────────────────── -->
+    <div class="ranking-list" id="rankingList">
+      {% for p in ranked_products %}
+      <div
+        class="ranking-item"
+        data-store="{{ p.store | lower }}"
+        data-category="{{ p.category | lower }}"
+        data-discount="{{ p.discount_percent or 0 }}"
+        data-rank="{{ loop.index }}"
+      >
+        <!-- Rank Number -->
+        <div class="rank-number-col">
+          {% if loop.index == 1 %}
+          <span class="rank-medal rank-gold"><i class="fas fa-medal"></i></span>
+          {% elif loop.index == 2 %}
+          <span class="rank-medal rank-silver"><i class="fas fa-medal"></i></span>
+          {% elif loop.index == 3 %}
+          <span class="rank-medal rank-bronze"><i class="fas fa-medal"></i></span>
+          {% else %}
+          <span class="rank-number">#{{ loop.index }}</span>
+          {% endif %}
+        </div>
+
+        <!-- Product Image -->
+        <div class="ranking-img-col">
+          <img
+            src="https://placehold.co/80x64/ecfdf5/059669?text={{ p.product_name[:6] | urlencode }}"
+            alt="{{ p.product_name }}"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Product Info -->
+        <div class="ranking-info-col">
+          <div class="ranking-product-name">{{ p.product_name }}</div>
+          <div class="ranking-meta">
+            <span class="store-badge store-{{ p.store | lower | replace("'","") | replace(" ","") }} small">{{ p.store }}</span>
+            <span class="ranking-category">{{ p.category }}</span>
+            {% if p.halal_certified %}
+            <span class="halal-badge small"><i class="fas fa-certificate"></i> JAKIM</span>
+            {% endif %}
+          </div>
+          {% if p.brand %}
+          <div class="ranking-brand">{{ p.brand }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Price + Discount -->
+        <div class="ranking-price-col">
+          <div class="ranking-price">RM {{ "%.2f" | format(p.price_after_discount) }}</div>
+          {% if p.discount_percent and p.discount_percent > 0 %}
+          <span class="discount-badge">-{{ p.discount_percent | int }}%</span>
+          {% if p.price_myr %}
+          <div class="ranking-original-price">RM {{ "%.2f" | format(p.price_myr) }}</div>
+          {% endif %}
+          {% endif %}
+        </div>
+
+        <!-- Score -->
+        <div class="ranking-score-col web-only">
+          {% if p.get('rank_score') or p.get('pop_score') %}
+          {% set score = (p.get('rank_score') or p.get('pop_score') or 0) %}
+          <div class="ranking-score-bar">
+            <div class="ranking-score-fill" style="width: {{ [score * 100, 100] | min | round(0) | int }}%"></div>
+          </div>
+          <span class="ranking-score-val">{{ "%.1f" | format(score * 100) }}%</span>
+          {% endif %}
+        </div>
+
+        <!-- Actions -->
+        <div class="ranking-actions-col">
+          <a href="/products/{{ p.product_id }}" class="btn-view">
+            <i class="fas fa-eye"></i>
+          </a>
+          <button class="icon-btn fav-btn" onclick="toggleFav('{{ p.product_id }}')">
+            <i class="fas fa-heart"></i>
+          </button>
+          <button class="icon-btn" onclick="addToCompare('{{ p.product_id }}')" title="Compare">
+            <i class="fas fa-balance-scale"></i>
+          </button>
+        </div>
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <i class="fas fa-trophy empty-icon"></i>
+        <h5>No ranking data available.</h5>
+        <a href="/products" class="btn-primary-small">Browse Products</a>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function filterRanking(type, btn) {
+  // Update active tab
+  document.querySelectorAll('.ranking-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+
+  const subfilter = document.getElementById('rankingSubfilter');
+  const storeFilter = document.getElementById('storeSubfilter');
+  const catFilter = document.getElementById('categorySubfilter');
+
+  storeFilter.style.display = 'none';
+  catFilter.style.display   = 'none';
+  subfilter.style.display   = 'none';
+
+  const items = document.querySelectorAll('.ranking-item');
+
+  if (type === 'all') {
+    items.forEach(item => { item.style.display = ''; });
+  } else if (type === 'store') {
+    subfilter.style.display = 'block';
+    storeFilter.style.display = 'flex';
+    items.forEach(item => { item.style.display = ''; });
+  } else if (type === 'category') {
+    subfilter.style.display = 'block';
+    catFilter.style.display = 'flex';
+    items.forEach(item => { item.style.display = ''; });
+  } else if (type === 'value') {
+    // Sort by discount % descending
+    const list = document.getElementById('rankingList');
+    const sorted = Array.from(items).sort((a, b) => {
+      return parseFloat(b.dataset.discount || 0) - parseFloat(a.dataset.discount || 0);
+    });
+    sorted.forEach(item => {
+      item.style.display = '';
+      list.appendChild(item);
+    });
+    // Update rank numbers
+    sorted.forEach((item, i) => {
+      const rankEl = item.querySelector('.rank-number');
+      if (rankEl) rankEl.textContent = '#' + (i + 1);
+    });
+  }
+}
+
+function subfilterStore(store) {
+  // Update active chip
+  document.querySelectorAll('#storeSubfilter .subfilter-chip').forEach(c => {
+    c.classList.toggle('active', c.textContent.trim().toLowerCase() === store.toLowerCase() || (!store && c.textContent.trim() === 'All Stores'));
+  });
+  const items = document.querySelectorAll('.ranking-item');
+  items.forEach(function(item) {
+    if (!store || item.dataset.store === store.toLowerCase()) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+function subfilterCategory(cat) {
+  document.querySelectorAll('#categorySubfilter .subfilter-chip').forEach(c => {
+    c.classList.toggle('active', c.textContent.trim().toLowerCase() === cat.toLowerCase() || (!cat && c.textContent.trim() === 'All Categories'));
+  });
+  const items = document.querySelectorAll('.ranking-item');
+  items.forEach(function(item) {
+    if (!cat || item.dataset.category === cat.toLowerCase()) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+</script>
+{% endblock %}

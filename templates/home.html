@@ -1,0 +1,250 @@
+﻿{% extends 'base.html' %}
+{% set active_page = 'home' %}
+{% block title %}HalalSaver MY — Halal Grocery Recommender{% endblock %}
+
+{% block content %}
+
+<!-- ── HERO SECTION ──────────────────────────────────────────────────────── -->
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fas fa-certificate"></i> JAKIM-Certified Products</div>
+    <h1 class="hero-title">Smart Halal Grocery Shopping Starts Here</h1>
+    <p class="hero-subtitle">
+      Discover the best halal deals across Lotus's, Mydin, and AEON.
+      Personalised recommendations powered by AI — just for you.
+    </p>
+    <div class="hero-cta">
+      <a href="/signup" class="btn-primary-hero"><i class="fas fa-rocket"></i> Get Started Free</a>
+      <a href="/login" class="btn-secondary-hero"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>500+</strong><span>Products</span></div>
+      <div class="hero-stat"><strong>3</strong><span>Major Stores</span></div>
+      <div class="hero-stat"><strong>13</strong><span>Categories</span></div>
+      <div class="hero-stat"><strong>100%</strong><span>Halal Verified</span></div>
+    </div>
+  </div>
+
+  <!-- Hero Search -->
+  <div class="hero-search-wrap">
+    <div class="hero-search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        id="heroSearch"
+        placeholder="Search for groceries, brands, categories…"
+        onkeydown="if(event.key==='Enter') window.location.href='/products?q='+this.value"
+      />
+      <button onclick="window.location.href='/products?q='+document.getElementById('heroSearch').value" class="search-btn">
+        Search
+      </button>
+    </div>
+    <div class="hero-quick-tags">
+      <a href="/products?q=milo" class="quick-tag">Milo</a>
+      <a href="/products?q=rice" class="quick-tag">Rice</a>
+      <a href="/products?q=cooking+oil" class="quick-tag">Cooking Oil</a>
+      <a href="/products?q=detergent" class="quick-tag">Detergent</a>
+      <a href="/products?q=chicken" class="quick-tag">Chicken</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CATEGORY ICONS ROW ────────────────────────────────────────────────── -->
+<section class="categories-section">
+  <div class="section-container">
+    <h2 class="section-title">Shop by Category</h2>
+    <div class="category-icons-row">
+      <a href="/products?category=Beverages" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-glass-water"></i></div>
+        <span>Beverages</span>
+      </a>
+      <a href="/products?category=Dairy+%26+Eggs" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-egg"></i></div>
+        <span>Dairy &amp; Eggs</span>
+      </a>
+      <a href="/products?category=Meat+%26+Poultry" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-drumstick-bite"></i></div>
+        <span>Meat &amp; Poultry</span>
+      </a>
+      <a href="/products?category=Rice+%26+Grains" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-seedling"></i></div>
+        <span>Rice &amp; Grains</span>
+      </a>
+      <a href="/products?category=Cooking+Essentials" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-fire-burner"></i></div>
+        <span>Cooking</span>
+      </a>
+      <a href="/products?category=Snacks+%26+Confectionery" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-cookie-bite"></i></div>
+        <span>Snacks</span>
+      </a>
+      <a href="/products?category=Personal+Care" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-pump-soap"></i></div>
+        <span>Personal Care</span>
+      </a>
+      <a href="/products?category=Household" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-house-chimney"></i></div>
+        <span>Household</span>
+      </a>
+      <a href="/products?category=Frozen+Foods" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-snowflake"></i></div>
+        <span>Frozen</span>
+      </a>
+      <a href="/products?category=Bread+%26+Bakery" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-bread-slice"></i></div>
+        <span>Bakery</span>
+      </a>
+      <a href="/products?halal=true" class="cat-icon-item cat-icon-halal">
+        <div class="cat-icon-circle"><i class="fas fa-certificate"></i></div>
+        <span>Halal Only</span>
+      </a>
+      <a href="/products" class="cat-icon-item">
+        <div class="cat-icon-circle"><i class="fas fa-th-large"></i></div>
+        <span>All Products</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── STORE BADGES ──────────────────────────────────────────────────────── -->
+<section class="stores-section">
+  <div class="section-container">
+    <h2 class="section-title">Featured Stores</h2>
+    <div class="store-badges-row">
+      <a href="/products?store=Lotus" class="store-badge-card store-lotus">
+        <i class="fas fa-store"></i>
+        <span>Lotus's</span>
+      </a>
+      <a href="/products?store=Mydin" class="store-badge-card store-mydin">
+        <i class="fas fa-store"></i>
+        <span>Mydin</span>
+      </a>
+      <a href="/products?store=AEON" class="store-badge-card store-aeon">
+        <i class="fas fa-store"></i>
+        <span>AEON</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED PRODUCTS ─────────────────────────────────────────────────── -->
+<section class="featured-products-section">
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">Featured Products</h2>
+      <a href="/products" class="see-all-link">See All <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="product-grid">
+      {% for p in featured_products %}
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img
+            src="https://placehold.co/200x160/ecfdf5/059669?text={{ p.product_name[:10] | urlencode }}"
+            alt="{{ p.product_name }}"
+            loading="lazy"
+          />
+          {% if p.halal_certified %}
+          <span class="halal-badge"><i class="fas fa-certificate"></i> JAKIM</span>
+          {% endif %}
+          <span class="store-badge store-{{ p.store | lower | replace("'","") | replace(" ","") }}">{{ p.store }}</span>
+        </div>
+        <div class="product-card-body">
+          <div class="product-name">{{ p.product_name }}</div>
+          <div class="product-price">RM {{ "%.2f" | format(p.price_after_discount) }}</div>
+          {% if p.discount_percent and p.discount_percent > 0 %}
+          <span class="discount-badge">-{{ p.discount_percent | int }}%</span>
+          {% endif %}
+          <div class="product-actions">
+            <button class="icon-btn fav-btn" onclick="toggleFav('{{ p.product_id }}')">
+              <i class="fas fa-heart"></i>
+            </button>
+            <a href="/products/{{ p.product_id }}" class="btn-view">View</a>
+            <button class="icon-btn" onclick="addToCompare('{{ p.product_id }}')">
+              <i class="fas fa-balance-scale"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <p class="text-muted">No featured products available.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ── DEALS / PROMOTIONS BANNER ─────────────────────────────────────────── -->
+<section class="deals-section">
+  <div class="section-container">
+    <h2 class="section-title"><i class="fas fa-tags"></i> Hot Deals Today</h2>
+    <div class="deals-grid">
+      <div class="deal-card deal-card-primary">
+        <div class="deal-icon"><i class="fas fa-percentage"></i></div>
+        <div class="deal-info">
+          <h4>Up to 45% OFF</h4>
+          <p>On selected beverages &amp; dairy products</p>
+          <a href="/products?category=Beverages&halal=true" class="deal-btn">Shop Now</a>
+        </div>
+      </div>
+      <div class="deal-card deal-card-secondary">
+        <div class="deal-icon"><i class="fas fa-certificate"></i></div>
+        <div class="deal-info">
+          <h4>Halal Guarantee</h4>
+          <p>All products JAKIM-certified verified</p>
+          <a href="/products?halal=true" class="deal-btn">Browse Halal</a>
+        </div>
+      </div>
+      <div class="deal-card deal-card-accent">
+        <div class="deal-icon"><i class="fas fa-robot"></i></div>
+        <div class="deal-info">
+          <h4>AI Recommendations</h4>
+          <p>Personalised picks just for you</p>
+          <a href="/dashboard" class="deal-btn">Get Recs</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ──────────────────────────────────────────────────────── -->
+<section class="how-it-works-section web-only">
+  <div class="section-container">
+    <h2 class="section-title text-center">How HalalSaver MY Works</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-number">1</div>
+        <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+        <h5>Create Account</h5>
+        <p>Sign up and set your budget, dietary preferences, and favourite categories.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-number">2</div>
+        <div class="step-icon"><i class="fas fa-sliders"></i></div>
+        <h5>Set Preferences</h5>
+        <p>Choose halal-only, budget range, preferred stores and product categories.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-number">3</div>
+        <div class="step-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+        <h5>Get Recommendations</h5>
+        <p>Our hybrid AI engine (SVD++ + Content-Based) finds the best deals for you.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-number">4</div>
+        <div class="step-icon"><i class="fas fa-balance-scale"></i></div>
+        <h5>Compare &amp; Save</h5>
+        <p>Compare products across stores and save money on your grocery budget.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ────────────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2>Ready to Save on Halal Groceries?</h2>
+    <p>Join thousands of Malaysian shoppers using HalalSaver MY to find the best deals.</p>
+    <a href="/signup" class="btn-cta-main"><i class="fas fa-rocket"></i> Start Saving Now</a>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,325 @@
+﻿{% extends 'base.html' %}
+{% set active_page = 'dashboard' %}
+{% block title %}Dashboard — HalalSaver MY{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper dashboard-page">
+
+  <!-- ── DASHBOARD HEADER ───────────────────────────────────────────────── -->
+  <div class="dashboard-header">
+    <div class="dashboard-header-inner section-container">
+      <div class="dash-welcome">
+        <div class="dash-avatar">
+          <img
+            src="https://ui-avatars.com/api/?name={{ session.get('user',{}).get('name','Guest') }}&background=2d7a4f&color=fff&rounded=true&size=64"
+            alt="Avatar"
+          />
+        </div>
+        <div class="dash-greeting">
+          <h2>Welcome back, {{ session.get('user',{}).get('name','Guest') }}! 👋</h2>
+          <p class="dash-subtitle">Here are your personalised halal grocery recommendations.</p>
+        </div>
+        <div class="dash-header-actions web-only">
+          <a href="/preferences" class="btn-dash-action">
+            <i class="fas fa-sliders"></i> Edit Preferences
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-body section-container">
+    <div class="dashboard-widgets">
+
+      <!-- ── LEFT COLUMN ─────────────────────────────────────────────── -->
+      <div class="dash-col-main">
+
+        <!-- Budget Tracker Card -->
+        <div class="dash-card budget-tracker-card">
+          <div class="dash-card-header">
+            <h5><i class="fas fa-wallet"></i> Budget Tracker</h5>
+            <a href="/preferences" class="card-action-link">Edit</a>
+          </div>
+          <div class="budget-tracker-body">
+            <div class="budget-info">
+              <div class="budget-amount">
+                RM <span id="budgetAmount">{{ user_prefs.get('budget', 100) | int }}</span>
+              </div>
+              <div class="budget-label">Monthly Budget</div>
+            </div>
+            <div class="budget-progress-wrap">
+              <div class="budget-progress-bar">
+                <div class="budget-progress-fill" style="width: 35%"></div>
+              </div>
+              <div class="budget-progress-labels">
+                <span>RM 0</span>
+                <span style="color:#2d7a4f;font-weight:600">35% used</span>
+                <span>RM {{ user_prefs.get('budget', 100) | int }}</span>
+              </div>
+            </div>
+            <div class="budget-stats-row">
+              <div class="budget-stat-item">
+                <span class="bstat-val">RM 35.00</span>
+                <span class="bstat-label">Spent</span>
+              </div>
+              <div class="budget-stat-item">
+                <span class="bstat-val" style="color:#2d7a4f">RM {{ (user_prefs.get('budget', 100) - 35) | int }}.00</span>
+                <span class="bstat-label">Remaining</span>
+              </div>
+              <div class="budget-stat-item">
+                <span class="bstat-val">{{ recommendations | length }}</span>
+                <span class="bstat-label">Recs Today</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommendations Section -->
+        <div class="dash-card recommendations-card">
+          <div class="dash-card-header">
+            <h5><i class="fas fa-wand-magic-sparkles"></i> Your Recommendations</h5>
+            <div class="rec-filter-row">
+              <label class="rec-filter-label">
+                Budget: RM
+                <input
+                  type="number"
+                  id="recBudget"
+                  value="{{ user_prefs.get('budget', 100) | int }}"
+                  min="5"
+                  max="500"
+                  style="width:70px;padding:2px 6px;border:1px solid #cde8d9;border-radius:4px;"
+                />
+              </label>
+              <button onclick="refreshRecommendations()" class="btn-refresh-recs">
+                <i class="fas fa-rotate"></i> Refresh
+              </button>
+            </div>
+          </div>
+          <div id="recsContainer">
+            {% if recommendations %}
+            <div class="product-grid" id="recsGrid">
+              {% for p in recommendations %}
+              <div class="product-card">
+                <div class="product-img-wrap">
+                  <img
+                    src="https://placehold.co/200x160/ecfdf5/059669?text={{ p.product_name[:10] | urlencode }}"
+                    alt="{{ p.product_name }}"
+                    loading="lazy"
+                  />
+                  {% if p.get('halal_certified') or p.get('halal_status') == 'Halal' %}
+                  <span class="halal-badge"><i class="fas fa-certificate"></i> JAKIM</span>
+                  {% endif %}
+                  {% if p.get('store') or p.get('store_name') %}
+                  <span class="store-badge store-{{ (p.get('store') or p.get('store_name')) | lower | replace("'","") | replace(" ","") }}">{{ p.get('store') or p.get('store_name') }}</span>
+                  {% endif %}
+                </div>
+                <div class="product-card-body">
+                  <div class="product-name">{{ p.get('product_name') }}</div>
+                  <div class="product-price">RM {{ "%.2f" | format(p.get('price_after_discount', 0)) }}</div>
+                  {% if p.get('discount_percent') and p.get('discount_percent') > 0 %}
+                  <span class="discount-badge">-{{ p.get('discount_percent') | int }}%</span>
+                  {% endif %}
+                  {% if p.get('final_score') %}
+                  <div class="rec-score-bar">
+                    <div class="rec-score-fill" style="width: {{ (p.get('final_score', 0) * 100) | round(0) | int }}%"></div>
+                    <span class="rec-score-text">{{ "%.0f%%" | format(p.get('final_score', 0) * 100) }} match</span>
+                  </div>
+                  {% endif %}
+                  <div class="product-actions">
+                    <button class="icon-btn fav-btn" onclick="toggleFav('{{ p.get('product_id') }}')">
+                      <i class="fas fa-heart"></i>
+                    </button>
+                    <a href="/products/{{ p.get('product_id') }}" class="btn-view">View</a>
+                    <button class="icon-btn" onclick="addToCompare('{{ p.get('product_id') }}')">
+                      <i class="fas fa-balance-scale"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+              <i class="fas fa-wand-magic-sparkles empty-icon"></i>
+              <h5>No recommendations yet</h5>
+              <p>Set your preferences to get personalised picks.</p>
+              <a href="/preferences" class="btn-primary-small">Set Preferences</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── RIGHT SIDEBAR ────────────────────────────────────────────── -->
+      <div class="dash-col-sidebar web-only">
+
+        <!-- Preferences Summary Card -->
+        <div class="dash-card prefs-summary-card">
+          <div class="dash-card-header">
+            <h6><i class="fas fa-sliders"></i> My Preferences</h6>
+            <a href="/preferences" class="card-action-link">Edit</a>
+          </div>
+          <div class="prefs-summary-body">
+            <div class="pref-summary-item">
+              <i class="fas fa-wallet pref-icon"></i>
+              <span>Budget: <strong>RM {{ user_prefs.get('budget', 100) | int }}</strong></span>
+            </div>
+            <div class="pref-summary-item">
+              <i class="fas fa-certificate pref-icon"></i>
+              <span>Halal Only: <strong>{{ 'Yes' if user_prefs.get('halal_only', True) else 'No' }}</strong></span>
+            </div>
+            <div class="pref-summary-item">
+              <i class="fas fa-th-large pref-icon"></i>
+              <span>
+                Categories:
+                <strong>
+                  {% if user_prefs.get('categories') %}
+                    {{ user_prefs.get('categories') | join(', ') }}
+                  {% else %}
+                    All
+                  {% endif %}
+                </strong>
+              </span>
+            </div>
+            <div class="pref-summary-item">
+              <i class="fas fa-store pref-icon"></i>
+              <span>
+                Stores:
+                <strong>
+                  {% if user_prefs.get('stores') %}
+                    {{ user_prefs.get('stores') | join(', ') }}
+                  {% else %}
+                    All
+                  {% endif %}
+                </strong>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Navigation Card -->
+        <div class="dash-card quick-nav-card">
+          <div class="dash-card-header">
+            <h6><i class="fas fa-bolt"></i> Quick Actions</h6>
+          </div>
+          <div class="quick-nav-links">
+            <a href="/products" class="quick-nav-item">
+              <i class="fas fa-box-open"></i>
+              <span>Browse Products</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+            <a href="/comparison" class="quick-nav-item">
+              <i class="fas fa-balance-scale"></i>
+              <span>Compare Prices</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+            <a href="/ranking" class="quick-nav-item">
+              <i class="fas fa-trophy"></i>
+              <span>Top Rankings</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+            <a href="/products?halal=true" class="quick-nav-item">
+              <i class="fas fa-certificate"></i>
+              <span>Halal Products</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Stats Card -->
+        <div class="dash-card stats-card">
+          <div class="dash-card-header">
+            <h6><i class="fas fa-chart-bar"></i> Your Stats</h6>
+          </div>
+          <div class="stats-body">
+            <div class="stat-row">
+              <span class="stat-label">Products Viewed</span>
+              <span class="stat-val" id="viewedCount">0</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Favourites Saved</span>
+              <span class="stat-val" id="favCount">0</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">In Comparison</span>
+              <span class="stat-val" id="compareCount">0</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Update stats from localStorage
+window.addEventListener('DOMContentLoaded', function() {
+  try {
+    const favs = JSON.parse(localStorage.getItem('halalsaver_favs') || '[]');
+    const compare = JSON.parse(localStorage.getItem('halalsaver_compare') || '[]');
+    const viewed = JSON.parse(localStorage.getItem('halalsaver_viewed') || '[]');
+    const el = function(id) { return document.getElementById(id); };
+    if (el('favCount'))     el('favCount').textContent     = favs.length;
+    if (el('compareCount')) el('compareCount').textContent = compare.length;
+    if (el('viewedCount'))  el('viewedCount').textContent  = viewed.length;
+  } catch(e) {}
+});
+
+function refreshRecommendations() {
+  const budget = document.getElementById('recBudget').value || 100;
+  const halal_only = {{ 'true' if user_prefs.get('halal_only', True) else 'false' }};
+  const container = document.getElementById('recsContainer');
+  container.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin fa-2x" style="color:var(--primary)"></i><p>Loading recommendations…</p></div>';
+
+  fetch('/api/recommend?budget=' + budget + '&halal_only=' + halal_only + '&top_n=10')
+    .then(r => r.json())
+    .then(function(data) {
+      if (!Array.isArray(data) || data.length === 0) {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-search empty-icon"></i><p>No recommendations for this budget.</p></div>';
+        return;
+      }
+      let html = '<div class="product-grid">';
+      data.forEach(function(p) {
+        const name   = p.product_name || '';
+        const price  = (p.price_after_discount || 0).toFixed(2);
+        const disc   = p.discount_percent || 0;
+        const halal  = p.halal_certified;
+        const store  = p.store || '';
+        const pid    = p.product_id || '';
+        const score  = p.final_score ? Math.round(p.final_score * 100) : 0;
+        const imgText = encodeURIComponent(name.slice(0, 10));
+        html += `<div class="product-card">
+          <div class="product-img-wrap">
+            <img src="https://placehold.co/200x160/ecfdf5/059669?text=${imgText}" alt="${name}" loading="lazy"/>
+            ${halal ? '<span class="halal-badge"><i class="fas fa-certificate"></i> JAKIM</span>' : ''}
+            <span class="store-badge store-${store.toLowerCase().replace(/'/g,'').replace(/ /g,'')}">${store}</span>
+          </div>
+          <div class="product-card-body">
+            <div class="product-name">${name}</div>
+            <div class="product-price">RM ${price}</div>
+            ${disc > 0 ? `<span class="discount-badge">-${Math.round(disc)}%</span>` : ''}
+            ${score > 0 ? `<div class="rec-score-bar"><div class="rec-score-fill" style="width:${score}%"></div><span class="rec-score-text">${score}% match</span></div>` : ''}
+            <div class="product-actions">
+              <button class="icon-btn fav-btn" onclick="toggleFav('${pid}')"><i class="fas fa-heart"></i></button>
+              <a href="/products/${pid}" class="btn-view">View</a>
+              <button class="icon-btn" onclick="addToCompare('${pid}')"><i class="fas fa-balance-scale"></i></button>
+            </div>
+          </div>
+        </div>`;
+      });
+      html += '</div>';
+      container.innerHTML = html;
+    })
+    .catch(function(err) {
+      container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle empty-icon" style="color:#dc3545"></i><p>Could not load recommendations. Please try again.</p></div>';
+      console.error(err);
+    });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,365 @@
+﻿/*
+ * toggle.css — HalalSaver MY
+ * Responsive layout styles (replaces manual web/mobile view switching)
+ * Uses CSS media queries instead of class-based toggling
+ */
+
+/* ── Smooth body transitions ─────────────────────────────────────────────── */
+body {
+  transition: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   UTILITY CLASSES: .web-only / .mobile-only
+   Controlled by media queries — no JS class toggling needed
+══════════════════════════════════════════════════════════════════════════ */
+
+/* Desktop default: web-only visible, mobile-only hidden */
+.mobile-only {
+  display: none !important;
+}
+
+/* Mobile: web-only hidden, mobile-only visible */
+@media (max-width: 768px) {
+  .web-only {
+    display: none !important;
+  }
+  .mobile-only {
+    display: revert !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   WEB FOOTER — visible on all screen sizes, stacks on mobile
+══════════════════════════════════════════════════════════════════════════ */
+.web-footer {
+  background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+  color: #fff;
+  margin-top: 3rem;
+  border-top: 3px solid rgba(255,255,255,.1);
+}
+
+.web-footer .footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 1.25rem;
+}
+
+.web-footer .footer-top {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.web-footer .footer-brand-col { flex: 2; min-width: 200px; }
+.web-footer .footer-tagline {
+  color: rgba(255,255,255,.6);
+  font-size: .82rem;
+  margin-top: .6rem;
+  line-height: 1.5;
+}
+
+.web-footer .footer-nav-col {
+  flex: 1;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+}
+.web-footer .footer-nav-title {
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: rgba(255,255,255,.45);
+  margin-bottom: .35rem;
+}
+.web-footer .footer-nav-col a {
+  color: rgba(255,255,255,.75);
+  text-decoration: none;
+  font-size: .85rem;
+  transition: color .2s;
+}
+.web-footer .footer-nav-col a:hover { color: #fff; }
+
+.web-footer .footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding-top: 1.25rem;
+  font-size: .78rem;
+  color: rgba(255,255,255,.5);
+}
+.web-footer .footer-halal-note {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  color: rgba(255,255,255,.55);
+}
+.web-footer .footer-halal-note i { color: #7ae8a8; }
+
+@media (max-width: 768px) {
+  .web-footer {
+    margin-bottom: 70px; /* clear bottom nav */
+  }
+  .web-footer .footer-top {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .web-footer .footer-brand-col,
+  .web-footer .footer-nav-col {
+    min-width: unset;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE BOTTOM NAV — hidden on desktop, shown on mobile
+══════════════════════════════════════════════════════════════════════════ */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: space-around;
+  background: #fff;
+  border-top: 2px solid #e0ebe3;
+  box-shadow: 0 -4px 16px rgba(5,150,105,.1);
+  padding: .4rem 0 .55rem;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  /* Prevent content from hiding behind bottom nav */
+  body {
+    padding-bottom: 70px;
+  }
+
+  /* Fix page-wrapper top offset for unchanged 68px navbar */
+  .page-wrapper {
+    padding-top: 68px;
+  }
+}
+
+.mobile-bottom-nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #9ab8a4;
+  text-decoration: none;
+  font-size: .62rem;
+  font-weight: 500;
+  padding: .3rem .5rem;
+  border-radius: 10px;
+  transition: color .2s;
+  min-width: 52px;
+  position: relative;
+}
+
+.mobile-bottom-nav a i {
+  font-size: 1.15rem;
+}
+
+.mobile-bottom-nav a.active {
+  color: #059669;
+}
+
+.mobile-bottom-nav a.active i {
+  transform: translateY(-1px);
+}
+
+.mobile-bottom-nav a:hover {
+  color: #059669;
+}
+
+.mobile-bottom-nav a.active::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background: #059669;
+  border-radius: 0 0 3px 3px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE NAVBAR — adapts to screen size
+══════════════════════════════════════════════════════════════════════════ */
+
+/* Mobile search icon — hidden on desktop, shown on mobile */
+.mobile-nav-search-btn {
+  display: none;
+  background: #f5fbf7;
+  border: 1px solid #e0ebe3;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #059669;
+  padding: .4rem .5rem;
+  font-size: .9rem;
+  transition: background .15s;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-nav-search-btn:hover { background: #e0f0e8; }
+
+@media (max-width: 768px) {
+  /* Compact navbar: hide links and inline search bar */
+  .page-nav-links {
+    display: none !important;
+  }
+  .page-nav-search {
+    display: none !important;
+  }
+
+  /* Show search icon button instead */
+  .mobile-nav-search-btn {
+    display: flex;
+  }
+
+  /* Hide products sidebar — filter drawer handles filters on mobile */
+  .products-sidebar {
+    display: none !important;
+  }
+
+  /* Product content area stacks vertically */
+  .page-content-area {
+    flex-direction: column !important;
+    padding: 0 !important;
+  }
+
+  /* Product grid: 2 columns on mobile */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: .75rem !important;
+    padding: .75rem !important;
+  }
+
+  /* Dashboard stacks vertically */
+  .dashboard-widgets {
+    flex-direction: column !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE SEARCH BAR — expandable bar below navbar
+══════════════════════════════════════════════════════════════════════════ */
+.mobile-search-bar {
+  display: none;
+  background: #fff;
+  padding: .6rem 1rem;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.mobile-search-bar.open {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .mobile-search-bar {
+    position: fixed;
+    top: 68px;
+    left: 0;
+    right: 0;
+    z-index: 899;
+  }
+}
+
+.mobile-search-bar input {
+  width: 100%;
+  padding: .5rem .75rem;
+  border: 1px solid #cde8d9;
+  border-radius: 20px;
+  font-size: .9rem;
+  outline: none;
+}
+
+.mobile-search-bar input:focus {
+  border-color: var(--primary, #059669);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE FILTER BUTTON & DRAWER — for products page
+══════════════════════════════════════════════════════════════════════════ */
+.mobile-filter-btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-filter-btn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: .4rem;
+    background: var(--primary, #059669);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: .45rem 1rem;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: .75rem;
+  }
+
+  .mobile-filter-btn-wrap {
+    display: block;
+  }
+}
+
+.mobile-filter-drawer {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.15);
+  padding: 1.5rem 1.25rem 5rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  transition: bottom .3s ease;
+}
+
+.mobile-filter-drawer.open {
+  bottom: 0;
+}
+
+.mobile-filter-drawer .drawer-handle {
+  width: 40px;
+  height: 4px;
+  background: #ddd;
+  border-radius: 2px;
+  margin: 0 auto 1rem;
+}
+
+.mobile-filter-drawer h6 {
+  font-weight: 700;
+  color: var(--primary, #059669);
+  margin-bottom: 1rem;
+}
+
+/* ── Overlay for mobile drawer ───────────────────────────────────────────── */
+.drawer-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  z-index: 999;
+}
+
+.drawer-overlay.active {
+  display: block;
+}

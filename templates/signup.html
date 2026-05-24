@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+{% set active_page = '' %}
+{% block title %}Create Account — HalalSaver MY{% endblock %}
+
+{% block content %}
+
+<div class="auth-page-wrap">
+  <div class="auth-container auth-container-reverse">
+
+    <!-- Left form panel -->
+    <div class="auth-form-panel">
+      <div class="auth-form-wrap">
+        <!-- Mobile logo -->
+        <div class="auth-mobile-logo mobile-only">
+          <a href="/" class="brand-logo">
+            <div class="logo-mark"><i class="fas fa-leaf"></i></div>
+            <div class="logo-text">
+              <span class="logo-name">HalalSaver</span><span class="logo-tag"> MY</span>
+            </div>
+          </a>
+        </div>
+
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Join HalalSaver MY — smart halal shopping starts here</p>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ 'success' if category=='success' else ('danger' if category=='danger' else ('warning' if category=='warning' else 'info')) }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="/signup" method="POST" class="auth-form" novalidate id="signupForm">
+
+          <div class="form-group">
+            <label for="full_name" class="form-label">Full Name <span class="required">*</span></label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-user input-icon"></i>
+              <input
+                type="text"
+                id="full_name"
+                name="full_name"
+                class="form-control auth-input"
+                placeholder="e.g. Ahmad Faizal"
+                required
+                autocomplete="name"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address <span class="required">*</span></label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-envelope input-icon"></i>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control auth-input"
+                placeholder="you@example.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Password <span class="required">*</span></label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-lock input-icon"></i>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control auth-input"
+                placeholder="Minimum 6 characters"
+                required
+                autocomplete="new-password"
+                minlength="6"
+              />
+              <button type="button" class="input-icon-right toggle-pwd" onclick="togglePwdVisibility('password','pwdEye1')">
+                <i class="fas fa-eye" id="pwdEye1"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirm_password" class="form-label">Confirm Password <span class="required">*</span></label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-lock input-icon"></i>
+              <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+                class="form-control auth-input"
+                placeholder="Re-enter your password"
+                required
+                autocomplete="new-password"
+              />
+              <button type="button" class="input-icon-right toggle-pwd" onclick="togglePwdVisibility('confirm_password','pwdEye2')">
+                <i class="fas fa-eye" id="pwdEye2"></i>
+              </button>
+            </div>
+            <div id="pwdMatchMsg" style="font-size:.78rem;margin-top:.25rem;"></div>
+          </div>
+
+          <!-- Preferences -->
+          <div class="signup-prefs-row">
+            <label class="pref-toggle-label">
+              <input type="checkbox" name="halal_only" checked class="form-check-input" />
+              <span class="pref-toggle-text">
+                <i class="fas fa-certificate" style="color:var(--primary)"></i>
+                Halal-only products
+              </span>
+            </label>
+            <label class="pref-toggle-label">
+              <input type="checkbox" name="budget_friendly" class="form-check-input" />
+              <span class="pref-toggle-text">
+                <i class="fas fa-piggy-bank" style="color:var(--primary)"></i>
+                Budget-friendly mode
+              </span>
+            </label>
+          </div>
+
+          <!-- Terms -->
+          <div class="form-check terms-check">
+            <input type="checkbox" id="terms" name="terms" class="form-check-input" required />
+            <label for="terms" class="form-check-label">
+              I agree to the <a href="#" class="auth-link">Terms of Service</a>
+              and <a href="#" class="auth-link">Privacy Policy</a>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-auth-submit" id="submitBtn">
+            <i class="fas fa-user-plus"></i> Create Account
+          </button>
+        </form>
+
+        <!-- Social auth — Google Sign-Up -->
+        <div class="auth-divider"><span>or sign up with</span></div>
+        <div class="social-auth-row">
+          <button class="social-btn social-google" id="googleSignUpBtn" type="button">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="18" />
+            Google
+          </button>
+        </div>
+
+        <p class="auth-switch-text">
+          Already have an account?
+          <a href="/login" class="auth-switch-link">Sign in</a>
+        </p>
+
+        <!-- Browse as Guest -->
+        <div class="guest-browse-row">
+          <div class="guest-divider-line"></div>
+          <span class="guest-divider-text">or</span>
+          <div class="guest-divider-line"></div>
+        </div>
+        <a href="/products" class="btn-guest-browse">
+          <i class="fas fa-store"></i> Browse Products as Guest
+        </a>
+        <p class="guest-note">
+          <i class="fas fa-info-circle"></i>
+          No account needed to browse &amp; compare. Sign up to unlock recommendations and favourites.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right promo panel (web only) -->
+    <div class="auth-promo web-only">
+      <div class="auth-promo-inner">
+        <div class="auth-promo-logo">
+          <div class="logo-mark large"><i class="fas fa-leaf"></i></div>
+          <div class="logo-text large">
+            <span class="logo-name">HalalSaver</span><span class="logo-tag"> MY</span>
+          </div>
+        </div>
+        <h2>Why Join Us?</h2>
+        <p>HalalSaver MY helps Malaysian shoppers find the best halal grocery deals — smarter, faster, cheaper.</p>
+        <ul class="auth-promo-features">
+          <li><i class="fas fa-robot"></i> AI-powered hybrid recommendations</li>
+          <li><i class="fas fa-certificate"></i> JAKIM-verified halal products</li>
+          <li><i class="fas fa-balance-scale"></i> Side-by-side price comparison</li>
+          <li><i class="fas fa-trophy"></i> Top-ranked products by category</li>
+          <li><i class="fas fa-wallet"></i> Budget tracker built-in</li>
+        </ul>
+        <div class="auth-promo-tagline">
+          <i class="fas fa-certificate"></i> Trusted Halal. Smart Savings.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<!-- Firebase JS SDK (auth only) -->
+<script type="module">
+  import { initializeApp }      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup }
+                                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey:     "{{ config.get('FIREBASE_WEB_API_KEY', '') }}",
+    authDomain: window.__FB_AUTH_DOMAIN__ || "",
+    projectId:  window.__FB_PROJECT_ID__  || "",
+  };
+
+  let app, auth;
+  try {
+    app  = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+  } catch (e) {
+    console.warn("[Firebase] SDK init skipped:", e.message);
+  }
+
+  document.getElementById('googleSignUpBtn').addEventListener('click', async () => {
+    if (!auth) {
+      alert("Google Sign-In is not configured. Use email/password instead.");
+      return;
+    }
+    try {
+      const provider = new GoogleAuthProvider();
+      const result   = await signInWithPopup(auth, provider);
+      const idToken  = await result.user.getIdToken();
+
+      const resp = await fetch('/api/auth/google', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          id_token:     idToken,
+          display_name: result.user.displayName,
+          email:        result.user.email,
+        }),
+      });
+      const data = await resp.json();
+      if (data.redirect) {
+        window.location.href = data.redirect;
+      } else {
+        alert(data.error || "Google sign-up failed.");
+      }
+    } catch (err) {
+      console.error("[Google Sign-Up]", err);
+      alert("Google sign-up failed: " + err.message);
+    }
+  });
+</script>
+
+<script>
+function togglePwdVisibility(fieldId, iconId) {
+  const field = document.getElementById(fieldId);
+  const icon  = document.getElementById(iconId);
+  if (field.type === 'password') {
+    field.type = 'text';
+    icon.classList.replace('fa-eye', 'fa-eye-slash');
+  } else {
+    field.type = 'password';
+    icon.classList.replace('fa-eye-slash', 'fa-eye');
+  }
+}
+
+// Password match validation
+document.getElementById('confirm_password').addEventListener('input', function() {
+  const pwd     = document.getElementById('password').value;
+  const confirm = this.value;
+  const msg     = document.getElementById('pwdMatchMsg');
+  if (!confirm) { msg.textContent = ''; return; }
+  if (pwd === confirm) {
+    msg.innerHTML = '<span style="color:#2d7a4f"><i class="fas fa-check"></i> Passwords match</span>';
+  } else {
+    msg.innerHTML = '<span style="color:#dc3545"><i class="fas fa-times"></i> Passwords do not match</span>';
+  }
+});
+
+// Validate terms before submit
+document.getElementById('signupForm').addEventListener('submit', function(e) {
+  const terms = document.getElementById('terms');
+  if (!terms.checked) {
+    e.preventDefault();
+    alert('Please accept the Terms of Service to continue.');
+  }
+});
+</script>
+{% endblock %}

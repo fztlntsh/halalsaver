@@ -1,0 +1,11 @@
+flask
+gunicorn
+firebase-admin
+pandas
+numpy
+scikit-learn
+scikit-surprise
+joblib
+google-cloud-firestore
+requests
+python-dotenv

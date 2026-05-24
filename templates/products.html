@@ -1,0 +1,329 @@
+﻿{% extends 'base.html' %}
+{% set active_page = 'products' %}
+{% block title %}Products — HalalSaver MY{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper products-page">
+
+  <!-- ── Mobile Filter Button ──────────────────────────────────────────── -->
+  <div class="mobile-filter-btn-wrap">
+    <button class="mobile-filter-btn" onclick="openFilterDrawer()">
+      <i class="fas fa-sliders"></i> Filters
+      {% set active_filters = [] %}
+      {% if args.get('category') %}{% set _ = active_filters.append(1) %}{% endif %}
+      {% if args.get('store') %}{% set _ = active_filters.append(1) %}{% endif %}
+      {% if args.get('halal') %}{% set _ = active_filters.append(1) %}{% endif %}
+      {% if args.get('max_price') %}{% set _ = active_filters.append(1) %}{% endif %}
+      {% if active_filters %}
+      <span class="filter-count-badge">{{ active_filters | length }}</span>
+      {% endif %}
+    </button>
+  </div>
+
+  <div class="products-layout page-content-area">
+
+    <!-- ── SIDEBAR FILTERS (web only) ────────────────────────────────── -->
+    <aside class="products-sidebar web-only">
+      <form method="GET" action="/products" id="filterForm">
+        <!-- Preserve search query -->
+        {% if args.get('q') %}
+        <input type="hidden" name="q" value="{{ args.get('q') }}" />
+        {% endif %}
+
+        <div class="sidebar-filter-section">
+          <h6 class="filter-heading"><i class="fas fa-search"></i> Search</h6>
+          <div class="sidebar-search-wrap">
+            <input
+              type="text"
+              name="q"
+              class="filter-input"
+              placeholder="Search products…"
+              value="{{ args.get('q', '') }}"
+            />
+          </div>
+        </div>
+
+        <div class="sidebar-filter-section">
+          <h6 class="filter-heading"><i class="fas fa-th-large"></i> Category</h6>
+          <select name="category" class="filter-select" onchange="this.form.submit()">
+            <option value="">All Categories</option>
+            {% for cat in categories %}
+            <option value="{{ cat }}" {% if args.get('category') == cat %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="sidebar-filter-section">
+          <h6 class="filter-heading"><i class="fas fa-store"></i> Store</h6>
+          <select name="store" class="filter-select" onchange="this.form.submit()">
+            <option value="">All Stores</option>
+            {% for store in stores %}
+            <option value="{{ store }}" {% if args.get('store') == store %}selected{% endif %}>{{ store }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="sidebar-filter-section">
+          <h6 class="filter-heading"><i class="fas fa-wallet"></i> Max Price (RM)</h6>
+          <div class="price-range-current">
+            RM <span id="priceRangeDisplay">{{ args.get('max_price', 200) }}</span>
+          </div>
+          <input
+            type="range"
+            name="max_price"
+            id="priceRangeSlider"
+            class="filter-range"
+            min="5"
+            max="500"
+            step="5"
+            value="{{ args.get('max_price', 200) }}"
+            oninput="document.getElementById('priceRangeDisplay').textContent = this.value"
+          />
+          <div class="price-range-labels"><span>RM 5</span><span>RM 500</span></div>
+        </div>
+
+        <div class="sidebar-filter-section">
+          <h6 class="filter-heading"><i class="fas fa-certificate"></i> Halal Only</h6>
+          <label class="toggle-switch-label small">
+            <input
+              type="checkbox"
+              name="halal"
+              value="true"
+              id="halalFilter"
+              class="toggle-switch-input"
+              onchange="this.form.submit()"
+              {% if args.get('halal') == 'true' %}checked{% endif %}
+            />
+            <span class="toggle-switch-track">
+              <span class="toggle-switch-thumb"></span>
+            </span>
+            <span class="toggle-switch-text small">JAKIM-certified only</span>
+          </label>
+        </div>
+
+        <button type="submit" class="filter-apply-btn">
+          <i class="fas fa-filter"></i> Apply Filters
+        </button>
+        <a href="/products" class="filter-clear-btn">
+          <i class="fas fa-times"></i> Clear All
+        </a>
+      </form>
+    </aside>
+
+    <!-- ── MAIN PRODUCTS AREA ────────────────────────────────────────── -->
+    <main class="products-main">
+
+      <!-- Results header -->
+      <div class="products-results-header">
+        <div class="results-count">
+          {% if args.get('q') %}
+          <strong>{{ total }}</strong> results for "<em>{{ args.get('q') }}</em>"
+          {% else %}
+          <strong>{{ total }}</strong> products found
+          {% endif %}
+        </div>
+        <div class="results-sort web-only">
+          <select class="filter-select small" onchange="sortProducts(this.value)">
+            <option value="">Sort by: Default</option>
+            <option value="price_asc">Price: Low to High</option>
+            <option value="price_desc">Price: High to Low</option>
+            <option value="discount">Biggest Discount</option>
+            <option value="name">Name A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Active filters display -->
+      {% if args.get('category') or args.get('store') or args.get('halal') or args.get('max_price') %}
+      <div class="active-filters-row">
+        <span class="active-filters-label">Active filters:</span>
+        {% if args.get('category') %}
+        <span class="filter-chip">
+          {{ args.get('category') }}
+          <a href="{{ url_for('products', **dict(args.to_dict(), **{'category': None})) }}" class="chip-remove">×</a>
+        </span>
+        {% endif %}
+        {% if args.get('store') %}
+        <span class="filter-chip">
+          {{ args.get('store') }}
+          <a href="{{ url_for('products', **dict(args.to_dict(), **{'store': None})) }}" class="chip-remove">×</a>
+        </span>
+        {% endif %}
+        {% if args.get('halal') %}
+        <span class="filter-chip halal-chip">
+          <i class="fas fa-certificate"></i> Halal Only
+          <a href="{{ url_for('products', **dict(args.to_dict(), **{'halal': None})) }}" class="chip-remove">×</a>
+        </span>
+        {% endif %}
+        {% if args.get('max_price') %}
+        <span class="filter-chip">
+          Max RM{{ args.get('max_price') }}
+          <a href="{{ url_for('products', **dict(args.to_dict(), **{'max_price': None})) }}" class="chip-remove">×</a>
+        </span>
+        {% endif %}
+        <a href="/products" class="clear-all-link">Clear all</a>
+      </div>
+      {% endif %}
+
+      <!-- Products Grid -->
+      {% if products %}
+      <div class="product-grid">
+        {% for p in products %}
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img
+              src="https://placehold.co/200x160/ecfdf5/059669?text={{ p.product_name[:10] | urlencode }}"
+              alt="{{ p.product_name }}"
+              loading="lazy"
+            />
+            {% if p.halal_certified %}
+            <span class="halal-badge"><i class="fas fa-certificate"></i> JAKIM</span>
+            {% endif %}
+            <span class="store-badge store-{{ p.store | lower | replace("'","") | replace(" ","") }}">{{ p.store }}</span>
+          </div>
+          <div class="product-card-body">
+            <div class="product-name">{{ p.product_name }}</div>
+            <div class="product-price">RM {{ "%.2f" | format(p.price_after_discount) }}</div>
+            {% if p.discount_percent and p.discount_percent > 0 %}
+            <span class="discount-badge">-{{ p.discount_percent | int }}%</span>
+            {% endif %}
+            <div class="product-actions">
+              <button class="icon-btn fav-btn" onclick="toggleFav('{{ p.product_id }}')">
+                <i class="fas fa-heart"></i>
+              </button>
+              <a href="/products/{{ p.product_id }}" class="btn-view">View</a>
+              <button class="icon-btn" onclick="addToCompare('{{ p.product_id }}')">
+                <i class="fas fa-balance-scale"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Pagination -->
+      {% if pages > 1 %}
+      <div class="pagination-wrap">
+        <nav class="pagination-nav">
+          {% if page > 1 %}
+          <a href="{{ url_for('products', **dict(args.to_dict(), **{'page': page - 1})) }}" class="page-btn page-prev">
+            <i class="fas fa-chevron-left"></i> Prev
+          </a>
+          {% endif %}
+
+          {% for p_num in range([1, page-2]|max, [pages+1, page+3]|min) %}
+          <a
+            href="{{ url_for('products', **dict(args.to_dict(), **{'page': p_num})) }}"
+            class="page-btn {{ 'page-active' if p_num == page else '' }}"
+          >{{ p_num }}</a>
+          {% endfor %}
+
+          {% if page < pages %}
+          <a href="{{ url_for('products', **dict(args.to_dict(), **{'page': page + 1})) }}" class="page-btn page-next">
+            Next <i class="fas fa-chevron-right"></i>
+          </a>
+          {% endif %}
+        </nav>
+        <p class="pagination-info">Page {{ page }} of {{ pages }} — {{ total }} products</p>
+      </div>
+      {% endif %}
+
+      {% else %}
+      <div class="empty-state">
+        <i class="fas fa-box-open empty-icon"></i>
+        <h4>No products found</h4>
+        <p>Try adjusting your filters or search query.</p>
+        <a href="/products" class="btn-primary-small">View All Products</a>
+      </div>
+      {% endif %}
+    </main>
+
+  </div>
+</div>
+
+<!-- ── MOBILE FILTER DRAWER ───────────────────────────────────────────────── -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeFilterDrawer()"></div>
+<div class="mobile-filter-drawer" id="filterDrawer">
+  <div class="drawer-handle"></div>
+  <h6><i class="fas fa-sliders"></i> Filter Products</h6>
+
+  <form method="GET" action="/products" id="mobileFilterForm">
+    {% if args.get('q') %}
+    <input type="hidden" name="q" value="{{ args.get('q') }}" />
+    {% endif %}
+
+    <div class="form-group mb-3">
+      <label class="form-label">Category</label>
+      <select name="category" class="form-control filter-select">
+        <option value="">All Categories</option>
+        {% for cat in categories %}
+        <option value="{{ cat }}" {% if args.get('category') == cat %}selected{% endif %}>{{ cat }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group mb-3">
+      <label class="form-label">Store</label>
+      <select name="store" class="form-control filter-select">
+        <option value="">All Stores</option>
+        {% for store in stores %}
+        <option value="{{ store }}" {% if args.get('store') == store %}selected{% endif %}>{{ store }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group mb-3">
+      <label class="form-label">Max Price (RM)</label>
+      <input type="number" name="max_price" class="form-control" placeholder="e.g. 50" value="{{ args.get('max_price', '') }}" />
+    </div>
+
+    <div class="form-group mb-3">
+      <label class="toggle-switch-label">
+        <input type="checkbox" name="halal" value="true" class="toggle-switch-input" {% if args.get('halal') == 'true' %}checked{% endif %} />
+        <span class="toggle-switch-track"><span class="toggle-switch-thumb"></span></span>
+        <span class="toggle-switch-text">Halal Only (JAKIM)</span>
+      </label>
+    </div>
+
+    <div class="drawer-actions-row">
+      <button type="submit" class="filter-apply-btn flex-1">Apply</button>
+      <a href="/products" class="filter-clear-btn flex-1" onclick="closeFilterDrawer()">Clear</a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function openFilterDrawer() {
+  document.getElementById('filterDrawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFilterDrawer() {
+  document.getElementById('filterDrawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function sortProducts(sortKey) {
+  const cards = Array.from(document.querySelectorAll('.product-card'));
+  const grid  = document.querySelector('.product-grid');
+  if (!grid || !sortKey) return;
+  cards.sort(function(a, b) {
+    const priceA = parseFloat(a.querySelector('.product-price').textContent.replace('RM','').trim());
+    const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('RM','').trim());
+    const nameA  = a.querySelector('.product-name').textContent.trim();
+    const nameB  = b.querySelector('.product-name').textContent.trim();
+    if (sortKey === 'price_asc')  return priceA - priceB;
+    if (sortKey === 'price_desc') return priceB - priceA;
+    if (sortKey === 'name')       return nameA.localeCompare(nameB);
+    return 0;
+  });
+  cards.forEach(function(c) { grid.appendChild(c); });
+}
+</script>
+{% endblock %}

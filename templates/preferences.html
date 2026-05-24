@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% set active_page = 'preferences' %}
+{% block title %}My Preferences — HalalSaver MY{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper preferences-page">
+  <div class="page-header-banner">
+    <div class="page-header-inner">
+      <h1><i class="fas fa-sliders"></i> My Preferences</h1>
+      <p>Customise your shopping experience — budget, categories, halal filter, and stores.</p>
+    </div>
+  </div>
+
+  <div class="preferences-layout section-container">
+
+    <!-- ── Preset Buttons ────────────────────────────────────────────────── -->
+    <div class="prefs-presets">
+      <h6 class="prefs-section-label"><i class="fas fa-bolt"></i> Quick Presets</h6>
+      <div class="preset-btns-row">
+        <button type="button" class="preset-btn" onclick="applyPreset('budget')">
+          <i class="fas fa-piggy-bank"></i> Budget Shopping
+          <small>Budget: RM50, Essentials only</small>
+        </button>
+        <button type="button" class="preset-btn" onclick="applyPreset('family')">
+          <i class="fas fa-people-roof"></i> Family Groceries
+          <small>Budget: RM200, All categories</small>
+        </button>
+        <button type="button" class="preset-btn" onclick="applyPreset('premium')">
+          <i class="fas fa-star"></i> Premium Shopper
+          <small>Budget: RM500, Best quality</small>
+        </button>
+      </div>
+    </div>
+
+    <form action="/preferences" method="POST" class="preferences-form" id="prefsForm">
+
+      <!-- ── Budget Slider ─────────────────────────────────────────────── -->
+      <div class="prefs-card">
+        <h6 class="prefs-section-label"><i class="fas fa-wallet"></i> Monthly Grocery Budget</h6>
+        <div class="budget-slider-wrap">
+          <div class="budget-display">
+            RM <span id="budgetDisplay">{{ prefs.budget | default(100) | int }}</span>
+          </div>
+          <input
+            type="range"
+            id="budgetSlider"
+            name="budget"
+            class="budget-slider"
+            min="5"
+            max="500"
+            step="5"
+            value="{{ prefs.budget | default(100) | int }}"
+            oninput="document.getElementById('budgetDisplay').textContent = this.value"
+          />
+          <div class="slider-labels">
+            <span>RM5</span>
+            <span>RM100</span>
+            <span>RM250</span>
+            <span>RM500</span>
+          </div>
+        </div>
+        <div class="budget-badges-row">
+          <button type="button" class="budget-quick-btn" onclick="setBudget(50)">RM50</button>
+          <button type="button" class="budget-quick-btn" onclick="setBudget(100)">RM100</button>
+          <button type="button" class="budget-quick-btn" onclick="setBudget(200)">RM200</button>
+          <button type="button" class="budget-quick-btn" onclick="setBudget(300)">RM300</button>
+          <button type="button" class="budget-quick-btn" onclick="setBudget(500)">RM500</button>
+        </div>
+      </div>
+
+      <!-- ── Halal Only Toggle ─────────────────────────────────────────── -->
+      <div class="prefs-card">
+        <h6 class="prefs-section-label"><i class="fas fa-certificate"></i> Halal Filter</h6>
+        <div class="halal-toggle-row">
+          <div class="halal-toggle-info">
+            <div class="halal-toggle-title">JAKIM Certified Only</div>
+            <div class="halal-toggle-desc">Filter recommendations to halal-certified products</div>
+          </div>
+          <label class="halal-toggle-ctrl" for="halalToggle">
+            <input
+              type="checkbox"
+              name="halal_only"
+              id="halalToggle"
+              class="toggle-switch-input"
+              {% if prefs.halal_only != false %}checked{% endif %}
+            />
+            <span class="toggle-switch-track">
+              <span class="toggle-switch-thumb"></span>
+            </span>
+          </label>
+        </div>
+        <p class="prefs-help-text">
+          <i class="fas fa-info-circle"></i>
+          When on, only products with a valid JAKIM certification appear in your recommendations and browse filters.
+        </p>
+      </div>
+
+      <!-- ── Category Multi-Select ─────────────────────────────────────── -->
+      <div class="prefs-card">
+        <h6 class="prefs-section-label"><i class="fas fa-th-large"></i> Preferred Categories</h6>
+        <p class="prefs-help-text">Select the categories you shop most often. Leave empty for all.</p>
+        <div class="category-checkboxes-grid">
+          {% for cat in categories %}
+          <label class="cat-checkbox-item">
+            <input
+              type="checkbox"
+              name="categories"
+              value="{{ cat }}"
+              {% if cat in prefs.get('categories', []) %}checked{% endif %}
+            />
+            <span class="cat-checkbox-label">{{ cat }}</span>
+          </label>
+          {% endfor %}
+        </div>
+        <div class="cat-select-actions">
+          <button type="button" class="link-btn" onclick="selectAllCategories(true)">Select All</button>
+          <button type="button" class="link-btn" onclick="selectAllCategories(false)">Clear All</button>
+        </div>
+      </div>
+
+      <!-- ── Store Filter ───────────────────────────────────────────────── -->
+      <div class="prefs-card">
+        <h6 class="prefs-section-label"><i class="fas fa-store"></i> Preferred Stores</h6>
+        <p class="prefs-help-text">Select which stores to include in recommendations. Leave empty for all.</p>
+        <div class="store-checkboxes-row">
+          {% for store in stores %}
+          <label class="store-checkbox-item store-{{ store | lower | replace("'","") | replace(" ","") }}">
+            <input
+              type="checkbox"
+              name="stores"
+              value="{{ store }}"
+              {% if store in prefs.get('stores', []) %}checked{% endif %}
+            />
+            <span class="store-check-label">
+              <i class="fas fa-store"></i> {{ store }}
+            </span>
+          </label>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- ── Save Button ───────────────────────────────────────────────── -->
+      <div class="prefs-actions">
+        <button type="submit" class="btn-save-prefs">
+          <i class="fas fa-save"></i> Save Preferences
+        </button>
+        <a href="/dashboard" class="btn-cancel-prefs">
+          <i class="fas fa-times"></i> Cancel
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function setBudget(val) {
+  document.getElementById('budgetSlider').value = val;
+  document.getElementById('budgetDisplay').textContent = val;
+}
+
+function selectAllCategories(check) {
+  document.querySelectorAll('input[name="categories"]').forEach(function(cb) {
+    cb.checked = check;
+  });
+}
+
+function applyPreset(type) {
+  if (type === 'budget') {
+    setBudget(50);
+    document.getElementById('halalToggle').checked = true;
+    selectAllCategories(false);
+    // Check only essential categories
+    ['Beverages','Rice & Grains','Cooking Essentials'].forEach(function(cat) {
+      document.querySelectorAll('input[name="categories"]').forEach(function(cb) {
+        if (cb.value === cat) cb.checked = true;
+      });
+    });
+  } else if (type === 'family') {
+    setBudget(200);
+    document.getElementById('halalToggle').checked = true;
+    selectAllCategories(true);
+  } else if (type === 'premium') {
+    setBudget(500);
+    document.getElementById('halalToggle').checked = false;
+    selectAllCategories(true);
+  }
+}
+</script>
+{% endblock %}

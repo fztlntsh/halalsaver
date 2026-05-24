@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% set active_page = '' %}
+{% block title %}Sign In — HalalSaver MY{% endblock %}
+
+{% block content %}
+
+<div class="auth-page-wrap">
+  <!-- ── Web: two-column layout ─────────────────────────────────────────── -->
+  <div class="auth-container">
+
+    <!-- Left promo panel (web only) -->
+    <div class="auth-promo web-only">
+      <div class="auth-promo-inner">
+        <div class="auth-promo-logo">
+          <div class="logo-mark large"><i class="fas fa-leaf"></i></div>
+          <div class="logo-text large">
+            <span class="logo-name">HalalSaver</span><span class="logo-tag"> MY</span>
+          </div>
+        </div>
+        <h2>Welcome Back!</h2>
+        <p>Sign in to access your personalised halal grocery recommendations, saved favourites, and budget tracker.</p>
+        <ul class="auth-promo-features">
+          <li><i class="fas fa-check-circle"></i> AI-powered recommendations</li>
+          <li><i class="fas fa-check-circle"></i> Compare prices across stores</li>
+          <li><i class="fas fa-check-circle"></i> 100% JAKIM halal verified</li>
+          <li><i class="fas fa-check-circle"></i> Budget-smart shopping</li>
+        </ul>
+        <div class="auth-promo-tagline">
+          <i class="fas fa-certificate"></i> Trusted Halal. Smart Savings.
+        </div>
+      </div>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="auth-form-panel">
+      <div class="auth-form-wrap">
+        <!-- Mobile: show logo here -->
+        <div class="auth-mobile-logo mobile-only">
+          <a href="/" class="brand-logo">
+            <div class="logo-mark"><i class="fas fa-leaf"></i></div>
+            <div class="logo-text">
+              <span class="logo-name">HalalSaver</span><span class="logo-tag"> MY</span>
+            </div>
+          </a>
+        </div>
+
+        <h2 class="auth-title">Sign In</h2>
+        <p class="auth-subtitle">Access your HalalSaver MY account</p>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ 'success' if category=='success' else ('danger' if category=='danger' else ('warning' if category=='warning' else 'info')) }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <!-- Login Form -->
+        <form action="/login" method="POST" class="auth-form" novalidate>
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-envelope input-icon"></i>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-control auth-input"
+                placeholder="you@example.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-lock input-icon"></i>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-control auth-input"
+                placeholder="Your password"
+                required
+                autocomplete="current-password"
+              />
+              <button type="button" class="input-icon-right toggle-pwd" onclick="togglePwdVisibility('password')">
+                <i class="fas fa-eye" id="pwdEyeIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-check-row">
+            <label class="form-check-label">
+              <input type="checkbox" name="remember_me" class="form-check-input" />
+              Remember me
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-auth-submit">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </button>
+        </form>
+
+        <!-- Social auth — Google Sign-In -->
+        <div class="auth-divider"><span>or continue with</span></div>
+        <div class="social-auth-row">
+          <button class="social-btn social-google" id="googleSignInBtn" type="button">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="18" />
+            Google
+          </button>
+        </div>
+
+        <p class="auth-switch-text">
+          Don't have an account?
+          <a href="/signup" class="auth-switch-link">Sign up free</a>
+        </p>
+
+        <!-- Browse as Guest -->
+        <div class="guest-browse-row">
+          <div class="guest-divider-line"></div>
+          <span class="guest-divider-text">or</span>
+          <div class="guest-divider-line"></div>
+        </div>
+        <a href="/products" class="btn-guest-browse">
+          <i class="fas fa-store"></i> Browse Products as Guest
+        </a>
+        <p class="guest-note">
+          <i class="fas fa-info-circle"></i>
+          Guest mode: browse &amp; compare freely. Sign in to save favourites and get personalised recommendations.
+        </p>
+
+        <!-- Demo hint -->
+        <div class="demo-hint">
+          <i class="fas fa-info-circle"></i>
+          <small>Demo: Register an account first, then sign in with the same credentials.</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<!-- Firebase JS SDK (auth only) -->
+<script type="module">
+  import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup }
+                                  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  // Firebase config — set in base.html or inline (public keys are safe in client JS)
+  const firebaseConfig = {
+    apiKey:            "{{ config.get('FIREBASE_WEB_API_KEY', '') }}",
+    authDomain:        window.__FB_AUTH_DOMAIN__ || "",
+    projectId:         window.__FB_PROJECT_ID__  || "",
+  };
+
+  let app, auth;
+  try {
+    app  = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+  } catch (e) {
+    console.warn("[Firebase] SDK init skipped (no config):", e.message);
+  }
+
+  document.getElementById('googleSignInBtn').addEventListener('click', async () => {
+    if (!auth) {
+      alert("Google Sign-In is not configured. Use email/password instead.");
+      return;
+    }
+    try {
+      const provider = new GoogleAuthProvider();
+      const result   = await signInWithPopup(auth, provider);
+      const idToken  = await result.user.getIdToken();
+
+      const resp = await fetch('/api/auth/google', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({
+          id_token:     idToken,
+          display_name: result.user.displayName,
+          email:        result.user.email,
+        }),
+      });
+      const data = await resp.json();
+      if (data.redirect) {
+        window.location.href = data.redirect;
+      } else {
+        alert(data.error || "Google sign-in failed.");
+      }
+    } catch (err) {
+      console.error("[Google Sign-In]", err);
+      alert("Google sign-in failed: " + err.message);
+    }
+  });
+</script>
+
+<script>
+function togglePwdVisibility(fieldId) {
+  const field = document.getElementById(fieldId);
+  const icon  = document.getElementById('pwdEyeIcon');
+  if (field.type === 'password') {
+    field.type = 'text';
+    icon.classList.replace('fa-eye', 'fa-eye-slash');
+  } else {
+    field.type = 'password';
+    icon.classList.replace('fa-eye-slash', 'fa-eye');
+  }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2d7a4f" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="HalalSaver MY" />
+
+  <title>HalalSaver MY — Hybrid Grocery Recommender System</title>
+
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body style="display:flex; flex-direction:column; min-height:100vh;">
+
+  <!-- ════════════════════ NAVBAR ════════════════════ -->
+  <nav class="home-navbar">
+    <div id="logo-placeholder"></div>
+
+    <nav class="home-nav-links d-none d-md-flex">
+      <a href="#features"><i class="fas fa-star"></i> Features</a>
+      <a href="#how-it-works"><i class="fas fa-circle-info"></i> How It Works</a>
+      <a href="#stores"><i class="fas fa-store"></i> Hypermarkets</a>
+      <a href="products.html"><i class="fas fa-box-open"></i> Browse</a>
+      <a href="ranking.html"><i class="fas fa-trophy"></i> Top Ranking</a>
+    </nav>
+
+    <div style="display:flex; align-items:center; gap:.6rem;">
+      <a href="login.html" class="btn-nav-login">Login</a>
+      <a href="register.html" class="btn-nav-register">Get Started Free</a>
+    </div>
+  </nav>
+
+
+  <!-- ════════════════════ HERO ════════════════════ -->
+  <section class="home-hero">
+    <div class="home-hero-content">
+      <div class="home-hero-badge">
+        <i class="fas fa-robot"></i> AI-Powered Hybrid Recommender
+      </div>
+
+      <h1>
+        Smart Halal Grocery<br />
+        Shopping for <span>Malaysia</span>
+      </h1>
+
+      <p>
+        HalalSaver MY uses a hybrid recommender engine combining Content-Based Filtering
+        and Collaborative Filtering to suggest JAKIM-certified halal groceries
+        within your budget — with real-time price comparison across AEON, Lotus's, and Mydin.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="register.html" class="btn-hero-primary">
+          <i class="fas fa-user-plus"></i> Start Saving Today
+        </a>
+        <a href="login.html" class="btn-hero-outline">
+          <i class="fas fa-arrow-right-to-bracket"></i> Sign In
+        </a>
+        <a href="products.html"
+           onclick="sessionStorage.setItem('hs_guest','true');"
+           class="btn-hero-outline" style="border-color:rgba(255,255,255,.3); font-size:.8rem; padding:.5rem 1.1rem;">
+          <i class="fas fa-user-clock"></i> Browse as Guest
+        </a>
+      </div>
+
+      <div class="hero-trust-badges">
+        <div class="trust-badge"><i class="fas fa-certificate"></i> JAKIM Halal Verified</div>
+        <div class="trust-badge"><i class="fas fa-wallet"></i> Budget-Aware Filtering</div>
+        <div class="trust-badge"><i class="fas fa-robot"></i> Hybrid AI Engine (CBF + CF)</div>
+        <div class="trust-badge"><i class="fas fa-store"></i> 3 Hypermarkets Compared</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════ FEATURES ════════════════════ -->
+  <section class="home-features" id="features">
+    <div class="section-title-center">
+      <h2>Everything You Need for Smarter Grocery Shopping</h2>
+      <p>Powered by a four-component system designed for Malaysian households.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-sliders" style="color:var(--primary)"></i></div>
+        <h3>Content-Based Filtering</h3>
+        <p>
+          Cosine similarity matches your stated preferences (categories, halal status, budget)
+          to grocery item feature vectors for personalised recommendations.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-users" style="color:var(--primary)"></i></div>
+        <h3>Collaborative Filtering</h3>
+        <p>
+          SVD++ item-based collaborative filtering learns from similar users'
+          purchasing patterns to surface items you haven't discovered yet.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-certificate" style="color:#1b6b3a"></i></div>
+        <h3>JAKIM Halal Verification</h3>
+        <p>
+          Every product is cross-checked against the JAKIM (Jabatan Kemajuan Islam Malaysia)
+          halal certification database and displays an official reference number.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-balance-scale" style="color:var(--primary)"></i></div>
+        <h3>Price Comparison Engine</h3>
+        <p>
+          Compares prices in real time across AEON, Lotus's, and Mydin so you
+          always know where to get the best deal on your groceries.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-wallet" style="color:var(--primary)"></i></div>
+        <h3>Budget-Aware Ranking</h3>
+        <p>
+          Set your monthly grocery budget and the system filters and ranks all
+          recommendations to ensure you never overspend.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-star" style="color:#f9ca24"></i></div>
+        <h3>Hybrid Scoring Formula</h3>
+        <p>
+          Final score = 0.9 × max(Content Score, Collab Score) + 0.1 × Popularity,
+          ensuring both personalisation and popularity are balanced.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════ HOW IT WORKS ════════════════════ -->
+  <section class="home-how" id="how-it-works">
+    <div class="section-title-center">
+      <h2>How HalalSaver MY Works</h2>
+      <p>From registration to your personalised grocery list — in four simple steps.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h4>Create Account</h4>
+        <p>Register with your email and set your monthly grocery budget.</p>
+      </div>
+
+      <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h4>Set Preferences</h4>
+        <p>Choose your preferred grocery categories, halal filter, and hypermarkets.</p>
+      </div>
+
+      <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h4>Get Recommendations</h4>
+        <p>The hybrid AI engine generates your personalised halal grocery list instantly.</p>
+      </div>
+
+      <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
+
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h4>Compare &amp; Save</h4>
+        <p>Compare prices across AEON, Lotus's, and Mydin to get the best deal.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════ HYPERMARKETS ════════════════════ -->
+  <section class="home-stores" id="stores">
+    <div class="section-title-center">
+      <h2>Prices Compared Across 3 Major Hypermarkets</h2>
+      <p>We track grocery prices across Malaysia's largest hypermarket chains.</p>
+    </div>
+
+    <div class="stores-row">
+      <div class="store-badge">
+        <i class="fas fa-store"></i>
+        <span>AEON</span>
+        <small>Malaysia's largest supermarket chain</small>
+      </div>
+      <div class="store-badge">
+        <i class="fas fa-store"></i>
+        <span>Lotus's</span>
+        <small>Formerly Tesco Malaysia</small>
+      </div>
+      <div class="store-badge">
+        <i class="fas fa-store"></i>
+        <span>Mydin</span>
+        <small>Bumiputera-owned hypermarket</small>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:1.8rem;">
+      <a href="comparison.html" class="btn-outline-custom" style="text-decoration:none; font-size:.88rem;">
+        <i class="fas fa-balance-scale"></i> View Full Price Comparison Table
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════ SAMPLE RECOMMENDATIONS ════════════════════ -->
+  <section style="padding: 4rem 2rem; background: var(--white);">
+    <div class="section-title-center">
+      <h2>Sample Recommendations</h2>
+      <p>A preview of what your personalised halal grocery list looks like.</p>
+    </div>
+
+    <div style="max-width:1100px; margin:0 auto;">
+      <div class="grocery-grid" id="homeGroceryGrid">
+        <!-- Injected by JS -->
+      </div>
+      <div style="text-align:center; margin-top:1.8rem;">
+        <a href="register.html" class="btn-hero-primary" style="display:inline-flex;">
+          <i class="fas fa-user-plus"></i> Sign Up to See All Recommendations
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════ CTA BANNER ════════════════════ -->
+  <section class="home-cta">
+    <h2>Start Shopping Smarter Today</h2>
+    <p>Join thousands of Malaysians who shop halal, save money, and eat better.</p>
+    <div class="hero-cta-group" style="position:relative;">
+      <a href="register.html" class="btn-hero-primary" style="background:white; color:var(--primary); box-shadow:none;">
+        <i class="fas fa-user-plus"></i> Create Free Account
+      </a>
+      <a href="products.html" class="btn-hero-outline" style="border-color:rgba(255,255,255,.5); color:white;">
+        <i class="fas fa-eye"></i> Browse Products
+      </a>
+    </div>
+  </section>
+
+
+  <!-- Footer (injected by JS) -->
+  <div id="footer-placeholder"></div>
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    /* ── Home page sample grid is now rendered inside main.js DOMContentLoaded
+          after Firestore data loads. No inline script needed here. ── */
+  </script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js")
+          .catch(err => console.warn("SW registration failed:", err));
+      });
+    }
+  </script>
+</body>
+</html>

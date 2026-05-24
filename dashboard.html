@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2d7a4f" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="HalalSaver MY" />
+
+  <title>Dashboard — HalalSaver MY | Grocery Recommender</title>
+
+  <!-- Bootstrap 5 -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <style>
+    /* ── Navbar mobile drawer ── */
+    .mobile-nav-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: var(--text-mid);
+      cursor: pointer;
+      padding: .3rem;
+    }
+    @media (max-width: 768px) {
+      .mobile-nav-btn { display: block; }
+      .nav-links-wrap { display: none !important; }
+    }
+
+    /* ── Search bar ── */
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--gray-100);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: .45rem .9rem;
+      transition: var(--transition);
+      min-width: 220px;
+    }
+    .search-bar:focus-within {
+      background: var(--white);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(45,122,79,.1);
+    }
+    .search-bar input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: .82rem;
+      color: var(--text-dark);
+      width: 100%;
+    }
+    .search-bar input::placeholder { color: var(--gray-400); }
+    .search-bar i { color: var(--gray-400); font-size: .85rem; flex-shrink: 0; }
+
+    /* ── Cart badge ── */
+    .cart-wrap { position: relative; }
+    #cartBadge {
+      display: none;
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 17px;
+      height: 17px;
+      background: #e74c3c;
+      color: white;
+      font-size: .6rem;
+      font-weight: 700;
+      border-radius: 10px;
+      text-align: center;
+      line-height: 17px;
+      border: 1.5px solid white;
+      padding: 0 3px;
+      pointer-events: none;
+      animation: pulse-green .6s ease;
+    }
+
+    /* ── Hero greeting right side art ── */
+    .hero-art {
+      font-size: 4.5rem;
+      line-height: 1;
+      opacity: .25;
+      position: absolute;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ── Recommendation chip row ── */
+    .chip-row {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: .3rem .8rem;
+      font-size: .75rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .chip:hover, .chip.active {
+      background: var(--primary-50);
+      border-color: var(--primary-100);
+      color: var(--primary);
+    }
+    .chip i { font-size: .65rem; }
+
+    /* ── Empty cart button ── */
+    .clear-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      padding: .45rem .9rem;
+      font-family: 'Poppins', sans-serif;
+      font-size: .8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .clear-btn:hover { border-color: #e74c3c; color: #e74c3c; background: #fef8f8; }
+
+    /* ── Info tooltip ── */
+    .info-tip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--gray-200);
+      color: var(--text-muted);
+      font-size: .6rem;
+      cursor: help;
+      margin-left: 4px;
+    }
+
+    /* ── Score circle ── */
+    .score-ring {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: conic-gradient(var(--primary) calc(var(--pct) * 1%), var(--gray-200) 0);
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+    .score-ring::before {
+      content: '';
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: white;
+    }
+    .score-ring span {
+      position: relative;
+      z-index: 1;
+      font-size: .65rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* ── User dropdown ── */
+    .user-menu { position: relative; }
+    .user-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      min-width: 200px;
+      z-index: 200;
+      overflow: hidden;
+      animation: slideUp .2s ease;
+    }
+    .user-dropdown.open { display: block; }
+    .dropdown-item-custom {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      padding: .65rem 1rem;
+      font-size: .82rem;
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+    .dropdown-item-custom:hover { background: var(--primary-50); color: var(--primary); }
+    .dropdown-divider { border-top: 1px solid var(--border); margin: .2rem 0; }
+    .dropdown-item-custom.danger:hover { background: #fef8f8; color: #e74c3c; }
+    .dropdown-header-area {
+      padding: .8rem 1rem;
+      background: var(--primary-50);
+      border-bottom: 1px solid var(--primary-100);
+    }
+    .dropdown-header-area .d-name { font-size: .85rem; font-weight: 600; color: var(--text-dark); }
+    .dropdown-header-area .d-email { font-size: .73rem; color: var(--text-muted); }
+  </style>
+</head>
+<body style="display:flex; flex-direction:column; min-height:100vh;">
+
+  <!-- ════════════════════════════════════════════════════════
+       NAVBAR
+       ════════════════════════════════════════════════════════ -->
+  <nav class="dash-navbar">
+    <!-- Logo -->
+    <div id="logo-placeholder"></div>
+
+    <!-- Nav links (desktop) -->
+    <ul class="nav-links nav-links-wrap mb-0 ps-0">
+      <li><a href="dashboard.html" class="active"><i class="fas fa-house"></i> Dashboard</a></li>
+      <li><a href="products.html"><i class="fas fa-box-open"></i> Products</a></li>
+      <li><a href="comparison.html"><i class="fas fa-balance-scale"></i> Compare</a></li>
+      <li><a href="ranking.html"><i class="fas fa-trophy"></i> Top Ranking</a></li>
+    </ul>
+
+    <!-- Right actions -->
+    <div class="nav-right">
+      <!-- Search -->
+      <div class="search-bar d-none d-md-flex">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search groceries…"
+               oninput="handleSearch(this.value)" />
+      </div>
+
+      <!-- Cart -->
+      <div class="cart-wrap">
+        <button class="nav-icon-btn" onclick="showToast('Cart feature coming soon!', 'info')">
+          <i class="fas fa-shopping-cart"></i>
+        </button>
+        <div id="cartBadge">0</div>
+      </div>
+
+      <!-- Notifications -->
+      <button class="nav-icon-btn">
+        <i class="fas fa-bell"></i>
+        <span class="badge-dot"></span>
+      </button>
+
+      <!-- User avatar + dropdown -->
+      <div class="user-menu">
+        <div class="user-avatar" onclick="toggleUserMenu()">A</div>
+        <div class="user-dropdown" id="userDropdown">
+          <div class="dropdown-header-area">
+            <div class="d-name">Faizatul Natasha</div>
+            <div class="d-email">fztlntsh@email.com</div>
+          </div>
+          <button class="dropdown-item-custom"><i class="fas fa-user"></i> My Profile</button>
+          <button class="dropdown-item-custom"><i class="fas fa-sliders"></i> Preferences</button>
+          <button class="dropdown-item-custom"><i class="fas fa-receipt"></i> Order History</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item-custom danger"
+                  onclick="handleLogout()">
+            <i class="fas fa-right-from-bracket"></i> Sign Out
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu btn -->
+      <button class="mobile-nav-btn" onclick="toggleMobileNav()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       HERO WELCOME BANNER
+       ════════════════════════════════════════════════════════ -->
+  <section class="dash-hero">
+    <div class="hero-content">
+      <p class="hero-greeting"><i class="fas fa-sun" style="color:#f9ca24"></i> Good morning</p>
+      <h1 class="hero-name">Hello! 👋</h1>
+      <p class="hero-sub">
+        Here are today's best halal-certified grocery recommendations within your budget
+      </p>
+
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="stat-val" id="statBudget">RM 50</span>
+          <span class="stat-label"><i class="fas fa-wallet" style="font-size:.65rem;opacity:.7"></i> Your Budget</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-val" id="statItems">12</span>
+          <span class="stat-label"><i class="fas fa-box" style="font-size:.65rem;opacity:.7"></i> Items Found</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-val" id="statScore">85%</span>
+          <span class="stat-label"><i class="fas fa-star" style="font-size:.65rem;opacity:.7"></i> Avg. Match</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-val" id="statHalal">9/12</span>
+          <span class="stat-label"><i class="fas fa-leaf" style="font-size:.65rem;opacity:.7"></i> Halal Items</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-art">🛒</div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════════
+       MAIN DASHBOARD BODY
+       ════════════════════════════════════════════════════════ -->
+  <div class="dash-body">
+
+    <!-- ── FILTER SIDEBAR ── -->
+    <aside class="filter-sidebar">
+
+      <!-- Budget Filter -->
+      <div class="sidebar-card">
+        <h6><i class="fas fa-wallet text-primary-custom"></i> Budget Filter</h6>
+        <div class="budget-display">
+          <div>
+            <div class="budget-val" id="budgetDisplay">RM 500</div>
+            <div class="budget-label">Max spend per item</div>
+          </div>
+          <i class="fas fa-sliders" style="color:var(--primary);font-size:1rem;"></i>
+        </div>
+        <input type="range" class="range-slider" id="budgetSlider"
+               min="0" max="500" value="500" step="5" />
+        <div class="range-marks"><span>RM 0</span><span>RM 250</span><span>RM 500</span></div>
+      </div>
+
+      <!-- Halal Filter -->
+      <div class="sidebar-card">
+        <h6><i class="fas fa-leaf text-primary-custom"></i> Halal Filter</h6>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="toggle-label">
+              <span>🕌</span> Halal Certified Only
+              <span class="info-tip" title="Show only items with official JAKIM halal certification">?</span>
+            </div>
+            <div class="toggle-desc">Filter by JAKIM certification</div>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="halalToggle" />
+            <span class="slider-switch"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="sidebar-card">
+        <h6><i class="fas fa-tags text-primary-custom"></i> Categories</h6>
+        <div class="category-list" id="categoryList">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="sidebar-card">
+        <h6><i class="fas fa-bolt text-primary-custom"></i> Quick Actions</h6>
+        <div style="display:flex;flex-direction:column;gap:.5rem;">
+          <button class="btn-outline-custom" style="width:100%;justify-content:center;"
+                  onclick="resetFilters()">
+            <i class="fas fa-rotate-left"></i> Reset Filters
+          </button>
+          <button class="btn-outline-custom" style="width:100%;justify-content:center;"
+                  onclick="showToast('Generating your personalised list…', 'info')">
+            <i class="fas fa-wand-magic-sparkles"></i> AI Recommend
+          </button>
+        </div>
+      </div>
+
+    </aside><!-- /.filter-sidebar -->
+
+    <!-- ── MAIN CONTENT ── -->
+    <main class="main-content">
+
+      <!-- Chip tags -->
+      <div class="chip-row">
+        <div class="chip active"><i class="fas fa-fire"></i> Top Picks</div>
+        <div class="chip"><i class="fas fa-tag"></i> On Sale</div>
+        <div class="chip"><i class="fas fa-leaf"></i> Halal</div>
+        <div class="chip"><i class="fas fa-seedling"></i> Organic</div>
+        <div class="chip"><i class="fas fa-truck"></i> Fast Delivery</div>
+        <div class="chip"><i class="fas fa-star"></i> 5-Star Rated</div>
+      </div>
+
+      <!-- Section header -->
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fas fa-robot" style="color:var(--primary)"></i>
+          AI Recommendations
+          <span id="resultCount">12 items</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.6rem;">
+          <button class="clear-btn" onclick="resetFilters()">
+            <i class="fas fa-filter-circle-xmark"></i> Clear
+          </button>
+          <select class="sort-select" id="sortSelect">
+            <option value="personalised">🎯 Personalised For You</option>
+            <option value="score">Best Match (Hybrid Score)</option>
+            <option value="value">Best Value (Score ÷ Price)</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+            <option value="name">Name A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Grocery Cards Grid -->
+      <div class="grocery-grid" id="groceryGrid">
+        <!-- Injected by JS renderCards() -->
+      </div>
+
+    </main><!-- /.main-content -->
+
+  </div><!-- /.dash-body -->
+
+
+  <!-- Product Detail Modal -->
+  <div class="modal-overlay" id="productModal" onclick="closeModal(event)">
+    <div class="modal-container">
+      <button class="modal-close-btn" onclick="closeModalBtn()">
+        <i class="fas fa-times"></i>
+      </button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Footer (injected by JS) -->
+  <div id="footer-placeholder"></div>
+
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    /* ── Dashboard-only extras ── */
+
+    /* Override injectComponents for dashboard (logo links to dashboard itself) */
+    document.addEventListener('DOMContentLoaded', () => {
+      const logoEl = document.getElementById('logo-placeholder');
+      if (logoEl) {
+        logoEl.innerHTML = `
+        <a href="dashboard.html" class="brand-logo" style="text-decoration:none;">
+          <div class="logo-mark">${LOGO_SVG}</div>
+          <div class="logo-text-group">
+            <span class="logo-name">HalalSaver</span>
+            <span class="logo-badge">MY &bull; Recommender</span>
+          </div>
+        </a>`;
+      }
+      const footerEl = document.getElementById('footer-placeholder');
+      if (footerEl) footerEl.innerHTML = createFooter();
+    });
+
+    /* User menu toggle */
+    function toggleUserMenu() {
+      document.getElementById('userDropdown').classList.toggle('open');
+    }
+    document.addEventListener('click', e => {
+      const menu = document.querySelector('.user-menu');
+      if (menu && !menu.contains(e.target)) {
+        document.getElementById('userDropdown').classList.remove('open');
+      }
+    });
+
+    /* Reset all filters */
+    function resetFilters() {
+      const slider = document.getElementById('budgetSlider');
+      const toggle = document.getElementById('halalToggle');
+      const sort   = document.getElementById('sortSelect');
+      if (slider) slider.value = 500;
+      if (toggle) toggle.checked = false;
+      if (sort)   sort.value = 'score';
+      activeCategory = 'All';
+      document.querySelectorAll('#categoryList .cat-item').forEach((el, i) => {
+        el.classList.toggle('active', i === 0);
+      });
+      initBudgetSlider(); // resets fill gradient
+      renderCards();
+      showToast('Filters reset!', 'info', 1800);
+    }
+
+    /* Search handler (client-side) */
+    let searchTerm = '';
+    function handleSearch(val) {
+      searchTerm = val.toLowerCase();
+      // simple override: re-render with search
+      renderCardsWithSearch();
+    }
+
+    /* Patched renderCards to honour searchTerm */
+    function renderCardsWithSearch() {
+      const grid     = document.getElementById('groceryGrid');
+      const resultCt = document.getElementById('resultCount');
+      if (!grid) return;
+
+      const budget    = parseFloat(document.getElementById('budgetSlider')?.value || 100);
+      const halalOnly = document.getElementById('halalToggle')?.checked || false;
+      const sortVal   = document.getElementById('sortSelect')?.value || 'score';
+
+      let filtered = GROCERY_DATA.filter(g => {
+        if (g.price > budget) return false;
+        if (halalOnly && !g.halal) return false;
+        if (activeCategory !== 'All' && g.category !== activeCategory) return false;
+        if (searchTerm && !g.name.toLowerCase().includes(searchTerm)
+                       && !g.brand.toLowerCase().includes(searchTerm)
+                       && !g.category.toLowerCase().includes(searchTerm)) return false;
+        return true;
+      });
+
+      if (sortVal === 'score')       filtered.sort((a,b) => b.score - a.score);
+      else if (sortVal === 'price-asc')  filtered.sort((a,b) => a.price - b.price);
+      else if (sortVal === 'price-desc') filtered.sort((a,b) => b.price - a.price);
+      else if (sortVal === 'name')   filtered.sort((a,b) => a.name.localeCompare(b.name));
+
+      if (resultCt) resultCt.textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="no-results">
+            <i class="fas fa-search"></i>
+            <p>No groceries match "${searchTerm || 'your filters'}".<br>
+               <small>Try a different search term or adjust your filters.</small></p>
+          </div>`;
+        return;
+      }
+      grid.innerHTML = filtered.map((g, i) => buildCard(g, i * 40)).join('');
+      updateStats(filtered);
+    }
+
+    /* Override main.js renderCards for this page (search-aware) */
+    window.renderCards = renderCardsWithSearch;
+
+    /* Chip toggle */
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', function () {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        showToast(`Showing: ${this.textContent.trim()}`, 'info', 1500);
+      });
+    });
+  </script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js")
+          .catch(err => console.warn("SW registration failed:", err));
+      });
+    }
+  </script>
+</body>
+</html>
