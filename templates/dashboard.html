@@ -1,4 +1,5 @@
 ﻿{% extends 'base.html' %}
+{% from 'base.html' import star_rating %}
 {% set active_page = 'dashboard' %}
 {% block title %}Dashboard — HalalSaver MY{% endblock %}
 
@@ -12,7 +13,7 @@
       <div class="dash-welcome">
         <div class="dash-avatar">
           <img
-            src="https://ui-avatars.com/api/?name={{ session.get('user',{}).get('name','Guest') }}&background=2d7a4f&color=fff&rounded=true&size=64"
+            src="https://ui-avatars.com/api/?name={{ session.get('user',{}).get('name','Guest') }}&background=059669&color=fff&rounded=true&size=64"
             alt="Avatar"
           />
         </div>
@@ -54,7 +55,7 @@
               </div>
               <div class="budget-progress-labels">
                 <span>RM 0</span>
-                <span style="color:#2d7a4f;font-weight:600">35% used</span>
+                <span style="color:#059669;font-weight:600">35% used</span>
                 <span>RM {{ user_prefs.get('budget', 100) | int }}</span>
               </div>
             </div>
@@ -64,7 +65,7 @@
                 <span class="bstat-label">Spent</span>
               </div>
               <div class="budget-stat-item">
-                <span class="bstat-val" style="color:#2d7a4f">RM {{ (user_prefs.get('budget', 100) - 35) | int }}.00</span>
+                <span class="bstat-val" style="color:#059669">RM {{ (user_prefs.get('budget', 100) - 35) | int }}.00</span>
                 <span class="bstat-label">Remaining</span>
               </div>
               <div class="budget-stat-item">
@@ -116,6 +117,7 @@
                 </div>
                 <div class="product-card-body">
                   <div class="product-name">{{ p.get('product_name') }}</div>
+                  <div class="product-rating">{{ star_rating(p.get('discount_percent'), p.get('halal_certified')) }}</div>
                   <div class="product-price">RM {{ "%.2f" | format(p.get('price_after_discount', 0)) }}</div>
                   {% if p.get('discount_percent') and p.get('discount_percent') > 0 %}
                   <span class="discount-badge">-{{ p.get('discount_percent') | int }}%</span>
@@ -131,8 +133,8 @@
                       <i class="fas fa-heart"></i>
                     </button>
                     <a href="/products/{{ p.get('product_id') }}" class="btn-view">View</a>
-                    <button class="icon-btn" onclick="addToCompare('{{ p.get('product_id') }}')">
-                      <i class="fas fa-balance-scale"></i>
+                    <button class="icon-btn list-btn" onclick="addToList('{{ p.get('product_id') }}','{{ p.get('product_name') }}')" title="Add to shopping list">
+                      <i class="fas fa-plus"></i>
                     </button>
                   </div>
                 </div>

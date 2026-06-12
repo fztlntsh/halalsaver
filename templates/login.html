@@ -47,17 +47,13 @@
         <h2 class="auth-title">Sign In</h2>
         <p class="auth-subtitle">Access your HalalSaver MY account</p>
 
-        <!-- Flash messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ 'success' if category=='success' else ('danger' if category=='danger' else ('warning' if category=='warning' else 'info')) }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+        <!-- Inline login error -->
+        {% if login_error %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> {{ login_error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endif %}
 
         <!-- Login Form -->
         <form action="/login" method="POST" class="auth-form" novalidate>
@@ -115,6 +111,10 @@
           <button class="social-btn social-google" id="googleSignInBtn" type="button">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="18" />
             Google
+          </button>
+          <button class="social-btn social-facebook" type="button" onclick="alert('Facebook login coming soon. Please use email/password or Google.')">
+            <i class="fab fa-facebook-f"></i>
+            Facebook
           </button>
         </div>
 

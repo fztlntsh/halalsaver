@@ -1,4 +1,5 @@
 ﻿{% extends 'base.html' %}
+{% from 'base.html' import star_rating %}
 {% set active_page = 'comparison' %}
 {% block title %}Compare Products — HalalSaver MY{% endblock %}
 
@@ -69,6 +70,12 @@
               <span class="best-price-badge"><i class="fas fa-star"></i> Best Price</span>
               {% endif %}
             </td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td class="compare-attr-label"><i class="fas fa-star"></i> Rating</td>
+            {% for p in compare_products %}
+            <td><div class="product-rating" style="justify-content:center;">{{ star_rating(p.discount_percent, p.halal_certified) }}</div></td>
             {% endfor %}
           </tr>
           <tr>
@@ -230,7 +237,7 @@
             <div class="compare-mc-attr-row">
               <span class="attr-label">In Stock</span>
               <span class="attr-val">
-                {% if p.in_stock %}<span style="color:#2d7a4f"><i class="fas fa-check"></i> Yes</span>
+                {% if p.in_stock %}<span style="color:#059669"><i class="fas fa-check"></i> Yes</span>
                 {% else %}<span style="color:#c0392b"><i class="fas fa-times"></i> No</span>{% endif %}
               </span>
             </div>
