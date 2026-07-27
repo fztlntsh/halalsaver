@@ -608,17 +608,37 @@ def hybrid_recommend(
         base_score  = max(c_score, cf_score)                  # Step 1
         final_score = 0.9 * base_score + 0.1 * p_score        # Step 2
 
+        is_halal = row["halal_certified"] in [True, "True"]
+
+        # Short "why recommended" chips for the UI — cheap heuristics, not
+        # part of the scoring formula itself.
+        reasons = []
+        if is_halal:
+            reasons.append("Halal certified")
+        if float(row["price_after_discount"]) <= 0.7 * budget:
+            reasons.append("Within budget")
+        if row["discount_percent"] and float(row["discount_percent"]) >= 15:
+            reasons.append(f"{int(row['discount_percent'])}% off")
+        if p_score >= 0.6:
+            reasons.append("Popular pick")
+
         records.append({
+            "product_id":           row["product_id"],
             "product_name":         row["product_name"],
             "store":                row["store"],
+            "category":             row.get("category"),
+            "brand":                row.get("brand"),
+            "unit":                 row.get("unit"),
+            "in_stock":             bool(row.get("in_stock", True)),
+            "image_local":          row.get("image_local"),
             "price_after_discount": round(float(row["price_after_discount"]), 2),
-            "halal_status":         "Certified"
-                                    if row["halal_certified"] in [True, "True"]
-                                    else "Not Certified",
+            "halal_certified":      bool(is_halal),
+            "halal_status":         "Certified" if is_halal else "Not Certified",
             "halal_body":           row["halal_body"],
             "rating":               round(cf_score * (RATING_MAX - RATING_MIN)
                                           + RATING_MIN, 2),
             "discount_percent":     float(row["discount_percent"]),
+            "reasons":              reasons[:3],
             # intermediate scores (useful for thesis reporting)
             "content_score":        round(c_score,   4),
             "collab_score":         round(cf_score,  4),

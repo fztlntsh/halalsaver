@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+{% from 'base.html' import initials_avatar %}
+{% set active_page = 'profile' %}
+{% block title %}My Profile — HalalSaver MY{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper profile-page">
+  <div class="page-header-banner">
+    <div class="page-header-inner">
+      <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+      <p>Update your personal details and change your password.</p>
+    </div>
+  </div>
+
+  <div class="section-container" style="max-width:600px;margin:0 auto;padding:2rem 1rem 3rem;">
+
+    {% if success_msg %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="fas fa-check-circle"></i> {{ success_msg }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+
+    <!-- Profile Card -->
+    <div class="profile-card">
+
+      <!-- Avatar row -->
+      <div class="profile-avatar-row">
+        {{ initials_avatar(user_profile.get('name'), 64) }}
+        <div class="profile-avatar-info">
+          <strong>{{ user_profile.get('name', 'User') }}</strong>
+          <small>{{ email }}</small>
+          <small class="profile-avatar-note">Your avatar is generated automatically from your name.</small>
+        </div>
+      </div>
+
+      <!-- ── Section 1: Update Name ─────────────────────────────── -->
+      <p class="profile-section-title"><i class="fas fa-id-card"></i> Personal Details</p>
+
+      {% if errors.get('name') %}
+      <div class="alert alert-danger" style="font-size:.82rem;padding:.5rem .85rem;border-radius:8px;">
+        <i class="fas fa-exclamation-circle"></i> {{ errors.name }}
+      </div>
+      {% endif %}
+
+      <form method="POST" action="/profile">
+        <input type="hidden" name="action" value="update_name" />
+        <div class="form-group mb-3">
+          <label for="full_name" class="form-label" style="font-size:.85rem;font-weight:600;color:#334155;">Full Name</label>
+          <div class="input-icon-wrap">
+            <i class="fas fa-user input-icon"></i>
+            <input
+              type="text"
+              id="full_name"
+              name="full_name"
+              class="form-control auth-input"
+              value="{{ user_profile.get('name', '') }}"
+              placeholder="Your full name"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label" style="font-size:.85rem;font-weight:600;color:#334155;">Email Address</label>
+          <div class="input-icon-wrap">
+            <i class="fas fa-envelope input-icon"></i>
+            <input
+              type="email"
+              class="form-control auth-input"
+              value="{{ email }}"
+              disabled
+              style="opacity:.65;cursor:not-allowed;"
+            />
+          </div>
+          <small style="color:#94a3b8;font-size:.75rem;">Email cannot be changed here. Contact support to update it.</small>
+        </div>
+        <button type="submit" class="btn-auth-submit" style="padding:.6rem 1.5rem;font-size:.9rem;">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+      </form>
+
+      <div class="profile-divider"></div>
+
+      <!-- ── Section 2: Change Password ─────────────────────────── -->
+      <p class="profile-section-title"><i class="fas fa-lock"></i> Change Password</p>
+
+      {% if errors.get('password') %}
+      <div class="alert alert-danger" style="font-size:.82rem;padding:.5rem .85rem;border-radius:8px;">
+        <i class="fas fa-exclamation-circle"></i> {{ errors.password }}
+      </div>
+      {% endif %}
+
+      <form method="POST" action="/profile">
+        <input type="hidden" name="action" value="change_password" />
+
+        <div class="form-group mb-3">
+          <label for="current_password" class="form-label" style="font-size:.85rem;font-weight:600;color:#334155;">Current Password</label>
+          <div class="input-icon-wrap">
+            <i class="fas fa-lock input-icon"></i>
+            <input
+              type="password"
+              id="current_password"
+              name="current_password"
+              class="form-control auth-input"
+              placeholder="Enter current password"
+              required
+              autocomplete="current-password"
+            />
+            <button type="button" class="input-icon-right toggle-pwd" onclick="togglePwdVisibility('current_password','eye0')">
+              <i class="fas fa-eye" id="eye0"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="new_password" class="form-label" style="font-size:.85rem;font-weight:600;color:#334155;">New Password</label>
+          <div class="input-icon-wrap">
+            <i class="fas fa-lock input-icon"></i>
+            <input
+              type="password"
+              id="new_password"
+              name="new_password"
+              class="form-control auth-input"
+              placeholder="Minimum 6 characters"
+              required
+              minlength="6"
+              autocomplete="new-password"
+            />
+            <button type="button" class="input-icon-right toggle-pwd" onclick="togglePwdVisibility('new_password','eye1')">
+              <i class="fas fa-eye" id="eye1"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="confirm_new_password" class="form-label" style="font-size:.85rem;font-weight:600;color:#334155;">Confirm New Password</label>
+          <div class="input-icon-wrap">
+            <i class="fas fa-lock input-icon"></i>
+            <input
+              type="password"
+              id="confirm_new_password"
+              name="confirm_new_password"
+              class="form-control auth-input"
+              placeholder="Re-enter new password"
+              required
+              autocomplete="new-password"
+            />
+            <button type="button" class="input-icon-right toggle-pwd" onclick="togglePwdVisibility('confirm_new_password','eye2')">
+              <i class="fas fa-eye" id="eye2"></i>
+            </button>
+          </div>
+          <div id="pwdMatchMsg" style="font-size:.78rem;margin-top:.25rem;"></div>
+        </div>
+
+        <button type="submit" class="btn-auth-submit" style="padding:.6rem 1.5rem;font-size:.9rem;">
+          <i class="fas fa-key"></i> Change Password
+        </button>
+      </form>
+
+      <div class="profile-divider"></div>
+
+      <!-- ── Quick links ─────────────────────────────────────────── -->
+      <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+        <a href="/preferences" class="btn-guest-browse" style="font-size:.82rem;padding:.45rem 1rem;">
+          <i class="fas fa-sliders"></i> Tune Preferences
+        </a>
+        <a href="/dashboard" class="btn-guest-browse" style="font-size:.82rem;padding:.45rem 1rem;">
+          <i class="fas fa-house"></i> Back to Dashboard
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function togglePwdVisibility(fieldId, iconId) {
+  const field = document.getElementById(fieldId);
+  const icon  = document.getElementById(iconId);
+  if (field.type === 'password') {
+    field.type = 'text';
+    icon.classList.replace('fa-eye', 'fa-eye-slash');
+  } else {
+    field.type = 'password';
+    icon.classList.replace('fa-eye-slash', 'fa-eye');
+  }
+}
+
+document.getElementById('confirm_new_password').addEventListener('input', function () {
+  const pwd     = document.getElementById('new_password').value;
+  const confirm = this.value;
+  const msg     = document.getElementById('pwdMatchMsg');
+  if (!confirm) { msg.textContent = ''; return; }
+  if (pwd === confirm) {
+    msg.innerHTML = '<span style="color:#059669"><i class="fas fa-check"></i> Passwords match</span>';
+  } else {
+    msg.innerHTML = '<span style="color:#dc3545"><i class="fas fa-times"></i> Passwords do not match</span>';
+  }
+});
+</script>
+{% endblock %}

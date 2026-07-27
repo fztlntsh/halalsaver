@@ -1,4 +1,5 @@
 ﻿{% extends 'base.html' %}
+{% from 'base.html' import star_rating, product_card %}
 {% set active_page = 'home' %}
 {% block title %}HalalSaver MY — Halal Grocery Recommender{% endblock %}
 
@@ -7,21 +8,23 @@
 <!-- ── HERO SECTION ──────────────────────────────────────────────────────── -->
 <section class="hero-section">
   <div class="hero-content">
-    <div class="hero-badge"><i class="fas fa-certificate"></i> JAKIM-Certified Products</div>
-    <h1 class="hero-title">Smart Halal Grocery Shopping Starts Here</h1>
+    <div class="hero-badge"><i class="fas fa-robot"></i> AI-Powered Hybrid Recommender</div>
+    <h1 class="hero-title">Smart Halal Grocery Shopping for <span class="hero-title-accent">Malaysia</span></h1>
     <p class="hero-subtitle">
-      Discover the best halal deals across Lotus's, Mydin, and AEON.
-      Personalised recommendations powered by AI — just for you.
+      HalalSaver MY uses a hybrid recommender engine combining Content-Based Filtering and
+      Collaborative Filtering to suggest JAKIM-certified halal groceries within your budget —
+      with real-time price comparison across AEON, Lotus's, and Mydin.
     </p>
     <div class="hero-cta">
-      <a href="/signup" class="btn-primary-hero"><i class="fas fa-rocket"></i> Get Started Free</a>
+      <a href="/signup" class="btn-primary-hero"><i class="fas fa-user-plus"></i> Start Saving Today</a>
       <a href="/login" class="btn-secondary-hero"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+      <a href="/products" class="hero-guest-link"><i class="fas fa-user-friends"></i> Browse as Guest</a>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><strong>500+</strong><span>Products</span></div>
-      <div class="hero-stat"><strong>3</strong><span>Major Stores</span></div>
-      <div class="hero-stat"><strong>13</strong><span>Categories</span></div>
-      <div class="hero-stat"><strong>100%</strong><span>Halal Verified</span></div>
+    <div class="hero-trust-row" id="features">
+      <span><i class="fas fa-certificate"></i> JAKIM Halal Verified</span>
+      <span><i class="fas fa-wallet"></i> Budget-Aware Filtering</span>
+      <span><i class="fas fa-brain"></i> Hybrid AI Engine (CBF + CF)</span>
+      <span><i class="fas fa-store"></i> 3 Hypermarkets Compared</span>
     </div>
   </div>
 
@@ -107,7 +110,7 @@
 </section>
 
 <!-- ── STORE BADGES ──────────────────────────────────────────────────────── -->
-<section class="stores-section">
+<section class="stores-section" id="hypermarkets">
   <div class="section-container">
     <h2 class="section-title">Featured Stores</h2>
     <div class="store-badges-row">
@@ -136,35 +139,7 @@
     </div>
     <div class="product-grid">
       {% for p in featured_products %}
-      <div class="product-card">
-        <div class="product-img-wrap">
-          <img
-            src="https://placehold.co/200x160/ecfdf5/059669?text={{ p.product_name[:10] | urlencode }}"
-            alt="{{ p.product_name }}"
-            loading="lazy"
-          />
-          {% if p.halal_certified %}
-          <span class="halal-badge"><i class="fas fa-certificate"></i> JAKIM</span>
-          {% endif %}
-          <span class="store-badge store-{{ p.store | lower | replace("'","") | replace(" ","") }}">{{ p.store }}</span>
-        </div>
-        <div class="product-card-body">
-          <div class="product-name">{{ p.product_name }}</div>
-          <div class="product-price">RM {{ "%.2f" | format(p.price_after_discount) }}</div>
-          {% if p.discount_percent and p.discount_percent > 0 %}
-          <span class="discount-badge">-{{ p.discount_percent | int }}%</span>
-          {% endif %}
-          <div class="product-actions">
-            <button class="icon-btn fav-btn" onclick="toggleFav('{{ p.product_id }}')">
-              <i class="fas fa-heart"></i>
-            </button>
-            <a href="/products/{{ p.product_id }}" class="btn-view">View</a>
-            <button class="icon-btn" onclick="addToCompare('{{ p.product_id }}')">
-              <i class="fas fa-balance-scale"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+      {{ product_card(p) }}
       {% else %}
       <p class="text-muted">No featured products available.</p>
       {% endfor %}
@@ -206,7 +181,7 @@
 </section>
 
 <!-- ── HOW IT WORKS ──────────────────────────────────────────────────────── -->
-<section class="how-it-works-section web-only">
+<section class="how-it-works-section web-only" id="how-it-works">
   <div class="section-container">
     <h2 class="section-title text-center">How HalalSaver MY Works</h2>
     <div class="how-steps">

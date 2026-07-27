@@ -4,52 +4,62 @@
 
 {% block content %}
 
-<div class="auth-page-wrap">
-  <div class="auth-container auth-container-reverse">
+<div class="auth-page-wrap auth-page-centered">
+  <div class="auth-container-card">
 
-    <!-- Left form panel -->
-    <div class="auth-form-panel">
-      <div class="auth-form-wrap">
-        <!-- Mobile logo -->
-        <div class="auth-mobile-logo mobile-only">
+    <div class="auth-form-wrap">
+        <div class="auth-card-logo">
           <a href="/" class="brand-logo">
-            <div class="logo-mark"><i class="fas fa-leaf"></i></div>
+            <div class="logo-mark"><i class="fas fa-leaf"></i><span class="logo-mark-badge"><i class="fas fa-check"></i></span></div>
             <div class="logo-text">
               <span class="logo-name">HalalSaver</span><span class="logo-tag"> MY</span>
             </div>
           </a>
         </div>
 
-        <h2 class="auth-title">Create Account</h2>
-        <p class="auth-subtitle">Join HalalSaver MY — smart halal shopping starts here</p>
+        <h2 class="auth-title auth-title-centered"><i class="fas fa-user-plus"></i> Create your account</h2>
+        <p class="auth-subtitle auth-subtitle-centered">Join Malaysians shopping smarter &amp; halal-certified</p>
 
-        <!-- Flash messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ 'success' if category=='success' else ('danger' if category=='danger' else ('warning' if category=='warning' else 'info')) }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+        <!-- Inline signup error -->
+        {% if signup_error %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i> {{ signup_error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endif %}
 
         <form action="/signup" method="POST" class="auth-form" novalidate id="signupForm">
 
-          <div class="form-group">
-            <label for="full_name" class="form-label">Full Name <span class="required">*</span></label>
-            <div class="input-icon-wrap">
-              <i class="fas fa-user input-icon"></i>
-              <input
-                type="text"
-                id="full_name"
-                name="full_name"
-                class="form-control auth-input"
-                placeholder="e.g. Ahmad Faizal"
-                required
-                autocomplete="name"
-              />
+          <div class="form-row-split">
+            <div class="form-group">
+              <label for="full_name" class="form-label">Full Name <span class="required">*</span></label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-user input-icon"></i>
+                <input
+                  type="text"
+                  id="full_name"
+                  name="full_name"
+                  class="form-control auth-input"
+                  placeholder="e.g. Ahmad Faizal"
+                  required
+                  autocomplete="name"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">Phone <span class="optional-label">(optional)</span></label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-phone input-icon"></i>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  class="form-control auth-input"
+                  placeholder="e.g. 012-345 6789"
+                  autocomplete="tel"
+                />
+              </div>
             </div>
           </div>
 
@@ -86,6 +96,10 @@
               <button type="button" class="input-icon-right toggle-pwd" onclick="togglePwdVisibility('password','pwdEye1')">
                 <i class="fas fa-eye" id="pwdEye1"></i>
               </button>
+            </div>
+            <div class="pwd-strength-row" id="pwdStrengthRow" style="display:none;">
+              <div class="pwd-strength-track"><div class="pwd-strength-fill" id="pwdStrengthFill"></div></div>
+              <span class="pwd-strength-label" id="pwdStrengthLabel"></span>
             </div>
           </div>
 
@@ -162,37 +176,12 @@
           <div class="guest-divider-line"></div>
         </div>
         <a href="/products" class="btn-guest-browse">
-          <i class="fas fa-store"></i> Browse Products as Guest
+          <i class="fas fa-user-friends"></i> Continue as Guest
         </a>
         <p class="guest-note">
           <i class="fas fa-info-circle"></i>
           No account needed to browse &amp; compare. Sign up to unlock recommendations and favourites.
         </p>
-      </div>
-    </div>
-
-    <!-- Right promo panel (web only) -->
-    <div class="auth-promo web-only">
-      <div class="auth-promo-inner">
-        <div class="auth-promo-logo">
-          <div class="logo-mark large"><i class="fas fa-leaf"></i></div>
-          <div class="logo-text large">
-            <span class="logo-name">HalalSaver</span><span class="logo-tag"> MY</span>
-          </div>
-        </div>
-        <h2>Why Join Us?</h2>
-        <p>HalalSaver MY helps Malaysian shoppers find the best halal grocery deals — smarter, faster, cheaper.</p>
-        <ul class="auth-promo-features">
-          <li><i class="fas fa-robot"></i> AI-powered hybrid recommendations</li>
-          <li><i class="fas fa-certificate"></i> JAKIM-verified halal products</li>
-          <li><i class="fas fa-balance-scale"></i> Side-by-side price comparison</li>
-          <li><i class="fas fa-trophy"></i> Top-ranked products by category</li>
-          <li><i class="fas fa-wallet"></i> Budget tracker built-in</li>
-        </ul>
-        <div class="auth-promo-tagline">
-          <i class="fas fa-certificate"></i> Trusted Halal. Smart Savings.
-        </div>
-      </div>
     </div>
 
   </div>
@@ -265,6 +254,36 @@ function togglePwdVisibility(fieldId, iconId) {
     icon.classList.replace('fa-eye-slash', 'fa-eye');
   }
 }
+
+// Password strength meter (length + character variety heuristic)
+document.getElementById('password').addEventListener('input', function() {
+  const val = this.value;
+  const row = document.getElementById('pwdStrengthRow');
+  const fill = document.getElementById('pwdStrengthFill');
+  const label = document.getElementById('pwdStrengthLabel');
+  if (!val) { row.style.display = 'none'; return; }
+  row.style.display = 'flex';
+
+  let score = 0;
+  if (val.length >= 6) score++;
+  if (val.length >= 10) score++;
+  if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+
+  const levels = [
+    { pct: 20,  label: 'Weak',   color: '#c0392b' },
+    { pct: 40,  label: 'Weak',   color: '#c0392b' },
+    { pct: 60,  label: 'Fair',   color: '#e07b39' },
+    { pct: 80,  label: 'Strong', color: '#0d5c40' },
+    { pct: 100, label: 'Strong', color: '#0d5c40' },
+  ];
+  const lvl = levels[Math.min(score, levels.length - 1)];
+  fill.style.width = lvl.pct + '%';
+  fill.style.background = lvl.color;
+  label.textContent = lvl.label;
+  label.style.color = lvl.color;
+});
 
 // Password match validation
 document.getElementById('confirm_password').addEventListener('input', function() {

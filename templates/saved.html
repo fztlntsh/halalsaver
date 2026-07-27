@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% from 'base.html' import star_rating, product_card %}
+{% set active_page = 'saved' %}
+{% block title %}Saved Items — HalalSaver MY{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper saved-page">
+
+  <!-- ── Hero Banner ─────────────────────────────────────────────────────── -->
+  <section class="saved-hero">
+    <div class="saved-hero-icon"><i class="fas fa-bookmark"></i></div>
+    <div class="saved-hero-text">
+      <h1>Saved Items</h1>
+      <p>Everything you've bookmarked for your next grocery run — halal picks, price checks, and quick re-ordering, all in one place.</p>
+    </div>
+    <div class="saved-hero-stats">
+      <div class="saved-hero-stat">
+        <strong>{{ list_products | length }}</strong>
+        <span>In List</span>
+      </div>
+      <div class="saved-hero-stat">
+        <strong>{{ favourites | length }}</strong>
+        <span>Favourites</span>
+      </div>
+      <div class="saved-hero-stat">
+        <strong>{{ halal_count }}</strong>
+        <span>Halal</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-container saved-body">
+
+    <!-- ── My Grocery List ───────────────────────────────────────────────── -->
+    <div class="saved-section">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-list-check"></i> My Grocery List</h2>
+        <span class="saved-section-sub">Items you've added from the Dashboard or Products page</span>
+      </div>
+
+      {% if list_products %}
+      {% if over_budget %}
+      <div class="list-budget-alert list-over-budget">
+        <i class="fas fa-triangle-exclamation"></i>
+        Your list total (RM {{ "%.2f" | format(list_total) }}) is over your RM {{ budget | int }} budget by
+        RM {{ "%.2f" | format(list_total - budget) }}.
+      </div>
+      {% else %}
+      <div class="list-budget-alert list-within-budget">
+        <i class="fas fa-circle-check"></i>
+        You're within budget — RM {{ "%.2f" | format(budget - list_total) }} remaining.
+      </div>
+      {% endif %}
+
+      <div class="comparison-table-wrap web-only">
+        <table class="comparison-table list-table">
+          <thead>
+            <tr>
+              <th class="compare-attr-col">Product</th>
+              <th>Store</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Line Total</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in list_products %}
+            <tr data-list-row="{{ p.product_id }}">
+              <td>
+                <div class="list-item-name" onclick="openQuickView('{{ p.product_id }}')" style="cursor:pointer;">
+                  {{ p.product_name }}
+                  {% if p.halal_certified %}<span class="halal-badge small"><i class="fas fa-certificate"></i> JAKIM</span>{% endif %}
+                </div>
+              </td>
+              <td><span class="store-badge store-{{ p.store | lower | replace("'","") | replace(" ","") }}">{{ p.store }}</span></td>
+              <td>RM {{ "%.2f" | format(p.price_after_discount) }}</td>
+              <td>
+                <div class="list-qty-stepper">
+                  <button class="list-qty-btn" onclick="updateListQty('{{ p.product_id }}', {{ p.quantity - 1 }})">−</button>
+                  <span class="list-qty-val">{{ p.quantity }}</span>
+                  <button class="list-qty-btn" onclick="updateListQty('{{ p.product_id }}', {{ p.quantity + 1 }})">+</button>
+                </div>
+              </td>
+              <td><strong>RM {{ "%.2f" | format(p.line_total) }}</strong></td>
+              <td>
+                <button class="icon-btn" onclick="removeFromList('{{ p.product_id }}')" title="Remove">
+                  <i class="fas fa-trash" style="color:#c0392b"></i>
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <tr class="list-total-row">
+              <td colspan="4" style="text-align:right;"><strong>List Total</strong></td>
+              <td colspan="2"><strong>RM {{ "%.2f" | format(list_total) }}</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Mobile cards -->
+      <div class="mobile-only">
+        {% for p in list_products %}
+        <div class="list-mobile-card" data-list-row="{{ p.product_id }}">
+          <div class="list-item-name" onclick="openQuickView('{{ p.product_id }}')">{{ p.product_name }}</div>
+          <div class="list-mc-meta">
+            <span class="store-badge store-{{ p.store | lower | replace("'","") | replace(" ","") }} small">{{ p.store }}</span>
+            <span>RM {{ "%.2f" | format(p.price_after_discount) }} × {{ p.quantity }}</span>
+          </div>
+          <div class="list-mc-actions">
+            <div class="list-qty-stepper">
+              <button class="list-qty-btn" onclick="updateListQty('{{ p.product_id }}', {{ p.quantity - 1 }})">−</button>
+              <span class="list-qty-val">{{ p.quantity }}</span>
+              <button class="list-qty-btn" onclick="updateListQty('{{ p.product_id }}', {{ p.quantity + 1 }})">+</button>
+            </div>
+            <strong>RM {{ "%.2f" | format(p.line_total) }}</strong>
+            <button class="icon-btn" onclick="removeFromList('{{ p.product_id }}')"><i class="fas fa-trash" style="color:#c0392b"></i></button>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="list-total-row-mobile"><strong>List Total: RM {{ "%.2f" | format(list_total) }}</strong></div>
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <i class="fas fa-list-check empty-icon"></i>
+        <h4>Your shopping list is empty</h4>
+        <p>Browse products and tap "Add to List" to start planning your halal grocery budget.</p>
+        <a href="/products" class="btn-primary-small">Browse Products</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- ── Favourites ───────────────────────────────────────────────────── -->
+    <div class="saved-section">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-heart"></i> Favourites</h2>
+        <span class="saved-section-sub">Products you've marked with the heart icon</span>
+      </div>
+
+      {% if favourites %}
+      <div class="product-grid saved-favourites-grid">
+        {% for p in favourites %}
+        {{ product_card(p, show_score=True) }}
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state">
+        <i class="fas fa-heart empty-icon"></i>
+        <h4>No favourites yet</h4>
+        <p>Tap the heart icon on any product to save it here.</p>
+        <a href="/products" class="btn-primary-small">Browse Products</a>
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Favourites cards on this page are always already-favourited, so
+// clicking the heart always removes it.
+document.querySelectorAll('.saved-favourites-grid .fav-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const card = btn.closest('.product-card');
+    if (card) setTimeout(function() { card.remove(); }, 250);
+  });
+});
+</script>
+{% endblock %}

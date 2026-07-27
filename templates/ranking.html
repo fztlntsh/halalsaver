@@ -31,36 +31,24 @@
 
   <div class="section-container ranking-body">
 
-    <!-- ── Tab Filters ──────────────────────────────────────────────────── -->
+    <!-- ── Rank Mode Tabs ───────────────────────────────────────────────── -->
     <div class="ranking-tabs">
-      <button class="ranking-tab active" data-filter="all" onclick="filterRanking('all', this)">
-        <i class="fas fa-th-large"></i> All
+      <button class="ranking-tab active" data-tab="popular" onclick="switchRankTab('popular', this)">
+        <i class="fas fa-fire"></i> Most Popular
       </button>
-      <button class="ranking-tab" data-filter="store" onclick="filterRanking('store', this)">
-        <i class="fas fa-store"></i> By Store
+      <button class="ranking-tab" data-tab="price" onclick="switchRankTab('price', this)">
+        <i class="fas fa-tag"></i> Lowest Price
       </button>
-      <button class="ranking-tab" data-filter="category" onclick="filterRanking('category', this)">
-        <i class="fas fa-tags"></i> By Category
-      </button>
-      <button class="ranking-tab" data-filter="value" onclick="filterRanking('value', this)">
-        <i class="fas fa-star"></i> Best Value
+      <button class="ranking-tab" data-tab="value" onclick="switchRankTab('value', this)">
+        <i class="fas fa-coins"></i> Best Value
       </button>
     </div>
 
-    <!-- Sub-filter (shows when By Store or By Category is active) -->
-    <div class="ranking-subfilter" id="rankingSubfilter" style="display:none;">
-      <div id="storeSubfilter" style="display:none;">
-        {% for store in stores %}
-        <button class="subfilter-chip" onclick="subfilterStore('{{ store }}')">{{ store }}</button>
-        {% endfor %}
-        <button class="subfilter-chip active" onclick="subfilterStore('')">All Stores</button>
-      </div>
-      <div id="categorySubfilter" style="display:none;">
-        {% for cat in categories %}
-        <button class="subfilter-chip" onclick="subfilterCategory('{{ cat }}')">{{ cat }}</button>
-        {% endfor %}
-        <button class="subfilter-chip active" onclick="subfilterCategory('')">All Categories</button>
-      </div>
+    <div class="ranking-subfilter" id="rankTabDesc">
+      <i class="fas fa-info-circle" style="color:var(--primary);"></i>
+      <span id="rankTabDescText">
+        <strong>Most Popular:</strong> Ranked by purchase frequency and community engagement, boosted for JAKIM-certified halal items.
+      </span>
     </div>
 
     <!-- ── Top 3 Podium ─────────────────────────────────────────────────── -->
@@ -73,7 +61,7 @@
       <!-- 2nd place -->
       <div class="podium-item podium-2">
         <div class="podium-medal medal-silver"><i class="fas fa-medal"></i></div>
-        <img src="https://placehold.co/100x80/ecfdf5/059669?text={{ p2.product_name[:6] | urlencode }}" alt="{{ p2.product_name }}" />
+        <img src="{{ p2.image_local if p2.image_local else 'https://placehold.co/100x80/ecfdf5/059669?text=' ~ (p2.product_name[:6] | urlencode) }}" alt="{{ p2.product_name }}" />
         <div class="podium-name">{{ p2.product_name }}</div>
         <div class="podium-price">RM {{ "%.2f" | format(p2.price_after_discount) }}</div>
         <div class="podium-rank">#2</div>
@@ -83,7 +71,7 @@
       <div class="podium-item podium-1">
         <div class="podium-crown"><i class="fas fa-crown"></i></div>
         <div class="podium-medal medal-gold"><i class="fas fa-medal"></i></div>
-        <img src="https://placehold.co/120x96/ecfdf5/059669?text={{ p1.product_name[:6] | urlencode }}" alt="{{ p1.product_name }}" />
+        <img src="{{ p1.image_local if p1.image_local else 'https://placehold.co/120x96/ecfdf5/059669?text=' ~ (p1.product_name[:6] | urlencode) }}" alt="{{ p1.product_name }}" />
         <div class="podium-name">{{ p1.product_name }}</div>
         <div class="podium-price">RM {{ "%.2f" | format(p1.price_after_discount) }}</div>
         <div class="podium-rank">#1</div>
@@ -92,7 +80,7 @@
       <!-- 3rd place -->
       <div class="podium-item podium-3">
         <div class="podium-medal medal-bronze"><i class="fas fa-medal"></i></div>
-        <img src="https://placehold.co/100x80/ecfdf5/059669?text={{ p3.product_name[:6] | urlencode }}" alt="{{ p3.product_name }}" />
+        <img src="{{ p3.image_local if p3.image_local else 'https://placehold.co/100x80/ecfdf5/059669?text=' ~ (p3.product_name[:6] | urlencode) }}" alt="{{ p3.product_name }}" />
         <div class="podium-name">{{ p3.product_name }}</div>
         <div class="podium-price">RM {{ "%.2f" | format(p3.price_after_discount) }}</div>
         <div class="podium-rank">#3</div>
@@ -108,6 +96,8 @@
         data-store="{{ p.store | lower }}"
         data-category="{{ p.category | lower }}"
         data-discount="{{ p.discount_percent or 0 }}"
+        data-price="{{ p.price_after_discount }}"
+        data-pop="{{ p.get('rank_score') or p.get('pop_score') or 0 }}"
         data-rank="{{ loop.index }}"
       >
         <!-- Rank Number -->
@@ -124,16 +114,16 @@
         </div>
 
         <!-- Product Image -->
-        <div class="ranking-img-col">
+        <div class="ranking-img-col" onclick="openQuickView('{{ p.product_id }}')" style="cursor:pointer;">
           <img
-            src="https://placehold.co/80x64/ecfdf5/059669?text={{ p.product_name[:6] | urlencode }}"
+            src="{{ p.image_local if p.image_local else 'https://placehold.co/80x64/ecfdf5/059669?text=' ~ (p.product_name[:6] | urlencode) }}"
             alt="{{ p.product_name }}"
             loading="lazy"
           />
         </div>
 
         <!-- Product Info -->
-        <div class="ranking-info-col">
+        <div class="ranking-info-col" onclick="openQuickView('{{ p.product_id }}')" style="cursor:pointer;">
           <div class="ranking-product-name">{{ p.product_name }}</div>
           <div class="ranking-meta">
             <span class="store-badge store-{{ p.store | lower | replace("'","") | replace(" ","") }} small">{{ p.store }}</span>
@@ -171,12 +161,24 @@
 
         <!-- Actions -->
         <div class="ranking-actions-col">
-          <a href="/products/{{ p.product_id }}" class="btn-view">
+          <button class="btn-view" onclick="openQuickView('{{ p.product_id }}')" title="Quick view">
             <i class="fas fa-eye"></i>
-          </a>
+          </button>
+          {% if session.get('user_id') %}
           <button class="icon-btn fav-btn" onclick="toggleFav('{{ p.product_id }}')">
             <i class="fas fa-heart"></i>
           </button>
+          <button class="icon-btn list-btn" onclick="addToList('{{ p.product_id }}')" title="Add to shopping list">
+            <i class="fas fa-list-check"></i>
+          </button>
+          {% else %}
+          <button class="icon-btn fav-btn guest-locked" onclick="showGuestPrompt()">
+            <i class="fas fa-heart"></i>
+          </button>
+          <button class="icon-btn list-btn guest-locked" onclick="showGuestPrompt()" title="Sign up to add to your shopping list">
+            <i class="fas fa-list-check"></i>
+          </button>
+          {% endif %}
           <button class="icon-btn" onclick="addToCompare('{{ p.product_id }}')" title="Compare">
             <i class="fas fa-balance-scale"></i>
           </button>
@@ -198,75 +200,44 @@
 
 {% block extra_js %}
 <script>
-function filterRanking(type, btn) {
-  // Update active tab
+const RANK_TAB_DESCS = {
+  popular: '<strong>Most Popular:</strong> Ranked by purchase frequency and community engagement, boosted for JAKIM-certified halal items.',
+  price:   '<strong>Lowest Price:</strong> Products ranked by the cheapest price available across all three stores. Great for strict budget shoppers.',
+  value:   '<strong>Best Value (Score ÷ Price):</strong> Balances popularity with price — high score at low cost ranks first. Ideal for smart shoppers.',
+};
+
+function switchRankTab(type, btn) {
   document.querySelectorAll('.ranking-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
 
-  const subfilter = document.getElementById('rankingSubfilter');
-  const storeFilter = document.getElementById('storeSubfilter');
-  const catFilter = document.getElementById('categorySubfilter');
+  const descEl = document.getElementById('rankTabDescText');
+  if (descEl) descEl.innerHTML = RANK_TAB_DESCS[type] || '';
 
-  storeFilter.style.display = 'none';
-  catFilter.style.display   = 'none';
-  subfilter.style.display   = 'none';
+  const list  = document.getElementById('rankingList');
+  const items = Array.from(document.querySelectorAll('.ranking-item'));
 
-  const items = document.querySelectorAll('.ranking-item');
-
-  if (type === 'all') {
-    items.forEach(item => { item.style.display = ''; });
-  } else if (type === 'store') {
-    subfilter.style.display = 'block';
-    storeFilter.style.display = 'flex';
-    items.forEach(item => { item.style.display = ''; });
-  } else if (type === 'category') {
-    subfilter.style.display = 'block';
-    catFilter.style.display = 'flex';
-    items.forEach(item => { item.style.display = ''; });
-  } else if (type === 'value') {
-    // Sort by discount % descending
-    const list = document.getElementById('rankingList');
-    const sorted = Array.from(items).sort((a, b) => {
-      return parseFloat(b.dataset.discount || 0) - parseFloat(a.dataset.discount || 0);
-    });
-    sorted.forEach(item => {
-      item.style.display = '';
-      list.appendChild(item);
-    });
-    // Update rank numbers
-    sorted.forEach((item, i) => {
-      const rankEl = item.querySelector('.rank-number');
-      if (rankEl) rankEl.textContent = '#' + (i + 1);
-    });
-  }
-}
-
-function subfilterStore(store) {
-  // Update active chip
-  document.querySelectorAll('#storeSubfilter .subfilter-chip').forEach(c => {
-    c.classList.toggle('active', c.textContent.trim().toLowerCase() === store.toLowerCase() || (!store && c.textContent.trim() === 'All Stores'));
-  });
-  const items = document.querySelectorAll('.ranking-item');
-  items.forEach(function(item) {
-    if (!store || item.dataset.store === store.toLowerCase()) {
-      item.style.display = '';
-    } else {
-      item.style.display = 'none';
+  items.sort((a, b) => {
+    if (type === 'price') {
+      return parseFloat(a.dataset.price || 0) - parseFloat(b.dataset.price || 0);
     }
-  });
-}
-
-function subfilterCategory(cat) {
-  document.querySelectorAll('#categorySubfilter .subfilter-chip').forEach(c => {
-    c.classList.toggle('active', c.textContent.trim().toLowerCase() === cat.toLowerCase() || (!cat && c.textContent.trim() === 'All Categories'));
-  });
-  const items = document.querySelectorAll('.ranking-item');
-  items.forEach(function(item) {
-    if (!cat || item.dataset.category === cat.toLowerCase()) {
-      item.style.display = '';
-    } else {
-      item.style.display = 'none';
+    if (type === 'value') {
+      const valA = parseFloat(a.dataset.pop || 0) / (parseFloat(a.dataset.price || 0) || 1);
+      const valB = parseFloat(b.dataset.pop || 0) / (parseFloat(b.dataset.price || 0) || 1);
+      return valB - valA;
     }
+    // popular (default order rendered by the server)
+    return parseFloat(b.dataset.pop || 0) - parseFloat(a.dataset.pop || 0);
+  });
+
+  const MEDALS = [
+    '<span class="rank-medal rank-gold"><i class="fas fa-medal"></i></span>',
+    '<span class="rank-medal rank-silver"><i class="fas fa-medal"></i></span>',
+    '<span class="rank-medal rank-bronze"><i class="fas fa-medal"></i></span>',
+  ];
+  items.forEach((item, i) => {
+    list.appendChild(item);
+    const col = item.querySelector('.rank-number-col');
+    if (col) col.innerHTML = i < 3 ? MEDALS[i] : '<span class="rank-number">#' + (i + 1) + '</span>';
   });
 }
 </script>

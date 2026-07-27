@@ -184,6 +184,29 @@ def sign_in_with_email_password(email: str, password: str) -> tuple[str | None, 
     return None, "Invalid email or password."
 
 
+def update_password(user_id: str, new_password: str, email: str | None = None) -> str | None:
+    """
+    Update a user's password. Caller is responsible for verifying the
+    current password first (see sign_in_with_email_password).
+
+    Returns an error message, or None on success.
+    """
+    if FIREBASE_ENABLED and _fb_auth:
+        try:
+            _fb_auth.update_user(user_id, password=new_password)
+            return None
+        except Exception as e:
+            logger.error(f"[DB] update_password error: {e}")
+            return f"Could not update password: {e}"
+    # Local fallback
+    if email:
+        user = _LOCAL_USERS.get(email.lower())
+        if user:
+            user["password"] = new_password
+            return None
+    return "Password update is unavailable in local/demo mode."
+
+
 def verify_id_token(id_token: str) -> str | None:
     """
     Verify a Firebase ID token from the client-side JS SDK (Google / social login).
@@ -236,6 +259,20 @@ def get_user(user_id: str) -> dict | None:
         if u.get("id") == user_id or u.get("user_id") == user_id:
             return u
     return None
+
+
+def update_user_name(user_id: str, name: str) -> None:
+    """Update just the display name on an existing user document."""
+    if FIREBASE_ENABLED and db:
+        try:
+            db.collection("users").document(user_id).update({"name": name})
+            return
+        except Exception as e:
+            logger.error(f"[DB] update_user_name error: {e}")
+    for u in _LOCAL_USERS.values():
+        if u.get("id") == user_id or u.get("user_id") == user_id:
+            u["name"] = name
+            return
 
 
 def get_user_by_email(email: str) -> dict | None:
@@ -453,6 +490,89 @@ def get_favourites(user_id: str) -> list[str]:
         except Exception as e:
             logger.error(f"[DB] get_favourites error: {e}")
     return list(_LOCAL_FAVOURITES.get(user_id, []))
+
+
+# =============================================================================
+# SECTION G.2 — Shopping List  (collection: user_list)
+#
+# Distinct from favourites (a simple saved/unsaved bookmark): the shopping
+# list tracks a quantity per product, for the "My Grocery List" budget-total
+# view on the Saved page.
+# =============================================================================
+
+_LOCAL_LIST: dict[str, dict[str, int]] = {}   # user_id → {product_id: quantity}
+
+
+def add_to_list(user_id: str, product_id: str, quantity: int = 1) -> None:
+    """Add a product to the shopping list, or increment its quantity if
+    already present (idempotent add — repeated clicks just bump the count)."""
+    if FIREBASE_ENABLED and db:
+        try:
+            doc_id = f"{user_id}_{product_id}"
+            doc_ref = db.collection("user_list").document(doc_id)
+            existing = doc_ref.get()
+            new_qty = quantity
+            if existing.exists:
+                new_qty = int(existing.to_dict().get("quantity", 0)) + quantity
+            doc_ref.set({
+                "user_id": user_id,
+                "product_id": product_id,
+                "quantity": new_qty,
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            })
+            return
+        except Exception as e:
+            logger.error(f"[DB] add_to_list error: {e}")
+    items = _LOCAL_LIST.setdefault(user_id, {})
+    items[product_id] = items.get(product_id, 0) + quantity
+
+
+def update_list_item(user_id: str, product_id: str, quantity: int) -> None:
+    """Set a shopping-list item to an absolute quantity; removes it if
+    quantity drops to zero or below."""
+    if quantity <= 0:
+        remove_from_list(user_id, product_id)
+        return
+    if FIREBASE_ENABLED and db:
+        try:
+            doc_id = f"{user_id}_{product_id}"
+            db.collection("user_list").document(doc_id).set({
+                "user_id": user_id,
+                "product_id": product_id,
+                "quantity": quantity,
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            })
+            return
+        except Exception as e:
+            logger.error(f"[DB] update_list_item error: {e}")
+    items = _LOCAL_LIST.setdefault(user_id, {})
+    items[product_id] = quantity
+
+
+def remove_from_list(user_id: str, product_id: str) -> None:
+    """Remove a product from the shopping list entirely."""
+    if FIREBASE_ENABLED and db:
+        try:
+            db.collection("user_list").document(f"{user_id}_{product_id}").delete()
+            return
+        except Exception as e:
+            logger.error(f"[DB] remove_from_list error: {e}")
+    _LOCAL_LIST.get(user_id, {}).pop(product_id, None)
+
+
+def get_list(user_id: str) -> dict[str, int]:
+    """Return {product_id: quantity} for everything in the user's shopping list."""
+    if FIREBASE_ENABLED and db:
+        try:
+            docs = (
+                db.collection("user_list")
+                .where("user_id", "==", user_id)
+                .stream()
+            )
+            return {d.to_dict()["product_id"]: int(d.to_dict().get("quantity", 1)) for d in docs}
+        except Exception as e:
+            logger.error(f"[DB] get_list error: {e}")
+    return dict(_LOCAL_LIST.get(user_id, {}))
 
 
 # =============================================================================

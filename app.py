@@ -7,11 +7,15 @@ FYP — CS230 | UiTM
 from __future__ import annotations
 
 import os
+import json
 import pickle
 import math
+import hashlib
 import traceback
+from datetime import date, timedelta
 from functools import wraps
 
+import numpy as np
 import pandas as pd
 from flask import (
     Flask, render_template, request, redirect, url_for,
@@ -24,7 +28,10 @@ import recommender as _recommender_mod
 # from a script where recommender was __main__)
 sys.modules['__main__'].SVDPlusPlus = _recommender_mod.SVDPlusPlus  # type: ignore
 
-from recommender import hybrid_recommend, _product_feature_matrix, SVDPlusPlus
+from recommender import (
+    hybrid_recommend, _product_feature_matrix, SVDPlusPlus,
+    get_content_score, get_collab_score,
+)
 import database as db_layer
 
 # ─── APP SETUP ────────────────────────────────────────────────────────────────
@@ -46,6 +53,10 @@ def serve_js(filename):
 def serve_assets(filename):
     return send_from_directory('assets', filename)
 
+@app.route('/frontend/assets/<path:filename>')
+def serve_frontend_assets(filename):
+    return send_from_directory('frontend/assets', filename)
+
 @app.route('/manifest.json')
 def serve_manifest():
     return send_from_directory('.', 'manifest.json')
@@ -62,6 +73,17 @@ df         = pd.read_csv('data/cleaned_dataset.csv')
 ratings_df = pd.read_csv('data/user_ratings.csv')
 n_cats     = int(df['category_enc'].max()) + 1
 feat_mat   = _product_feature_matrix(df)
+
+# Real product photos, fuzzy-matched by name/brand from the smaller
+# photographed catalog (see data/match_product_images.py) — not every
+# product has one, templates fall back to a placeholder when absent.
+try:
+    with open('data/product_images.json', encoding='utf-8') as _img_f:
+        _PRODUCT_IMAGE_MAP = json.load(_img_f)
+    df['image_local'] = df['product_name'].map(_PRODUCT_IMAGE_MAP)
+    print(f"[HalalSaver] Matched {df['image_local'].notna().sum()} / {len(df)} products to real photos")
+except FileNotFoundError:
+    df['image_local'] = None
 
 with open('models/svdpp_model.pkl', 'rb') as f:
     svdpp_data = pickle.load(f)
@@ -118,6 +140,13 @@ def df_to_records(frame: pd.DataFrame) -> list[dict]:
     return records
 
 
+def prioritize_real_photos(records: list[dict]) -> list[dict]:
+    """Stable-sort a list of product records so ones with a real photo
+    (image_local) come first and placeholder-only ones are pushed later —
+    display order only, doesn't change which products are included."""
+    return sorted(records, key=lambda r: 0 if r.get('image_local') else 1)
+
+
 def filter_products(
     category: str | None = None,
     store: str | None = None,
@@ -145,16 +174,89 @@ def filter_products(
     return result
 
 
+def _simulated_jakim_cert(product_id: str, halal_certified: bool, halal_body: str | None) -> dict | None:
+    """
+    Illustrative JAKIM certificate details for the quick-view modal.
+
+    The dataset only carries a halal_certified flag + issuing body name —
+    no real certificate number or validity dates — so these are
+    deterministically derived from the product_id (same product always
+    shows the same "cert") purely for UI demonstration purposes.
+    """
+    if not halal_certified:
+        return None
+    h = int(hashlib.md5(product_id.encode()).hexdigest(), 16)
+    issued_days_ago = 200 + (h % 700)
+    validity_days = 730 + (h % 500)
+    issued = date.today() - timedelta(days=issued_days_ago)
+    expiry = issued + timedelta(days=validity_days)
+    return {
+        'ref_no': f"JAKIM-MY-{(h % 900000) + 100000}",
+        'issued_by': halal_body or 'JAKIM Malaysia',
+        'issued_date': issued.isoformat(),
+        'expiry_date': expiry.isoformat(),
+        'active': expiry >= date.today(),
+    }
+
+
+def _score_single_product(pid: str, user_id: str | None) -> dict | None:
+    """Hybrid score breakdown (Fig. 3.16) for one product, using the
+    logged-in user's saved preferences as the content-based "user vector".
+    Guests get content/popularity scores against default preferences but
+    no personalised collaborative-filtering score."""
+    row = df[df['product_id'] == pid]
+    if row.empty:
+        return None
+    df_pos = df.index.get_loc(row.index[0])
+
+    prefs = session.get('prefs') or {}
+    budget = float(prefs.get('budget', 100))
+    halal_only = prefs.get('halal_only', True)
+    cats = prefs.get('categories') or []
+    category = cats[0] if cats else None
+
+    max_price = df['price_after_discount'].max()
+    budget_norm = float(np.clip(budget / max_price, 0.0, 1.0))
+    if category and category in df['category'].values:
+        cat_enc = int(df[df['category'] == category]['category_enc'].iloc[0])
+        cat_norm_u = float(cat_enc) / (n_cats - 1)
+    else:
+        cat_norm_u = 0.5
+    halal_flag_u = 1.0 if halal_only else 0.5
+    user_vector = [budget_norm, cat_norm_u, halal_flag_u]
+
+    content_score = get_content_score(user_vector, feat_mat[df_pos].tolist())
+    pop_score = float(pop_scores.get(pid, 0.0))
+
+    collab_score = None
+    if user_id:
+        collab_score = round(get_collab_score(user_id, pid, algo, implicit=implicit), 4)
+
+    base_score = max(content_score, collab_score if collab_score is not None else 0.0)
+    final_score = 0.9 * base_score + 0.1 * pop_score
+
+    return {
+        'content_score': round(content_score, 4),
+        'collab_score': collab_score,
+        'popularity_score': round(pop_score, 4),
+        'final_score': round(final_score, 4),
+    }
+
+
 # ─── PAGE ROUTES ─────────────────────────────────────────────────────────────
 
 @app.route('/')
 def home():
-    # Featured products: top 8 by popularity
+    # Featured products: top popular products, preferring ones with a real
+    # photo so the landing page's showcase isn't mostly placeholder boxes.
     featured = []
     try:
-        top_ids = pop_scores.nlargest(8).index.tolist()
+        top_ids = pop_scores.nlargest(40).index.tolist()
         feat_df = df[df['product_id'].isin(top_ids)].copy()
-        featured = df_to_records(feat_df)
+        feat_df['_pop'] = feat_df['product_id'].map(pop_scores)
+        feat_df['_has_img'] = feat_df['image_local'].notna()
+        feat_df = feat_df.sort_values(['_has_img', '_pop'], ascending=[False, False])
+        featured = df_to_records(feat_df.head(8))
     except Exception:
         featured = df_to_records(df.head(8))
     return render_template('home.html', featured_products=featured, active_page='home')
@@ -255,6 +357,57 @@ def preferences():
     )
 
 
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    user_id = get_current_user_id()
+    errors: dict[str, str] = {}
+    success_msg = None
+
+    if request.method == 'POST':
+        action = request.form.get('action')
+
+        if action == 'update_name':
+            name = request.form.get('full_name', '').strip()
+            if not name:
+                errors['name'] = 'Please enter your full name.'
+            else:
+                db_layer.update_user_name(user_id, name)
+                session['user'] = {**session.get('user', {}), 'name': name}
+                success_msg = 'Profile updated successfully!'
+
+        elif action == 'change_password':
+            current_password = request.form.get('current_password', '')
+            new_password     = request.form.get('new_password', '')
+            confirm_password = request.form.get('confirm_new_password', '')
+            email = session.get('user', {}).get('email', '')
+
+            if len(new_password) < 6:
+                errors['password'] = 'New password must be at least 6 characters.'
+            elif new_password != confirm_password:
+                errors['password'] = 'New passwords do not match.'
+            else:
+                _, verify_err = db_layer.sign_in_with_email_password(email, current_password)
+                if verify_err:
+                    errors['password'] = 'Current password is incorrect.'
+                else:
+                    update_err = db_layer.update_password(user_id, new_password, email=email)
+                    if update_err:
+                        errors['password'] = update_err
+                    else:
+                        success_msg = 'Password changed successfully!'
+
+    user_profile = db_layer.get_user(user_id) or session.get('user', {})
+    return render_template(
+        'profile.html',
+        active_page='profile',
+        user_profile=user_profile,
+        email=session.get('user', {}).get('email', ''),
+        errors=errors,
+        success_msg=success_msg,
+    )
+
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -290,27 +443,37 @@ def dashboard():
             pop_scores=pop_scores,
             n_cats=n_cats,
         )
-        recommendations = df_to_records(recs_df)
+        # Same top-N picks, ranked by score — just reorder which of them
+        # renders first so real photos aren't buried behind placeholders.
+        recommendations = prioritize_real_photos(df_to_records(recs_df))
     except Exception as e:
         print(f"[Dashboard] recommend error: {e}")
         recommendations = df_to_records(df.head(10))
 
-    # Load favourites and user profile from database
-    favourites   = db_layer.get_favourites(user_id)
-    user_profile = db_layer.get_user(user_id) or session.get('user', {})
+    # Budget tracker — "spend" is estimated from the user's favourited products
+    fav_ids  = db_layer.get_favourites(user_id)
+    fav_df   = df[df['product_id'].isin(fav_ids)].drop_duplicates('product_id')
+    estimated_spend = round(float(fav_df['price_after_discount'].sum()), 2)
+    pct_used = int(min(100, round((estimated_spend / float(budget)) * 100))) if budget else 0
+
+    halal_count = sum(1 for r in recommendations if r.get('halal_certified'))
+    avg_match   = int(round(
+        sum(r.get('final_score', 0) for r in recommendations) / len(recommendations) * 100
+    )) if recommendations else 0
 
     return render_template(
         'dashboard.html',
         active_page='dashboard',
         recommendations=recommendations,
         user_prefs=prefs,
-        favourites=favourites,
-        user_profile=user_profile,
+        estimated_spend=estimated_spend,
+        pct_used=pct_used,
+        halal_count=halal_count,
+        avg_match=avg_match,
     )
 
 
 @app.route('/products')
-@login_required
 def products():
     category  = request.args.get('category')
     store     = request.args.get('store')
@@ -320,6 +483,11 @@ def products():
     page      = request.args.get('page', 1, type=int)
 
     filtered  = filter_products(category, store, halal, max_price, q)
+    # Real-photo products first (stable — keeps existing relative order
+    # within each group), so placeholder-only products land on later pages.
+    filtered  = filtered.assign(_has_img=filtered['image_local'].notna()) \
+                         .sort_values('_has_img', ascending=False, kind='stable') \
+                         .drop(columns='_has_img')
     total     = len(filtered)
     pages     = max(1, math.ceil(total / PER_PAGE))
     page      = max(1, min(page, pages))
@@ -341,7 +509,6 @@ def products():
 
 
 @app.route('/products/<pid>')
-@login_required
 def product_detail(pid):
     row = df[df['product_id'] == pid]
     if row.empty:
@@ -352,15 +519,19 @@ def product_detail(pid):
     # Increment popularity on each view
     db_layer.update_popularity(pid, delta=0.01)
 
-    # Related: same category, exclude self, top 8 by pop score
+    # Related: same category, exclude self, top popular — preferring ones
+    # with a real photo, same reasoning as the home page featured strip.
     cat = product.get('category')
     related_df = df[(df['category'] == cat) & (df['product_id'] != pid)]
     if not related_df.empty:
         try:
-            related_ids = pop_scores[pop_scores.index.isin(related_df['product_id'])].nlargest(8).index.tolist()
-            related_df  = related_df[related_df['product_id'].isin(related_ids)]
+            related_ids = pop_scores[pop_scores.index.isin(related_df['product_id'])].nlargest(24).index.tolist()
+            related_df  = related_df[related_df['product_id'].isin(related_ids)].copy()
+            related_df['_pop'] = related_df['product_id'].map(pop_scores)
+            related_df['_has_img'] = related_df['image_local'].notna()
+            related_df = related_df.sort_values(['_has_img', '_pop'], ascending=[False, False])
         except Exception:
-            related_df = related_df.head(8)
+            related_df = related_df.head(24)
     related = df_to_records(related_df.head(8))
 
     return render_template(
@@ -372,14 +543,12 @@ def product_detail(pid):
 
 
 @app.route('/comparison')
-@login_required
 def comparison():
     # Redirect old /comparison?ids=... links to new /compare
     return redirect(url_for('compare', **request.args))
 
 
 @app.route('/ranking')
-@login_required
 def ranking():
     try:
         top_ids   = pop_scores.nlargest(50).index.tolist()
@@ -401,6 +570,46 @@ def ranking():
     )
 
 
+@app.route('/saved')
+@login_required
+def saved():
+    user_id = get_current_user_id()
+
+    # Shopping list: {product_id: quantity} merged with product data
+    list_qty = db_layer.get_list(user_id)
+    list_products = []
+    if list_qty:
+        list_df = df[df['product_id'].isin(list_qty.keys())].drop_duplicates('product_id')
+        for record in df_to_records(list_df):
+            qty = list_qty.get(record['product_id'], 1)
+            record['quantity']   = qty
+            record['line_total'] = round(record['price_after_discount'] * qty, 2)
+            list_products.append(record)
+    list_total = round(sum(p['line_total'] for p in list_products), 2)
+
+    prefs      = session.get('prefs') or db_layer.get_preferences(user_id)
+    budget     = float(prefs.get('budget', prefs.get('budget_max', 100)))
+    over_budget = list_total > budget
+
+    # Favourites: full product records (product_card macro needs more than an id)
+    fav_ids  = db_layer.get_favourites(user_id)
+    fav_df   = df[df['product_id'].isin(fav_ids)].drop_duplicates('product_id')
+    favourites = df_to_records(fav_df)
+
+    halal_count = sum(1 for p in favourites if p.get('halal_certified'))
+
+    return render_template(
+        'saved.html',
+        active_page='saved',
+        list_products=list_products,
+        list_total=list_total,
+        budget=budget,
+        over_budget=over_budget,
+        favourites=favourites,
+        halal_count=halal_count,
+    )
+
+
 # ─── API ENDPOINTS ────────────────────────────────────────────────────────────
 
 @app.route('/api/recommend')
@@ -411,6 +620,7 @@ def api_recommend():
     category   = request.args.get('category') or None
     halal_only = request.args.get('halal_only', 'true').lower() == 'true'
     top_n      = int(request.args.get('top_n', 10))
+    fmt        = request.args.get('format')
 
     try:
         recs = hybrid_recommend(
@@ -419,9 +629,14 @@ def api_recommend():
             df=df, feat_mat=feat_mat, algo=algo,
             implicit=implicit, pop_scores=pop_scores, n_cats=n_cats,
         )
-        return jsonify(df_to_records(recs))
+        products = prioritize_real_photos(df_to_records(recs))
+        if fmt == 'html':
+            return render_template('_partials/product_grid.html', products=products, show_score=True)
+        return jsonify(products)
     except Exception as e:
         traceback.print_exc()
+        if fmt == 'html':
+            return render_template('_partials/product_grid.html', products=[], show_score=True)
         return jsonify({'error': str(e)}), 500
 
 
@@ -436,6 +651,9 @@ def api_products():
     per_page  = request.args.get('per_page', PER_PAGE, type=int)
 
     filtered  = filter_products(category, store, halal, max_price, q)
+    filtered  = filtered.assign(_has_img=filtered['image_local'].notna()) \
+                         .sort_values('_has_img', ascending=False, kind='stable') \
+                         .drop(columns='_has_img')
     total     = len(filtered)
     pages     = max(1, math.ceil(total / per_page))
     page      = max(1, min(page, pages))
@@ -465,7 +683,31 @@ def api_product(pid):
     except Exception:
         related_df = related_df.head(6)
 
-    return jsonify({'product': product, 'related': df_to_records(related_df.head(6))})
+    # Price by store — same product name across the three hypermarkets.
+    # The dataset has occasional duplicate-name rows within a single store
+    # (near-identical batch/variant entries), so take the cheapest row per
+    # store rather than listing every duplicate.
+    same_name_df = df[df['product_name'] == product.get('product_name')]
+    per_store = (
+        same_name_df.loc[same_name_df.groupby('store')['price_after_discount'].idxmin()]
+        if not same_name_df.empty else same_name_df
+    )
+    store_prices = df_to_records(per_store[['store', 'price_after_discount']])
+    if store_prices:
+        best = min(sp['price_after_discount'] for sp in store_prices)
+        for sp in store_prices:
+            sp['is_best_price'] = sp['price_after_discount'] == best
+
+    jakim_cert = _simulated_jakim_cert(pid, bool(product.get('halal_certified')), product.get('halal_body'))
+    scores = _score_single_product(pid, get_current_user_id())
+
+    return jsonify({
+        'product':      product,
+        'related':      df_to_records(related_df.head(6)),
+        'store_prices': store_prices,
+        'jakim_cert':   jakim_cert,
+        'scores':       scores,
+    })
 
 
 @app.route('/api/search')
@@ -535,6 +777,46 @@ def api_remove_favourite(pid):
     return jsonify({'status': 'removed', 'product_id': pid})
 
 
+@app.route('/api/list', methods=['GET'])
+@login_required
+def api_get_list():
+    user_id  = get_current_user_id()
+    list_qty = db_layer.get_list(user_id)
+    count    = sum(list_qty.values())
+    return jsonify({'items': list_qty, 'count': count})
+
+
+@app.route('/api/list/<pid>', methods=['POST'])
+@login_required
+def api_add_list_item(pid):
+    user_id  = get_current_user_id()
+    data     = request.get_json(silent=True) or {}
+    quantity = int(data.get('quantity', 1))
+    db_layer.add_to_list(user_id, pid, quantity=quantity)
+    count = sum(db_layer.get_list(user_id).values())
+    return jsonify({'status': 'added', 'product_id': pid, 'count': count})
+
+
+@app.route('/api/list/<pid>', methods=['PUT'])
+@login_required
+def api_update_list_item(pid):
+    user_id  = get_current_user_id()
+    data     = request.get_json(silent=True) or {}
+    quantity = int(data.get('quantity', 1))
+    db_layer.update_list_item(user_id, pid, quantity)
+    count = sum(db_layer.get_list(user_id).values())
+    return jsonify({'status': 'updated', 'product_id': pid, 'count': count})
+
+
+@app.route('/api/list/<pid>', methods=['DELETE'])
+@login_required
+def api_remove_list_item(pid):
+    user_id = get_current_user_id()
+    db_layer.remove_from_list(user_id, pid)
+    count = sum(db_layer.get_list(user_id).values())
+    return jsonify({'status': 'removed', 'product_id': pid, 'count': count})
+
+
 @app.route('/api/rate', methods=['POST'])
 @login_required
 def api_rate():
@@ -589,7 +871,6 @@ def google_signin():
 
 
 @app.route('/search')
-@login_required
 def search():
     """GET /search?q=keyword — renders products.html with search results."""
     q = request.args.get('q', '').strip()
@@ -626,14 +907,13 @@ def recommend():
             df=df, feat_mat=feat_mat, algo=algo,
             implicit=implicit, pop_scores=pop_scores, n_cats=n_cats,
         )
-        return jsonify(df_to_records(recs))
+        return jsonify(prioritize_real_photos(df_to_records(recs)))
     except Exception as e:
         traceback.print_exc()
         return jsonify({'error': str(e)}), 500
 
 
 @app.route('/compare', methods=['GET', 'POST'])
-@login_required
 def compare():
     """GET /compare — render comparison page.
        POST /compare — receive {product_ids:[...]} and return JSON."""

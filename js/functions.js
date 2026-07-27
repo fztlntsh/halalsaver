@@ -218,6 +218,79 @@ function trackView(productId) {
   if (el) el.textContent = _hsList(HS_VIEWED).length;
 }
 
+/* ── Shopping list ("My Grocery List") ───────────────────────────────────── */
+function addToList(productId) {
+  if (!productId) return;
+  var pid = String(productId);
+
+  if (typeof window.__IS_LOGGED_IN__ !== 'undefined' && !window.__IS_LOGGED_IN__) {
+    _hsLoginPrompt('add items to your shopping list');
+    return;
+  }
+
+  fetch('/api/list/' + encodeURIComponent(pid), { method: 'POST' })
+    .then(function(r) {
+      if (r.status === 401) { _hsLoginPrompt('add items to your shopping list'); return null; }
+      return r.json();
+    })
+    .then(function(data) {
+      if (!data) return;
+      _hsToast('<i class="fas fa-list-check"></i> Added to your list', 'ok');
+      if (typeof window.refreshListBadge === 'function') window.refreshListBadge(data.count);
+    })
+    .catch(function() {});
+}
+
+function updateListQty(productId, quantity) {
+  if (!productId) return;
+  var pid = String(productId);
+  if (quantity <= 0) { removeFromList(pid); return; }
+
+  fetch('/api/list/' + encodeURIComponent(pid), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ quantity: quantity })
+  })
+    .then(function() { window.location.reload(); })
+    .catch(function() {});
+}
+
+function removeFromList(productId) {
+  if (!productId) return;
+  fetch('/api/list/' + encodeURIComponent(productId), { method: 'DELETE' })
+    .then(function() { window.location.reload(); })
+    .catch(function() {});
+}
+
+/* ── Product rating widget (quick-view modal + product detail page) ─────── */
+function submitRating(productId, value, containerEl) {
+  if (!productId) return;
+
+  if (typeof window.__IS_LOGGED_IN__ !== 'undefined' && !window.__IS_LOGGED_IN__) {
+    _hsLoginPrompt('rate products');
+    return;
+  }
+
+  fetch('/api/rate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ product_id: String(productId), rating: value, interaction_type: 'rating' })
+  })
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      _hsToast('<i class="fas fa-star"></i> Thanks for rating!', 'ok');
+      if (containerEl) {
+        containerEl.querySelectorAll('.rate-star').forEach(function(star) {
+          var v = parseInt(star.getAttribute('data-val'), 10);
+          star.classList.toggle('rated', v <= value);
+          star.classList.toggle('fas', v <= value);
+          star.classList.toggle('far', v > value);
+        });
+      }
+    })
+    .catch(function() {});
+}
+
 /* ── Init ─────────────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', function() {
   // Restore fav button states
@@ -233,4 +306,36 @@ document.addEventListener('DOMContentLoaded', function() {
   if (favEl)  favEl.textContent  = _hsList(HS_FAVS).length;
   if (cmpEl)  cmpEl.textContent  = _hsList(HS_COMPARE).length;
   if (viewEl) viewEl.textContent = _hsList(HS_VIEWED).length;
+
+  _hsInitScrollReveal();
 });
+
+/* ── Scroll reveal — fade + slide cards in as they enter the viewport ───────
+   Applies to every card-like element site-wide so motion feels consistent
+   across products / comparison / ranking / dashboard. Re-run after any
+   dynamic re-render (e.g. AJAX'd recommendations) by calling this again. ── */
+function _hsInitScrollReveal(root) {
+  if (!('IntersectionObserver' in window)) return;
+  var selector = '.product-card, .dash-card, .deal-card, .ranking-item, ' +
+    '.podium-item, .comparison-table-wrap, .compare-mobile-card, ' +
+    '.cat-icon-item, .store-badge-card, .how-step';
+  var scope = root || document;
+  var els = scope.querySelectorAll(selector);
+  if (!els.length) return;
+
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry, i) {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = ((i % 6) * 60) + 'ms';
+        entry.target.classList.add('reveal-in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+
+  els.forEach(function(el) {
+    if (el.classList.contains('reveal-in')) return;
+    el.classList.add('reveal-init');
+    io.observe(el);
+  });
+}

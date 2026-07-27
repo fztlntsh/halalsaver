@@ -1,3 +1,98 @@
+{% macro star_rating(discount, halal) %}
+  {%- set pct = (discount or 0) | float -%}
+  {%- set base = 5 if pct >= 35 else (4 if pct >= 15 else (3 if pct >= 5 else 2)) -%}
+  {%- set stars = [5, base + (1 if halal else 0)] | min -%}
+  {%- for i in range(5) -%}
+    <i class="{{ 'fas' if i < stars else 'far' }} fa-star"></i>
+  {%- endfor -%}
+  <span class="rating-num">{{ stars }}.0</span>
+{% endmacro %}
+
+{# Local CSS-only avatar (no external network call) — a solid-green
+   circle with the person's initials, replacing the old ui-avatars.com
+   dependency used in the navbar, dashboard header and profile page. #}
+{% macro initials_avatar(name, size=36) %}
+{%- set clean = (name or 'U').strip() -%}
+{%- set parts = clean.split() -%}
+{%- set initials = ((parts[0][0] if parts else 'U') ~ (parts[-1][0] if parts|length > 1 else '')) | upper -%}
+<div class="initials-avatar" style="width:{{ size }}px;height:{{ size }}px;font-size:{{ (size * 0.42) | round(1) }}px;">{{ initials }}</div>
+{% endmacro %}
+
+{# Shared product card — used across home/products/dashboard/favourites/related
+   so markup, badges and actions stay identical everywhere (single source of
+   truth instead of copy-pasted blocks). show_score=True renders the
+   recommendation match bar + explainability reason chips (Dashboard only). #}
+{% macro product_card(p, show_score=False) %}
+{% set pid = p.get('product_id') %}
+{% set _img = p.get('image_local') %}
+<div class="product-card"
+     data-pid="{{ pid }}"
+     data-discount="{{ p.get('discount_percent', 0) | float }}"
+     data-halal="{{ 'true' if p.get('halal_certified') else 'false' }}"
+     data-cheaper="{{ 'true' if p.get('is_cheaper_alt') else 'false' }}"
+     data-final-score="{{ p.get('final_score', 0) | float }}"
+     data-price="{{ p.get('price_after_discount', 0) | float }}">
+  <div class="product-img-wrap" onclick="openQuickView('{{ pid }}')">
+    <img
+      src="{{ _img if _img else 'https://placehold.co/200x160/ecfdf5/059669?text=' ~ ((p.get('product_name') or '')[:10] | urlencode) }}"
+      alt="{{ p.get('product_name') }}"
+      loading="lazy"
+    />
+    {% if p.get('halal_certified') %}
+    <span class="halal-badge"><i class="fas fa-certificate"></i> JAKIM</span>
+    {% endif %}
+    {% if p.get('is_cheaper_alt') %}
+    <span class="cheaper-alt-badge" title="Notably cheaper than similar products"><i class="fas fa-piggy-bank"></i> Cheaper Alt.</span>
+    {% endif %}
+    {% if p.get('store') %}
+    <span class="store-badge store-{{ p.get('store') | lower | replace("'","") | replace(" ","") }}">{{ p.get('store') }}</span>
+    {% endif %}
+  </div>
+  <div class="product-card-body">
+    <div class="product-name" onclick="openQuickView('{{ pid }}')">{{ p.get('product_name') }}</div>
+    <div class="product-rating">{{ star_rating(p.get('discount_percent'), p.get('halal_certified')) }}</div>
+    <div class="product-price">RM {{ "%.2f" | format(p.get('price_after_discount', 0)) }}</div>
+    {% if p.get('discount_percent') and p.get('discount_percent') > 0 %}
+    <span class="discount-badge">-{{ p.get('discount_percent') | int }}%</span>
+    {% endif %}
+    {% if show_score and p.get('final_score') %}
+    <div class="rec-score-bar">
+      <div class="rec-score-fill" style="width: {{ (p.get('final_score', 0) * 100) | round(0) | int }}%"></div>
+      <span class="rec-score-text">{{ "%.0f%%" | format(p.get('final_score', 0) * 100) }} match</span>
+    </div>
+    {% endif %}
+    {% if show_score and p.get('reasons') %}
+    <div class="reason-chips-row">
+      {% for reason in p.get('reasons') %}
+      <span class="reason-chip">{{ reason }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="product-actions">
+      {% if session.get('user_id') %}
+      <button class="icon-btn fav-btn" onclick="toggleFav('{{ pid }}')" title="Save to favourites">
+        <i class="fas fa-heart"></i>
+      </button>
+      {% else %}
+      <button class="icon-btn fav-btn guest-locked" onclick="showGuestPrompt()" title="Sign up to save favourites">
+        <i class="fas fa-heart"></i>
+      </button>
+      {% endif %}
+      <button class="btn-view" onclick="openQuickView('{{ pid }}')">View</button>
+      {% if session.get('user_id') %}
+      <button class="icon-btn list-btn" onclick="addToList('{{ pid }}')" title="Add to shopping list">
+        <i class="fas fa-list-check"></i>
+      </button>
+      {% else %}
+      <button class="icon-btn list-btn guest-locked" onclick="showGuestPrompt()" title="Sign up to add to your shopping list">
+        <i class="fas fa-list-check"></i>
+      </button>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +104,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="HalalSaver MY" />
   <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/frontend/assets/icons/icon-192.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/frontend/assets/icons/icon-192.png" />
 
   <title>{% block title %}HalalSaver MY{% endblock %}</title>
 
@@ -31,6 +128,7 @@
   <nav class="web-navbar" id="webNavbar">
     <div id="logo-placeholder"></div>
     <ul class="page-nav-links">
+      {% if session.get('user_id') %}
       <li>
         <a href="/dashboard" class="{{ 'active' if active_page=='dashboard' else '' }}">
           <i class="fas fa-house"></i> Dashboard
@@ -51,6 +149,27 @@
           <i class="fas fa-trophy"></i> Top Ranking
         </a>
       </li>
+      <li>
+        <a href="/saved" class="{{ 'active' if active_page=='saved' else '' }} nav-list-link">
+          <i class="fas fa-heart"></i> Saved
+          <span class="list-count-badge" id="navListBadge" style="display:none;">0</span>
+        </a>
+      </li>
+      {% else %}
+      <li><a href="/#features"><i class="fas fa-star"></i> Features</a></li>
+      <li><a href="/#how-it-works"><i class="fas fa-circle-info"></i> How It Works</a></li>
+      <li><a href="/#hypermarkets"><i class="fas fa-store"></i> Hypermarkets</a></li>
+      <li>
+        <a href="/products" class="{{ 'active' if active_page=='products' else '' }}">
+          <i class="fas fa-box-open"></i> Browse
+        </a>
+      </li>
+      <li>
+        <a href="/ranking" class="{{ 'active' if active_page=='ranking' else '' }}">
+          <i class="fas fa-trophy"></i> Top Ranking
+        </a>
+      </li>
+      {% endif %}
     </ul>
     <div class="page-nav-search">
       <i class="fas fa-search"></i>
@@ -64,21 +183,27 @@
     <button class="mobile-nav-search-btn" onclick="toggleMobileSearch()" title="Search">
       <i class="fas fa-search"></i>
     </button>
+    <!-- Install-as-app button — hidden until the browser confirms the site
+         is installable (see the beforeinstallprompt handler below) -->
+    <button class="install-app-btn" id="installAppBtn" onclick="installApp()" style="display:none;" title="Install HalalSaver MY as an app">
+      <i class="fas fa-mobile-screen-button"></i> <span>Install App</span>
+    </button>
     {% if session.get('user_id') %}
     <div class="nav-avatar-wrap">
-      <img
-        class="nav-avatar-img"
-        src="https://ui-avatars.com/api/?name={{ session.get('user',{}).get('name','U') | urlencode }}&background=059669&color=fff&rounded=true"
-        alt="User"
-        onclick="toggleUserMenu()"
-      />
+      <button class="nav-avatar-btn" onclick="toggleUserMenu()" title="Account menu">
+        {{ initials_avatar(session.get('user',{}).get('name','User')) }}
+        <i class="fas fa-chevron-down nav-avatar-chevron" id="avatarChevron"></i>
+      </button>
       <div class="nav-user-menu" id="userMenu">
         <div class="nav-user-info">
           <strong>{{ session.get('user',{}).get('name','User') }}</strong>
           <small>{{ session.get('user',{}).get('email','') }}</small>
         </div>
-        <a href="/preferences"><i class="fas fa-sliders"></i> Preferences</a>
-        <a href="/dashboard"><i class="fas fa-house"></i> Dashboard</a>
+        <a href="/profile"><i class="fas fa-user-pen"></i> Update Profile</a>
+        <a href="/preferences"><i class="fas fa-sliders"></i> Change Preferences</a>
+        <a href="/saved"><i class="fas fa-heart"></i> Saved Items</a>
+        <a href="#" id="installAppMenuItem" onclick="installApp(); return false;" style="display:none;"><i class="fas fa-mobile-screen-button"></i> Install App</a>
+        <div style="height:1px;background:#a7f3d0;margin:.3rem 0;"></div>
         <a href="/logout" class="danger"><i class="fas fa-right-from-bracket"></i> Logout</a>
       </div>
     </div>
@@ -99,19 +224,43 @@
     />
   </div>
 
-  <!-- Flash messages -->
+  <!-- Flash messages — queued here, rendered as the same bottom-right
+       toast used for AJAX feedback (_hsToast, frontend/js/functions.js)
+       once that script loads further down the page, for one consistent
+       notification style site-wide. -->
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-      <div class="flash-messages" style="position:fixed;top:60px;right:16px;z-index:8888;min-width:280px;">
-        {% for category, message in messages %}
-          <div class="alert alert-{{ 'success' if category=='success' else ('danger' if category=='danger' else ('warning' if category=='warning' else 'info')) }} alert-dismissible fade show" role="alert" style="font-size:.875rem;">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          </div>
-        {% endfor %}
-      </div>
+      <script>
+        window.__flashMessages = {{ messages | tojson }};
+      </script>
     {% endif %}
   {% endwith %}
+
+  <!-- ── Guest Sign-Up Prompt Modal (site-wide) ───────────────────────────── -->
+  <div class="guest-prompt-overlay" id="guestPromptOverlay" onclick="closeGuestPrompt()"></div>
+  <div class="guest-prompt-modal" id="guestPromptModal">
+    <button class="guest-prompt-close" onclick="closeGuestPrompt()"><i class="fas fa-times"></i></button>
+    <div class="guest-prompt-icon"><i class="fas fa-lock"></i></div>
+    <h5>Sign Up to Unlock This Feature</h5>
+    <p>Create a free account to save favourites, add items to your shopping list, get AI-powered recommendations, and personalise your shopping experience.</p>
+    <div class="guest-prompt-btns">
+      <a href="/signup" class="btn-auth-submit" style="display:inline-block;padding:.65rem 1.6rem;font-size:.9rem;border-radius:10px;text-align:center;">
+        <i class="fas fa-user-plus"></i> Create Free Account
+      </a>
+      <a href="/login" class="btn-guest-browse" style="display:inline-block;padding:.55rem 1.4rem;font-size:.85rem;border-radius:10px;text-align:center;margin-top:.5rem;">
+        Already have an account? Login
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Product Quick-View Modal (site-wide) ─────────────────────────────── -->
+  <div class="quickview-overlay" id="quickViewOverlay" onclick="closeQuickView()"></div>
+  <div class="quickview-modal modal-container" id="quickViewModal">
+    <button class="modal-close-btn" onclick="closeQuickView()"><i class="fas fa-times"></i></button>
+    <div id="quickViewBody">
+      <div class="loading-spinner"><i class="fas fa-spinner fa-spin fa-2x" style="color:var(--primary,#059669)"></i></div>
+    </div>
+  </div>
 
   <!-- ── Main Content ─────────────────────────────────────────────────────── -->
   {% block content %}{% endblock %}
@@ -128,7 +277,7 @@
     <a href="/dashboard" class="{{ 'active' if active_page=='recommend' else '' }}">
       <i class="fas fa-wand-magic-sparkles"></i><span>Recommend</span>
     </a>
-    <a href="/dashboard" class="{{ 'active' if active_page=='dashboard' else '' }}">
+    <a href="/saved" class="{{ 'active' if active_page=='saved' else '' }}">
       <i class="fas fa-heart"></i><span>Saved</span>
     </a>
     <a href="/preferences" class="{{ 'active' if active_page=='preferences' else '' }}">
@@ -154,6 +303,12 @@
         <div class="footer-brand-col">
           <div id="logo-placeholder-footer"></div>
           <p class="footer-tagline">Smart halal grocery savings for every Malaysian family.</p>
+          <div class="footer-social-row">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
         </div>
         <div class="footer-nav-col">
           <h6 class="footer-nav-title">Pages</h6>
@@ -165,6 +320,7 @@
         <div class="footer-nav-col">
           <h6 class="footer-nav-title">Account</h6>
           <a href="/dashboard">Dashboard</a>
+          <a href="/saved">Saved Items</a>
           <a href="/preferences">Preferences</a>
           <a href="/logout">Log Out</a>
         </div>
@@ -178,17 +334,42 @@
 
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Login state for JS functions -->
-  <script>window.__IS_LOGGED_IN__ = {{ 'true' if session.get('user_id') else 'false' }};</script>
-  <!-- Existing main JS -->
-  <script src="/js/main.js"></script>
+  <!-- Login state and Firebase client config for JS -->
+  <script>
+    window.__IS_LOGGED_IN__   = {{ 'true' if session.get('user_id') else 'false' }};
+    window.__FB_AUTH_DOMAIN__ = "{{ config.get('FIREBASE_AUTH_DOMAIN', '') }}";
+    window.__FB_PROJECT_ID__  = "{{ config.get('FIREBASE_PROJECT_ID', '') }}";
+
+    function refreshListBadge(count) {
+      var badge = document.getElementById('navListBadge');
+      if (!badge) return;
+      if (count > 0) { badge.textContent = count; badge.style.display = 'inline-flex'; }
+      else { badge.style.display = 'none'; }
+    }
+
+    if (window.__IS_LOGGED_IN__) {
+      fetch('/api/list')
+        .then(function(r) { return r.json(); })
+        .then(function(data) { refreshListBadge(data.count || 0); })
+        .catch(function() {});
+    }
+  </script>
   <!-- Product interaction functions (fav, compare tray) -->
   <script src="/js/functions.js"></script>
+  <!-- Show any server-side flash messages as toasts -->
+  <script>
+    (function() {
+      var flashType = { success: 'ok', danger: 'danger', warning: 'warn', info: 'info' };
+      (window.__flashMessages || []).forEach(function(pair) {
+        _hsToast(pair[1], flashType[pair[0]] || 'info');
+      });
+    })();
+  </script>
   <!-- Logo placeholder injector -->
   <script>
     document.querySelectorAll('[id^="logo-placeholder"]').forEach(function(el) {
       el.innerHTML = '<a href="/" class="brand-logo">' +
-        '<div class="logo-mark"><i class="fas fa-leaf"></i></div>' +
+        '<div class="logo-mark"><i class="fas fa-leaf"></i><span class="logo-mark-badge"><i class="fas fa-check"></i></span></div>' +
         '<div class="logo-text"><span class="logo-name">HalalSaver</span><span class="logo-tag"> MY</span></div>' +
         '</a>';
     });
@@ -196,19 +377,265 @@
 
   <script>
     function toggleUserMenu() {
-      const menu = document.getElementById('userMenu');
-      if (menu) menu.classList.toggle('open');
+      const menu    = document.getElementById('userMenu');
+      const chevron = document.getElementById('avatarChevron');
+      if (menu) {
+        menu.classList.toggle('open');
+        if (chevron) chevron.classList.toggle('open');
+      }
     }
     function toggleMobileSearch() {
       document.getElementById('mobileSearchBar').classList.toggle('open');
     }
     document.addEventListener('click', function(e) {
-      const menu = document.getElementById('userMenu');
+      const menu    = document.getElementById('userMenu');
+      const chevron = document.getElementById('avatarChevron');
       const avatarWrap = document.querySelector('.nav-avatar-wrap');
       if (menu && avatarWrap && !avatarWrap.contains(e.target)) {
         menu.classList.remove('open');
+        if (chevron) chevron.classList.remove('open');
       }
     });
+
+    /* ── PWA: install as app ──────────────────────────────────────────── */
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').catch(function() {});
+      });
+    }
+
+    var _hsDeferredInstallPrompt = null;
+    var _hsIsStandalone = window.matchMedia('(display-mode: standalone)').matches
+      || window.navigator.standalone === true;
+
+    function _hsShowInstallControls() {
+      var btn = document.getElementById('installAppBtn');
+      var menuItem = document.getElementById('installAppMenuItem');
+      if (btn) btn.style.display = 'inline-flex';
+      if (menuItem) menuItem.style.display = 'flex';
+    }
+    function _hsHideInstallControls() {
+      var btn = document.getElementById('installAppBtn');
+      var menuItem = document.getElementById('installAppMenuItem');
+      if (btn) btn.style.display = 'none';
+      if (menuItem) menuItem.style.display = 'none';
+    }
+
+    if (!_hsIsStandalone) {
+      window.addEventListener('beforeinstallprompt', function(e) {
+        e.preventDefault();
+        _hsDeferredInstallPrompt = e;
+        _hsShowInstallControls();
+      });
+
+      // iOS Safari never fires beforeinstallprompt — show the button anyway
+      // and fall back to manual "Add to Home Screen" instructions on click.
+      var isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+      var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+      if (isIOS && isSafari) {
+        _hsShowInstallControls();
+      }
+    }
+
+    window.addEventListener('appinstalled', function() {
+      _hsDeferredInstallPrompt = null;
+      _hsHideInstallControls();
+      _hsToast('<i class="fas fa-circle-check"></i> HalalSaver MY installed!', 'ok');
+    });
+
+    function installApp() {
+      if (_hsDeferredInstallPrompt) {
+        _hsDeferredInstallPrompt.prompt();
+        _hsDeferredInstallPrompt.userChoice.then(function(choice) {
+          _hsDeferredInstallPrompt = null;
+          if (choice.outcome !== 'accepted') return; // button stays visible to try again
+        });
+        return;
+      }
+      // No native prompt available (iOS Safari, or engagement heuristics not
+      // met yet) — show the manual steps for this platform instead.
+      var ua = navigator.userAgent.toLowerCase();
+      var msg = /iphone|ipad|ipod/.test(ua)
+        ? 'Tap the <i class="fas fa-arrow-up-from-bracket"></i> Share icon, then "Add to Home Screen".'
+        : 'Open your browser menu and choose "Install app" / "Add to Home screen".';
+      _hsToast('<i class="fas fa-mobile-screen-button"></i> ' + msg, 'info');
+    }
+
+    /* ── Guest sign-up prompt (site-wide) ─────────────────────────────── */
+    function showGuestPrompt() {
+      document.getElementById('guestPromptOverlay').classList.add('active');
+      document.getElementById('guestPromptModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeGuestPrompt() {
+      document.getElementById('guestPromptOverlay').classList.remove('active');
+      document.getElementById('guestPromptModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* ── Product Quick-View modal (site-wide) ─────────────────────────── */
+    function openQuickView(pid) {
+      if (!pid) return;
+      const overlay = document.getElementById('quickViewOverlay');
+      const modal    = document.getElementById('quickViewModal');
+      const body     = document.getElementById('quickViewBody');
+      overlay.classList.add('active');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      body.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin fa-2x" style="color:var(--primary,#059669)"></i></div>';
+
+      if (typeof trackView === 'function') trackView(pid);
+
+      fetch('/api/product/' + encodeURIComponent(pid))
+        .then(function(r) { return r.json(); })
+        .then(function(data) { body.innerHTML = renderQuickView(data); })
+        .catch(function() {
+          body.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle empty-icon" style="color:#dc3545"></i><p>Could not load product details.</p></div>';
+        });
+    }
+
+    function closeQuickView() {
+      document.getElementById('quickViewOverlay').classList.remove('active');
+      document.getElementById('quickViewModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeQuickView(); closeGuestPrompt(); }
+    });
+
+    function _qvScoreBar(label, value) {
+      var pct = Math.round((value || 0) * 100);
+      return '<div class="qv-score-row"><span class="qv-score-label">' + label + '</span>' +
+        '<div class="qv-score-track"><div class="qv-score-fill" style="width:' + pct + '%"></div></div>' +
+        '<span class="qv-score-pct">' + pct + '%</span></div>';
+    }
+
+    function _qvUnitInfo(unit, price) {
+      if (!unit) return '';
+      var m = String(unit).match(/^([\d.]+)\s*(kg|g|l|ml)$/i);
+      if (!m) return unit; // e.g. "15 sachets" — no per-100 rate to compute
+      var qty = parseFloat(m[1]);
+      var u = m[2].toLowerCase();
+      var grams = (u === 'kg' || u === 'l') ? qty * 1000 : qty;
+      if (!grams) return unit;
+      var per100 = (price / grams) * 100;
+      var label = (u === 'kg' || u === 'g') ? '100g' : '100ml';
+      return unit + ' &middot; RM' + per100.toFixed(2) + '/' + label;
+    }
+
+    function renderQuickView(data) {
+      const p = data.product || {};
+      const pid   = p.product_id || '';
+      const name  = p.product_name || '';
+      const price = (p.price_after_discount || 0).toFixed(2);
+      const orig  = p.price_myr || 0;
+      const disc  = p.discount_percent || 0;
+      const halal = p.halal_certified;
+      const store = p.store || '';
+      const isLoggedIn = window.__IS_LOGGED_IN__;
+      const reasons = Array.isArray(p.reasons) ? p.reasons : [];
+
+      let html = '<div class="qv-layout">';
+      html += '<div class="qv-img-wrap">';
+      var imgSrc = p.image_local || ('https://placehold.co/300x240/ecfdf5/059669?text=' + encodeURIComponent(name.slice(0,12)));
+      html += '<img src="' + imgSrc + '" alt="' + name + '"/>';
+      if (halal) html += '<span class="halal-badge"><i class="fas fa-certificate"></i> JAKIM</span>';
+      if (p.is_cheaper_alt) html += '<span class="cheaper-alt-badge"><i class="fas fa-piggy-bank"></i> Cheaper Alt.</span>';
+      html += '</div>';
+      html += '<div class="qv-info">';
+      html += '<span class="store-badge store-' + store.toLowerCase().replace(/'/g,'').replace(/ /g,'') + '">' + store + '</span> ';
+      if (p.category) html += '<span class="detail-category-chip">' + p.category + '</span>';
+      html += '<h4 class="qv-name">' + name + '</h4>';
+      if (p.brand && p.category) {
+        html += '<p class="qv-desc">' + p.brand + ' — a popular choice in ' + p.category + '.</p>';
+      } else if (p.category) {
+        html += '<p class="qv-desc">A popular pick in ' + p.category + '.</p>';
+      }
+      if (p.brand) html += '<p class="qv-brand"><strong>Brand:</strong> ' + p.brand + '</p>';
+      if (p.unit) html += '<p class="qv-unit"><i class="fas fa-weight-hanging"></i> ' + _qvUnitInfo(p.unit, p.price_after_discount || 0) + '</p>';
+      html += '<div class="qv-price-block"><span class="qv-price">RM ' + price + '</span>';
+      if (disc > 0) html += ' <span class="qv-price-orig">RM ' + orig.toFixed(2) + '</span> <span class="discount-badge">-' + Math.round(disc) + '%</span>';
+      html += '</div>';
+      if (reasons.length) {
+        html += '<div class="reason-chips-row">';
+        reasons.forEach(function(r) { html += '<span class="reason-chip">' + r + '</span>'; });
+        html += '</div>';
+      }
+
+      // Price by store — best-effort match on identical product name;
+      // not every product has a listing at all three stores.
+      if (Array.isArray(data.store_prices) && data.store_prices.length > 1) {
+        html += '<div class="qv-block"><h6><i class="fas fa-store"></i> Price by Store</h6><div class="qv-store-prices">';
+        data.store_prices.forEach(function(sp) {
+          html += '<div class="qv-store-price-item' + (sp.is_best_price ? ' best' : '') + '">';
+          html += '<span class="qv-store-price-store">' + (sp.store || '') + '</span>';
+          html += '<span class="qv-store-price-amt">RM ' + (sp.price_after_discount || 0).toFixed(2) + '</span>';
+          if (sp.is_best_price) html += '<span class="qv-best-badge">BEST</span>';
+          html += '</div>';
+        });
+        html += '</div></div>';
+      }
+
+      // JAKIM certification — simulated/illustrative (see app.py
+      // _simulated_jakim_cert docstring: the dataset has no real
+      // cert-number/date columns).
+      if (data.jakim_cert) {
+        var jc = data.jakim_cert;
+        html += '<div class="qv-block qv-jakim">';
+        html += '<h6><i class="fas fa-certificate"></i> JAKIM Halal Certification <span class="qv-simulated-tag">(Simulated)</span></h6>';
+        html += '<div class="qv-jakim-grid">';
+        html += '<span>Ref No.</span><strong>' + jc.ref_no + '</strong>';
+        html += '<span>Issued By</span><strong>' + jc.issued_by + '</strong>';
+        html += '<span>Valid</span><strong>' + jc.issued_date + ' – ' + jc.expiry_date +
+          (jc.active ? ' <i class="fas fa-circle-check qv-cert-active"></i> Active' : ' <i class="fas fa-circle-xmark qv-cert-expired"></i> Expired') + '</strong>';
+        html += '</div></div>';
+      }
+
+      // Hybrid Score Breakdown — the actual Content-Based / Collaborative /
+      // Popularity scores computed by recommender.py's hybrid formula
+      // (Fig. 3.16), not placeholder numbers.
+      if (data.scores && typeof data.scores.final_score === 'number') {
+        var sc = data.scores;
+        html += '<div class="qv-block qv-scores">';
+        html += '<h6><i class="fas fa-layer-group"></i> Hybrid Score Breakdown</h6>';
+        html += _qvScoreBar('Content-Based (CBF)', sc.content_score);
+        if (sc.collab_score !== null) html += _qvScoreBar('Collaborative (CF)', sc.collab_score);
+        html += _qvScoreBar('Popularity', sc.popularity_score);
+        html += '<div class="qv-final-score">Final Score <strong>' + Math.round(sc.final_score * 100) + '%</strong></div>';
+        if (!isLoggedIn) html += '<p class="qv-scores-note">Sign in for a personalised collaborative-filtering score.</p>';
+        html += '</div>';
+      }
+
+      html += '<div class="qv-rate-row" id="qvRateWidget">Rate this product: ';
+      for (let i = 1; i <= 5; i++) {
+        html += '<i class="far fa-star rate-star" data-val="' + i + '" onclick="submitRating(\'' + pid + '\', ' + i + ', document.getElementById(\'qvRateWidget\'))"></i>';
+      }
+      html += '</div>';
+      html += '<div class="qv-actions">';
+      html += isLoggedIn
+        ? '<button class="icon-btn fav-btn" onclick="toggleFav(\'' + pid + '\')"><i class="fas fa-heart"></i> Favourite</button>'
+        : '<button class="icon-btn fav-btn guest-locked" onclick="showGuestPrompt()"><i class="fas fa-heart"></i> Favourite</button>';
+      html += isLoggedIn
+        ? '<button class="btn-view list-btn" onclick="addToList(\'' + pid + '\')"><i class="fas fa-list-check"></i> Add to List</button>'
+        : '<button class="btn-view list-btn guest-locked" onclick="showGuestPrompt()"><i class="fas fa-list-check"></i> Add to List</button>';
+      html += '<button class="icon-btn" onclick="addToCompare(\'' + pid + '\')"><i class="fas fa-balance-scale"></i></button>';
+      html += '</div>';
+      html += '<a href="/products/' + pid + '" class="qv-full-link">View Full Page <i class="fas fa-arrow-right"></i></a>';
+      html += '</div></div>';
+
+      if (Array.isArray(data.related) && data.related.length) {
+        html += '<div class="qv-related"><h6>Related Products</h6><div class="qv-related-row">';
+        data.related.slice(0, 4).forEach(function(r) {
+          html += '<div class="qv-related-item" onclick="openQuickView(\'' + r.product_id + '\')">';
+          html += '<div class="qv-related-name">' + r.product_name + '</div>';
+          html += '<div class="qv-related-price">RM ' + (r.price_after_discount || 0).toFixed(2) + '</div>';
+          html += '</div>';
+        });
+        html += '</div></div>';
+      }
+      return html;
+    }
   </script>
 
   {% block extra_js %}{% endblock %}

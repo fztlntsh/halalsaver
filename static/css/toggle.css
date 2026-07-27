@@ -223,9 +223,36 @@ body {
     display: none !important;
   }
 
+  /* Guest login/signup pills and the avatar menu duplicate the bottom nav
+     on mobile and are what was pushing the navbar wider than the viewport —
+     the bottom nav already exposes Login / Sign Up / Profile. */
+  .nav-guest-btns {
+    display: none !important;
+  }
+  .nav-avatar-wrap {
+    display: none !important;
+  }
+
+  .web-navbar {
+    gap: .6rem;
+    padding: 0 .85rem;
+  }
+  .web-navbar .logo-tag {
+    display: none;
+  }
+
   /* Show search icon button instead */
   .mobile-nav-search-btn {
     display: flex;
+  }
+
+  /* Icon-only install button — room is tight once the logo tag disappears */
+  .install-app-btn span {
+    display: none;
+  }
+  .install-app-btn {
+    padding: .4rem .55rem;
+    margin-left: 0;
   }
 
   /* Hide products sidebar — filter drawer handles filters on mobile */

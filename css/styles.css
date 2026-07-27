@@ -42,6 +42,18 @@
 
   --transition: all .25s cubic-bezier(.4,0,.2,1);
   --transition-slow: all .4s cubic-bezier(.4,0,.2,1);
+
+  /* ── Shared "card system" tokens — keep every card on the same corners,
+     shadow, hover lift and timing so the app reads as one design, not a
+     patchwork of pages ── */
+  --accent-blue:      #0ea5e9;
+  --accent-indigo:    #6366f1;
+  --radius-card:      22px;
+  --radius-card-sm:   18px;
+  --shadow-card:      0 4px 20px rgba(5,150,105,.08);
+  --shadow-card-hover: 0 20px 45px -18px rgba(5,150,105,.3);
+  --ease-premium:     cubic-bezier(.22,1,.36,1);
+  --dur-card:         .35s;
 }
 
 /* ── Reset & Base ── */

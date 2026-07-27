@@ -1,4 +1,5 @@
 ﻿{% extends 'base.html' %}
+{% from 'base.html' import star_rating %}
 {% set active_page = 'comparison' %}
 {% block title %}Compare Products — HalalSaver MY{% endblock %}
 
@@ -46,11 +47,13 @@
             <th class="compare-product-col">
               <div class="compare-product-header">
                 <img
-                  src="https://placehold.co/120x96/ecfdf5/059669?text={{ p.product_name[:8] | urlencode }}"
+                  src="{{ p.image_local if p.image_local else 'https://placehold.co/120x96/ecfdf5/059669?text=' ~ (p.product_name[:8] | urlencode) }}"
                   alt="{{ p.product_name }}"
                   class="compare-thumb"
+                  onclick="openQuickView('{{ p.product_id }}')"
+                  style="cursor:pointer;"
                 />
-                <div class="compare-product-name">{{ p.product_name }}</div>
+                <div class="compare-product-name" onclick="openQuickView('{{ p.product_id }}')" style="cursor:pointer;">{{ p.product_name }}</div>
                 <button class="compare-remove-btn" onclick="removeFromComparison('{{ p.product_id }}')" title="Remove">
                   <i class="fas fa-times"></i>
                 </button>
@@ -69,6 +72,12 @@
               <span class="best-price-badge"><i class="fas fa-star"></i> Best Price</span>
               {% endif %}
             </td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td class="compare-attr-label"><i class="fas fa-star"></i> Rating</td>
+            {% for p in compare_products %}
+            <td><div class="product-rating" style="justify-content:center;">{{ star_rating(p.discount_percent, p.halal_certified) }}</div></td>
             {% endfor %}
           </tr>
           <tr>
@@ -149,9 +158,9 @@
             <td class="compare-attr-label">Actions</td>
             {% for p in compare_products %}
             <td>
-              <a href="/products/{{ p.product_id }}" class="btn-view" style="display:inline-block;margin:.25rem 0;">
+              <button class="btn-view" style="display:inline-block;margin:.25rem 0;" onclick="openQuickView('{{ p.product_id }}')">
                 <i class="fas fa-eye"></i> View
-              </a>
+              </button>
               <button class="icon-btn fav-btn" onclick="toggleFav('{{ p.product_id }}')">
                 <i class="fas fa-heart"></i>
               </button>
@@ -191,10 +200,12 @@
           <div class="best-price-ribbon"><i class="fas fa-star"></i> Best Price</div>
           {% endif %}
           <img
-            src="https://placehold.co/280x180/ecfdf5/059669?text={{ p.product_name[:8] | urlencode }}"
+            src="{{ p.image_local if p.image_local else 'https://placehold.co/280x180/ecfdf5/059669?text=' ~ (p.product_name[:8] | urlencode) }}"
             alt="{{ p.product_name }}"
+            onclick="openQuickView('{{ p.product_id }}')"
+            style="cursor:pointer;"
           />
-          <div class="compare-mc-name">{{ p.product_name }}</div>
+          <div class="compare-mc-name" onclick="openQuickView('{{ p.product_id }}')" style="cursor:pointer;">{{ p.product_name }}</div>
           <div class="compare-mc-price {{ 'best-price-text' if p.price_after_discount == min_price else '' }}">
             RM {{ "%.2f" | format(p.price_after_discount) }}
           </div>
@@ -230,15 +241,15 @@
             <div class="compare-mc-attr-row">
               <span class="attr-label">In Stock</span>
               <span class="attr-val">
-                {% if p.in_stock %}<span style="color:#2d7a4f"><i class="fas fa-check"></i> Yes</span>
+                {% if p.in_stock %}<span style="color:#059669"><i class="fas fa-check"></i> Yes</span>
                 {% else %}<span style="color:#c0392b"><i class="fas fa-times"></i> No</span>{% endif %}
               </span>
             </div>
           </div>
           <div class="compare-mc-actions">
-            <a href="/products/{{ p.product_id }}" class="btn-view" style="flex:1;justify-content:center">
+            <button class="btn-view" style="flex:1;justify-content:center" onclick="openQuickView('{{ p.product_id }}')">
               <i class="fas fa-eye"></i> View
-            </a>
+            </button>
             <button class="icon-btn fav-btn" onclick="toggleFav('{{ p.product_id }}')">
               <i class="fas fa-heart"></i>
             </button>

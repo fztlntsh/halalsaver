@@ -17,3 +17,6 @@ data/gen_products.js
 data/gen_products2.js
 data/generate_datasets.js
 data/preprocess.js
+
+# Local safety backup made before bulk data edits — not needed in the repo
+data/cleaned_dataset.csv.bak

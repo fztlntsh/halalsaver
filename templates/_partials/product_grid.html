@@ -1,0 +1,11 @@
+{% from 'base.html' import product_card %}
+<div class="product-grid">
+  {% for p in products %}
+  {{ product_card(p, show_score=show_score) }}
+  {% else %}
+  <div class="empty-state">
+    <i class="fas fa-search empty-icon"></i>
+    <p>No recommendations for this budget.</p>
+  </div>
+  {% endfor %}
+</div>

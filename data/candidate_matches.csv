@@ -1,0 +1,225 @@
+prd_id,prd_brand,prd_name,candidate_live_name,candidate_live_brand,candidate_live_category,score,same_brand
+PRD-328,kraft,Krafts Cream Cheese Spread 227g,Puck Cream Cheese Spread,puck,Dairy & Chilled,0.6,False
+PRD-328,kraft,Krafts Cream Cheese Spread 227g,Puck Cream Cheese Spread New Formula,puck,Dairy & Chilled,0.6,False
+PRD-055,heinz,Heinz Baby Puree Apple & Mango 120g,Heinz Cereals Rice with Apple,heinz,Baby & Kids,0.54,True
+PRD-055,heinz,Heinz Baby Puree Apple & Mango 120g,Heinz Cereals Rice with Apple Eco Pack,heinz,Baby & Kids,0.54,True
+PRD-069,nestle,Nestlé Bliss Low Fat Yogurt 135g,Nestle Natural Set Yogurt,nestle,Dairy & Chilled,0.54,True
+PRD-069,nestle,Nestlé Bliss Low Fat Yogurt 135g,Nestle Fruity Yogurt Strawberry,nestle,Dairy & Chilled,0.54,True
+PRD-129,seri murni,Seri Murni Brown Rice 2kg,Seri Murni Palm Cooking Oil,seri murni,Cooking Essentials,0.54,True
+PRD-129,seri murni,Seri Murni Brown Rice 2kg,Seri Murni Palm Cooking Oil Limited Edition,seri murni,Cooking Essentials,0.54,True
+PRD-025,nestle,Nestlé Cornflakes 500g,Nestle Drumstick Vanilla,nestle,Dairy & Chilled,0.5,True
+PRD-025,nestle,Nestlé Cornflakes 500g,Nestle NAN HA 1,nestle,Baby & Kids,0.5,True
+PRD-077,local,Local Tomatoes 500g,Beef Slice Local,local farm,Fresh Produce,0.5,True
+PRD-077,local,Local Tomatoes 500g,Roti Benggali Local,local bakery,Bakery,0.5,True
+PRD-078,local,Local Carrots 500g,Beef Slice Local,local farm,Fresh Produce,0.5,True
+PRD-078,local,Local Carrots 500g,Roti Benggali Local,local bakery,Bakery,0.5,True
+PRD-097,goodday,Goodday Chocolate Milk 200ml,Toblerone Milk Chocolate,toblerone,Snacks,0.5,False
+PRD-097,goodday,Goodday Chocolate Milk 200ml,Toblerone Milk Chocolate New Formula,toblerone,Snacks,0.5,False
+PRD-118,cadbury,Cadbury Chocolate Digestives 400g,Cadbury Crunchie,cadbury,Snacks,0.5,True
+PRD-118,cadbury,Cadbury Chocolate Digestives 400g,Cadbury Crunchie Eco Pack,cadbury,Snacks,0.5,True
+PRD-137,anchor,Anchor Butter Salted 250g,King Butter Salted,king,Dairy & Chilled,0.5,False
+PRD-137,anchor,Anchor Butter Salted 250g,SCS Butter Salted,scs,Cooking Essentials,0.5,False
+PRD-143,kara,Kara Coconut Cream 200ml,Yeo's Coconut Cream,yeo's,Cooking Essentials,0.5,False
+PRD-143,kara,Kara Coconut Cream 200ml,Yeo's Coconut Cream Value Pack,yeo's,Cooking Essentials,0.5,False
+PRD-146,kimball,Kimball Tomato Ketchup 500g,Heinz Tomato Ketchup,heinz,Cooking Essentials,0.5,False
+PRD-146,kimball,Kimball Tomato Ketchup 500g,Heinz Tomato Ketchup Twin Pack,heinz,Cooking Essentials,0.5,False
+PRD-151,mamee,Mamee Snack Noodles Hot & Spicy 25g×10,Mamee O-Corn Snack,mamee,Snacks,0.5,True
+PRD-151,mamee,Mamee Snack Noodles Hot & Spicy 25g×10,Mamee O-Corn Snack Eco Pack,mamee,Snacks,0.5,True
+PRD-188,jalen,Jalen Corned Beef 340g,Champion Corned Beef,champion,Canned & Preserved,0.5,False
+PRD-188,jalen,Jalen Corned Beef 340g,Champion Corned Beef Value Pack,champion,Canned & Preserved,0.5,False
+PRD-198,saji,Saji Cooking Oil 5L,Sunco Cooking Oil,sunco,Cooking Essentials,0.5,False
+PRD-198,saji,Saji Cooking Oil 5L,Sunco Cooking Oil Family Size,sunco,Cooking Essentials,0.5,False
+PRD-199,cap buruh,Buruh Cooking Oil 2L,Sunco Cooking Oil,sunco,Cooking Essentials,0.5,False
+PRD-199,cap buruh,Buruh Cooking Oil 2L,Sunco Cooking Oil Family Size,sunco,Cooking Essentials,0.5,False
+PRD-208,maggi,Maggi Tomato Ketchup 325g,Heinz Tomato Ketchup,heinz,Cooking Essentials,0.5,False
+PRD-208,maggi,Maggi Tomato Ketchup 325g,Heinz Tomato Ketchup Twin Pack,heinz,Cooking Essentials,0.5,False
+PRD-234,adabi,Adabi Instant Mee Segera Kari 5pack,Adabi Rempah Kari Ayam,adabi,Cooking Essentials,0.5,True
+PRD-234,adabi,Adabi Instant Mee Segera Kari 5pack,Adabi Kari Ikan Canned,adabi,Canned & Preserved,0.5,True
+PRD-262,yeo's,Yeos Sambal Oelek 200g,ABC Sambal Oelek,abc,Cooking Essentials,0.5,False
+PRD-262,yeo's,Yeos Sambal Oelek 200g,ABC Sambal Oelek Twin Pack,abc,Cooking Essentials,0.5,False
+PRD-284,local,Potato White 1kg,Dragon Fruit White,local farm,Fresh Produce,0.5,True
+PRD-284,local,Potato White 1kg,Dragon Fruit White Refill Pack,local farm,Fresh Produce,0.5,True
+PRD-294,imported,Apple Fuji 4pcs,Washington Apple Red,imported,Fresh Produce,0.5,True
+PRD-294,imported,Apple Fuji 4pcs,Washington Apple Red Family Size,imported,Fresh Produce,0.5,True
+PRD-301,nestle,Nestlé Corn Flakes 300g,Kellogg's Corn Flakes,kellogg's,Rice & Grains,0.5,False
+PRD-301,nestle,Nestlé Corn Flakes 300g,Kellogg's Corn Flakes Limited Edition,kellogg's,Rice & Grains,0.5,False
+PRD-302,kellogg's,Kellogg's Frosties 300g,Kellogg's Corn Flakes,kellogg's,Rice & Grains,0.5,True
+PRD-302,kellogg's,Kellogg's Frosties 300g,Kellogg's Corn Flakes Limited Edition,kellogg's,Rice & Grains,0.5,True
+PRD-321,gardenia,Gardenia ClassicWhite Bread 400g,Gardenia Croissant,gardenia,Bakery,0.5,True
+PRD-321,gardenia,Gardenia ClassicWhite Bread 400g,Gardenia Croissant Value Pack,gardenia,Bakery,0.5,True
+PRD-329,gardenia,Gardenia Raisin Loaf 380g,Gardenia Croissant,gardenia,Bakery,0.5,True
+PRD-329,gardenia,Gardenia Raisin Loaf 380g,Gardenia Croissant Value Pack,gardenia,Bakery,0.5,True
+PRD-331,gardenia,Gardenia Twiggies Chocolate 6pcs,Gardenia Croissant,gardenia,Bakery,0.5,True
+PRD-331,gardenia,Gardenia Twiggies Chocolate 6pcs,Gardenia Croissant Value Pack,gardenia,Bakery,0.5,True
+PRD-340,gardenia,Gardenia Multigrain Loaf 400g,Gardenia Croissant,gardenia,Bakery,0.5,True
+PRD-340,gardenia,Gardenia Multigrain Loaf 400g,Gardenia Croissant Value Pack,gardenia,Bakery,0.5,True
+PRD-004,adabi,Adabi Coconut Milk 200ml,Kicap Manis Adabi,adabi,Cooking Essentials,0.45,True
+PRD-004,adabi,Adabi Coconut Milk 200ml,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.45,True
+PRD-032,maggi,Maggi Secukup Rasa 300g,Maggi Tomyam Paste,maggi,Cooking Essentials,0.45,True
+PRD-032,maggi,Maggi Secukup Rasa 300g,Maggi Sos Cili,maggi,Cooking Essentials,0.45,True
+PRD-082,yeo's,Yeo's Barley Water 250ml,Yeo's Coconut Cream,yeo's,Cooking Essentials,0.45,True
+PRD-082,yeo's,Yeo's Barley Water 250ml,Yeo's Coconut Cream Value Pack,yeo's,Cooking Essentials,0.45,True
+PRD-089,vitagen,Vitagen Strawberry 125ml×5,Vitagen Cultured Milk Original Bundle Pack,vitagen,Beverages,0.45,True
+PRD-089,vitagen,Vitagen Strawberry 125ml×5,Vitagen Cultured Milk Original Limited Edition,vitagen,Beverages,0.45,True
+PRD-098,pokka,Pokka Lemon Tea 300ml,Pokka Iced Coffee,pokka,Beverages,0.45,True
+PRD-098,pokka,Pokka Lemon Tea 300ml,Pokka Sorbet Mango,pokka,Frozen Food,0.45,True
+PRD-100,nestle milo,Milo RTD 200ml,Milo Activ-Go Tin,milo,Beverages,0.45,True
+PRD-100,nestle milo,Milo RTD 200ml,Milo Activ-Go Tin Value Pack,milo,Beverages,0.45,True
+PRD-144,yeo's,Yeos Sambal Belacan 200g,Yeo's Coconut Cream,yeo's,Cooking Essentials,0.45,True
+PRD-144,yeo's,Yeos Sambal Belacan 200g,Yeo's Coconut Cream Value Pack,yeo's,Cooking Essentials,0.45,True
+PRD-147,nestle milo,Nestlé Milo Powder 1kg,Nestle Drumstick Vanilla,nestle,Dairy & Chilled,0.45,True
+PRD-147,nestle milo,Nestlé Milo Powder 1kg,Nestle NAN HA 1,nestle,Baby & Kids,0.45,True
+PRD-182,tesco,Tesco Baked Beans 420g,Tesco Plastic Wrap,tesco,Household,0.45,True
+PRD-182,tesco,Tesco Baked Beans 420g,Tesco Vegetable Soup,tesco,Canned & Preserved,0.45,True
+PRD-201,adabi,Adabi Curry Powder 250g,Kicap Manis Adabi,adabi,Cooking Essentials,0.45,True
+PRD-201,adabi,Adabi Curry Powder 250g,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.45,True
+PRD-202,adabi,Adabi Rendang Paste 180g,Kicap Manis Adabi,adabi,Cooking Essentials,0.45,True
+PRD-202,adabi,Adabi Rendang Paste 180g,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.45,True
+PRD-215,heinz,Heinz White Vinegar 473ml,Heinz Tomato Ketchup,heinz,Cooking Essentials,0.45,True
+PRD-215,heinz,Heinz White Vinegar 473ml,Heinz Tomato Ketchup Twin Pack,heinz,Cooking Essentials,0.45,True
+PRD-235,gardenia,Gardenia Pita Bread 6s,Gardenia Croissant,gardenia,Bakery,0.45,True
+PRD-235,gardenia,Gardenia Pita Bread 6s,Gardenia Croissant Value Pack,gardenia,Bakery,0.45,True
+PRD-246,adabi,Adabi Cumin Powder 100g,Kicap Manis Adabi,adabi,Cooking Essentials,0.45,True
+PRD-246,adabi,Adabi Cumin Powder 100g,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.45,True
+PRD-249,maggi,Maggi Secukup Rasa 100g,Maggi Tomyam Paste,maggi,Cooking Essentials,0.45,True
+PRD-249,maggi,Maggi Secukup Rasa 100g,Maggi Sos Cili,maggi,Cooking Essentials,0.45,True
+PRD-257,adabi,Adabi Mixed Herbs 20g,Kicap Manis Adabi,adabi,Cooking Essentials,0.45,True
+PRD-257,adabi,Adabi Mixed Herbs 20g,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.45,True
+PRD-267,farmhouse,Farmhouse Frozen Prawns 500g,Farmhouse Fresh Milk,farmhouse,Dairy & Chilled,0.45,True
+PRD-267,farmhouse,Farmhouse Frozen Prawns 500g,Farmhouse Fresh Milk Eco Pack,farmhouse,Dairy & Chilled,0.45,True
+PRD-277,gardenia,Gardenia Frozen Pizza Dough 400g,Gardenia Croissant,gardenia,Bakery,0.45,True
+PRD-277,gardenia,Gardenia Frozen Pizza Dough 400g,Gardenia Croissant Value Pack,gardenia,Bakery,0.45,True
+PRD-307,nestle,Nestlé Koko Krunch 330g,Nestle Drumstick Vanilla,nestle,Dairy & Chilled,0.45,True
+PRD-307,nestle,Nestlé Koko Krunch 330g,Nestle NAN HA 1,nestle,Baby & Kids,0.45,True
+PRD-308,kellogg's,Kellogg's Special K 300g,Kellogg's Corn Flakes,kellogg's,Rice & Grains,0.45,True
+PRD-308,kellogg's,Kellogg's Special K 300g,Kellogg's Corn Flakes Limited Edition,kellogg's,Rice & Grains,0.45,True
+PRD-311,nestle,Nestlé Fitnesse Cereal 375g,Nestle Drumstick Vanilla,nestle,Dairy & Chilled,0.45,True
+PRD-311,nestle,Nestlé Fitnesse Cereal 375g,Nestle NAN HA 1,nestle,Baby & Kids,0.45,True
+PRD-315,nestle,Nestlé Breakfast Biscuits 225g,Nestle Drumstick Vanilla,nestle,Dairy & Chilled,0.45,True
+PRD-315,nestle,Nestlé Breakfast Biscuits 225g,Nestle NAN HA 1,nestle,Baby & Kids,0.45,True
+PRD-316,kellogg's,Kellogg's All Bran 200g,Kellogg's Corn Flakes,kellogg's,Rice & Grains,0.45,True
+PRD-316,kellogg's,Kellogg's All Bran 200g,Kellogg's Corn Flakes Limited Edition,kellogg's,Rice & Grains,0.45,True
+PRD-322,gardenia,Gardenia Whole Wheat Bread 400g,Gardenia Croissant,gardenia,Bakery,0.45,True
+PRD-322,gardenia,Gardenia Whole Wheat Bread 400g,Gardenia Croissant Value Pack,gardenia,Bakery,0.45,True
+PRD-332,gardenia,Gardenia Muffin Double Choc 6pcs,Gardenia Croissant,gardenia,Bakery,0.45,True
+PRD-332,gardenia,Gardenia Muffin Double Choc 6pcs,Gardenia Croissant Value Pack,gardenia,Bakery,0.45,True
+PRD-336,gardenia,Gardenia Toast Premium White 600g,Gardenia Croissant,gardenia,Bakery,0.45,True
+PRD-336,gardenia,Gardenia Toast Premium White 600g,Gardenia Croissant Value Pack,gardenia,Bakery,0.45,True
+PRD-338,massimo,Massimo Hotdog Bun 6pcs,Potato Roll Bun Value Pack,massimo,Bakery,0.45,True
+PRD-338,massimo,Massimo Hotdog Bun 6pcs,Potato Roll Bun Refill Pack,massimo,Bakery,0.45,True
+PRD-044,dettol,Dettol Anti-Bacterial Handwash 250ml,Dettol Original Floor Cleaner,dettol,Household,0.42,True
+PRD-044,dettol,Dettol Anti-Bacterial Handwash 250ml,Dettol Antiseptic Liquid,dettol,Household,0.42,True
+PRD-145,adabi,Adabi Santan Kelapa Pekat 200ml,Kicap Manis Adabi,adabi,Cooking Essentials,0.42,True
+PRD-145,adabi,Adabi Santan Kelapa Pekat 200ml,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.42,True
+PRD-213,abc,ABC Soy Sauce Dark 625ml,ABC Sambal Oelek,abc,Cooking Essentials,0.42,True
+PRD-213,abc,ABC Soy Sauce Dark 625ml,ABC Sambal Oelek Twin Pack,abc,Cooking Essentials,0.42,True
+PRD-217,maggi,Maggi Mee Goreng 5pack,Maggi Tomyam Paste,maggi,Cooking Essentials,0.42,True
+PRD-217,maggi,Maggi Mee Goreng 5pack,Maggi Sos Cili,maggi,Cooking Essentials,0.42,True
+PRD-229,maggi,Maggi Noodles Curry 5pack,Maggi Tomyam Paste,maggi,Cooking Essentials,0.42,True
+PRD-229,maggi,Maggi Noodles Curry 5pack,Maggi Sos Cili,maggi,Cooking Essentials,0.42,True
+PRD-241,adabi,Adabi Sea Salt Fine 500g,Kicap Manis Adabi,adabi,Cooking Essentials,0.42,True
+PRD-241,adabi,Adabi Sea Salt Fine 500g,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.42,True
+PRD-245,adabi,Adabi Black Pepper Powder 100g,Kicap Manis Adabi,adabi,Cooking Essentials,0.42,True
+PRD-245,adabi,Adabi Black Pepper Powder 100g,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.42,True
+PRD-275,farmhouse,Farmhouse Frozen Crab Sticks 200g,Farmhouse Fresh Milk,farmhouse,Dairy & Chilled,0.42,True
+PRD-275,farmhouse,Farmhouse Frozen Crab Sticks 200g,Farmhouse Fresh Milk Eco Pack,farmhouse,Dairy & Chilled,0.42,True
+PRD-280,farmhouse,Farmhouse Frozen Whole Chicken 1.5kg,Farmhouse Fresh Milk,farmhouse,Dairy & Chilled,0.42,True
+PRD-280,farmhouse,Farmhouse Frozen Whole Chicken 1.5kg,Farmhouse Fresh Milk Eco Pack,farmhouse,Dairy & Chilled,0.42,True
+PRD-309,nestle,Nestlé Milo Breakfast Cereal 330g,Nestle Drumstick Vanilla,nestle,Dairy & Chilled,0.42,True
+PRD-309,nestle,Nestlé Milo Breakfast Cereal 330g,Nestle NAN HA 1,nestle,Baby & Kids,0.42,True
+PRD-318,nestle milo,Milo Nuggets Cereal 170g,Milo Activ-Go Tin,milo,Beverages,0.42,True
+PRD-318,nestle milo,Milo Nuggets Cereal 170g,Milo Activ-Go Tin Value Pack,milo,Beverages,0.42,True
+PRD-335,massimo,Massimo Mini Sausage Roll 4pcs,Potato Roll Bun Value Pack,massimo,Bakery,0.42,True
+PRD-335,massimo,Massimo Mini Sausage Roll 4pcs,Potato Roll Bun Refill Pack,massimo,Bakery,0.42,True
+PRD-003,campbell's,Campbell's Mushroom Soup 305g,Heinz Cream of Mushroom Soup,heinz,Canned & Preserved,0.4,False
+PRD-003,campbell's,Campbell's Mushroom Soup 305g,Heinz Cream of Mushroom Soup Refill Pack,heinz,Canned & Preserved,0.4,False
+PRD-029,cap burung,Cap Burung Kicap Manis 340g,Kicap Manis Adabi,adabi,Cooking Essentials,0.4,False
+PRD-029,cap burung,Cap Burung Kicap Manis 340g,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.4,False
+PRD-092,cactus,Cactus Mineral Water 1.5L,Evian Natural Mineral Water,evian,Beverages,0.4,False
+PRD-092,cactus,Cactus Mineral Water 1.5L,Evian Natural Mineral Water Value Pack,evian,Beverages,0.4,False
+PRD-099,ah huat,Teh Tarik Kaw Canned 325ml,Nescafe Tarik Kaw,nescafe,Beverages,0.4,False
+PRD-099,ah huat,Teh Tarik Kaw Canned 325ml,Nescafe Tarik Kaw Bundle Pack,nescafe,Beverages,0.4,False
+PRD-126,bernas,Bernas Special Rice 5kg,Super Special Thai Rice,super special,Rice & Grains,0.4,False
+PRD-126,bernas,Bernas Special Rice 5kg,Super Special Thai Rice New Formula,super special,Rice & Grains,0.4,False
+PRD-197,knife,Knife Sunflower Cooking Oil 2L,Sunco Cooking Oil,sunco,Cooking Essentials,0.4,False
+PRD-197,knife,Knife Sunflower Cooking Oil 2L,Sunco Cooking Oil Family Size,sunco,Cooking Essentials,0.4,False
+PRD-326,high 5,High 5 White Bread 400g,Sandwich White Bread Sliced,tesco,Bakery,0.4,False
+PRD-326,high 5,High 5 White Bread 400g,Sandwich White Bread Sliced Value Pack,tesco,Bakery,0.4,False
+PRD-034,adabi,Adabi Cili Boh (Chili Paste) 500g,Kicap Manis Adabi,adabi,Cooking Essentials,0.39,True
+PRD-034,adabi,Adabi Cili Boh (Chili Paste) 500g,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.39,True
+PRD-093,marigold,Marigold Peel Fresh Orange 1L,Marigold Yogurt Mixed Berry Twin Pack,marigold,Dairy & Chilled,0.39,True
+PRD-093,marigold,Marigold Peel Fresh Orange 1L,Marigold Yogurt Mixed Berry Eco Pack,marigold,Dairy & Chilled,0.39,True
+PRD-094,marigold,Marigold Peel Fresh Apple 1L,Marigold Yogurt Mixed Berry Twin Pack,marigold,Dairy & Chilled,0.39,True
+PRD-094,marigold,Marigold Peel Fresh Apple 1L,Marigold Yogurt Mixed Berry Eco Pack,marigold,Dairy & Chilled,0.39,True
+PRD-189,rexona,Rexona Tuna in Sunflower Oil 185g,Rexona Men Sport Deodorant,rexona,Personal Care,0.39,True
+PRD-189,rexona,Rexona Tuna in Sunflower Oil 185g,Rexona Men Sport Deodorant Refill Pack,rexona,Personal Care,0.39,True
+PRD-218,maggi,Maggi Tom Yam Noodles 5pack,Maggi Tomyam Paste,maggi,Cooking Essentials,0.39,True
+PRD-218,maggi,Maggi Tom Yam Noodles 5pack,Maggi Sos Cili,maggi,Cooking Essentials,0.39,True
+PRD-236,adabi,Adabi Instant Curry Laksa Paste 200g,Kicap Manis Adabi,adabi,Cooking Essentials,0.39,True
+PRD-236,adabi,Adabi Instant Curry Laksa Paste 200g,Kicap Manis Adabi Limited Edition,adabi,Cooking Essentials,0.39,True
+PRD-238,maggi,Maggi 2-Minute Noodles Chicken 5pack,Maggi Tomyam Paste,maggi,Cooking Essentials,0.39,True
+PRD-238,maggi,Maggi 2-Minute Noodles Chicken 5pack,Maggi Sos Cili,maggi,Cooking Essentials,0.39,True
+PRD-240,maggi,Maggi Hot Cup Tom Yam 62g,Maggi Tomyam Paste,maggi,Cooking Essentials,0.39,True
+PRD-240,maggi,Maggi Hot Cup Tom Yam 62g,Maggi Sos Cili,maggi,Cooking Essentials,0.39,True
+PRD-220,mamee,Mamee Chef Kari Noodles 5pack,Mamee O-Corn Snack,mamee,Snacks,0.38,True
+PRD-220,mamee,Mamee Chef Kari Noodles 5pack,Mamee O-Corn Snack Eco Pack,mamee,Snacks,0.38,True
+PRD-221,mamee,Mamee Chef Mee Goreng 5pack,Mamee O-Corn Snack,mamee,Snacks,0.38,True
+PRD-221,mamee,Mamee Chef Mee Goreng 5pack,Mamee O-Corn Snack Eco Pack,mamee,Snacks,0.38,True
+PRD-015,cap buruh,Cap Buruh Table Salt 500g,Rose Brand Salt Table,rose brand,Cooking Essentials,0.33,False
+PRD-015,cap buruh,Cap Buruh Table Salt 500g,Rose Brand Salt Table Twin Pack,rose brand,Cooking Essentials,0.33,False
+PRD-023,cintan,Cintan Curry Mi Goreng (5-pack),Ibumie Mi Goreng Penang,ibumie,Rice & Grains,0.33,False
+PRD-023,cintan,Cintan Curry Mi Goreng (5-pack),Ibumie Mi Goreng Penang Family Size,ibumie,Rice & Grains,0.33,False
+PRD-059,oldtown,OldTown White Coffee 3-in-1 (30 sachets),Ali Cafe White Coffee,power root,Beverages,0.33,False
+PRD-059,oldtown,OldTown White Coffee 3-in-1 (30 sachets),Ali Cafe White Coffee Limited Edition,power root,Beverages,0.33,False
+PRD-125,jasmine,Jasmine Super Tempatan Rice 5kg,Super Special Thai Rice,super special,Rice & Grains,0.33,False
+PRD-125,jasmine,Jasmine Super Tempatan Rice 5kg,Super Special Thai Rice New Formula,super special,Rice & Grains,0.33,False
+PRD-305,quaker,Quaker Rolled Oats 500g,Bob Red Mill Rolled Oats,bob red mill,Rice & Grains,0.33,False
+PRD-305,quaker,Quaker Rolled Oats 500g,Bob Red Mill Rolled Oats New Formula,bob red mill,Rice & Grains,0.33,False
+PRD-330,massimo,Massimo Croissant 4pcs,Gardenia Croissant,gardenia,Bakery,0.33,False
+PRD-330,massimo,Massimo Croissant 4pcs,Gardenia Croissant Value Pack,gardenia,Bakery,0.33,False
+PRD-016,bungasari,Tepung Gandum (All-Purpose Flour) 1kg,RHB Flour Plain Tepung,rhb,Cooking Essentials,0.29,False
+PRD-016,bungasari,Tepung Gandum (All-Purpose Flour) 1kg,RHB Flour Plain Tepung Twin Pack,rhb,Cooking Essentials,0.29,False
+PRD-183,del monte,Del Monte Peach Slices in Juice 415g,Golden Circle Peach Slices,golden circle,Canned & Preserved,0.29,False
+PRD-183,del monte,Del Monte Peach Slices in Juice 415g,Golden Circle Peach Slices Twin Pack,golden circle,Canned & Preserved,0.29,False
+PRD-200,vesawit,Vesawit Palm Olein Oil 5L,Seri Murni Palm Cooking Oil,seri murni,Cooking Essentials,0.29,False
+PRD-200,vesawit,Vesawit Palm Olein Oil 5L,Seri Murni Palm Cooking Oil Limited Edition,seri murni,Cooking Essentials,0.29,False
+PRD-310,bob's red mill,Bob's Red Mill Granola 340g,Bob Red Mill Rolled Oats,bob red mill,Rice & Grains,0.29,False
+PRD-310,bob's red mill,Bob's Red Mill Granola 340g,Bob Red Mill Rolled Oats New Formula,bob red mill,Rice & Grains,0.29,False
+PRD-009,f&n,100Plus Isotonic 24-can Pack,Coke Original Can,coca-cola,Beverages,0.25,False
+PRD-009,f&n,100Plus Isotonic 24-can Pack,Pepsi Original Can,pepsi,Beverages,0.25,False
+PRD-010,sunquick,Sunquick Orange Concentrate 840ml,Orange Navel,imported,Fresh Produce,0.25,False
+PRD-010,sunquick,Sunquick Orange Concentrate 840ml,Orange Navel Value Pack,imported,Fresh Produce,0.25,False
+PRD-013,cap jati,Jasmine Rice 5kg,Beras Jasmine 5% Broken,cap nona,Rice & Grains,0.25,False
+PRD-013,cap jati,Jasmine Rice 5kg,Beras Jasmine 5% Broken Refill Pack,cap nona,Rice & Grains,0.25,False
+PRD-047,local,Choy Sum (Chinese Cabbage) 300g,Durian Musang King,local farm,Fresh Produce,0.25,True
+PRD-047,local,Choy Sum (Chinese Cabbage) 300g,Durian D24,local farm,Fresh Produce,0.25,True
+PRD-048,ql farm,Free-Range Chicken Eggs 10pcs,Fa Women Deodorant Aqua,fa,Personal Care,0.25,True
+PRD-048,ql farm,Free-Range Chicken Eggs 10pcs,Fa Women Deodorant Aqua Twin Pack,fa,Personal Care,0.25,True
+PRD-091,spritzer,Spritzer Sparkling Water 325ml,Calpis Water Original,calpis,Beverages,0.25,False
+PRD-091,spritzer,Spritzer Sparkling Water 325ml,Ritz Crackers Original,ritz,Snacks,0.25,True
+PRD-110,twisties,Twisties Cheese 60g,Philadelphia Cream Cheese,philadelphia,Dairy & Chilled,0.25,False
+PRD-110,twisties,Twisties Cheese 60g,Milkana Cheese Spread,milkana,Dairy & Chilled,0.25,False
+PRD-135,leggos,Leggos Pasta Spaghetti 400g,Penne Pasta,barilla,Rice & Grains,0.25,False
+PRD-135,leggos,Leggos Pasta Spaghetti 400g,Penne Pasta Family Size,barilla,Rice & Grains,0.25,False
+PRD-136,naturel,Naturel Olive Oil Extra Virgin 500ml,Brown Rice Beras Perang,naturel,Rice & Grains,0.25,True
+PRD-136,naturel,Naturel Olive Oil Extra Virgin 500ml,Brown Rice Beras Perang Eco Pack,naturel,Rice & Grains,0.25,True
+PRD-242,cap faiza,Cap Faiza Turmeric Powder 200g,Fa Women Deodorant Aqua,fa,Personal Care,0.25,True
+PRD-242,cap faiza,Cap Faiza Turmeric Powder 200g,Fa Women Deodorant Aqua Twin Pack,fa,Personal Care,0.25,True
+PRD-243,cap faiza,Cap Faiza Coriander Powder 200g,Fa Women Deodorant Aqua,fa,Personal Care,0.25,True
+PRD-243,cap faiza,Cap Faiza Coriander Powder 200g,Fa Women Deodorant Aqua Twin Pack,fa,Personal Care,0.25,True
+PRD-244,cap faiza,Cap Faiza Chilli Powder 250g,Fa Women Deodorant Aqua,fa,Personal Care,0.25,True
+PRD-244,cap faiza,Cap Faiza Chilli Powder 250g,Fa Women Deodorant Aqua Twin Pack,fa,Personal Care,0.25,True
+PRD-272,seachoice,Frozen Squid Ring 300g,Squid Fresh,local farm,Fresh Produce,0.25,False
+PRD-272,seachoice,Frozen Squid Ring 300g,Squid Fresh Family Size,local farm,Fresh Produce,0.25,False
+PRD-278,greenfarm,Frozen Edamame Beans 500g,Fa Women Deodorant Aqua,fa,Personal Care,0.25,True
+PRD-278,greenfarm,Frozen Edamame Beans 500g,Fa Women Deodorant Aqua Twin Pack,fa,Personal Care,0.25,True
+PRD-281,ocean king,Crab Meat Frozen 200g,King Butter Salted,king,Dairy & Chilled,0.25,True
+PRD-281,ocean king,Crab Meat Frozen 200g,King Butter Salted Limited Edition,king,Dairy & Chilled,0.25,True
+PRD-286,local,Spinach 200g,Durian Musang King,local farm,Fresh Produce,0.25,True
+PRD-286,local,Spinach 200g,Durian D24,local farm,Fresh Produce,0.25,True
+PRD-292,local,Pandan Leaves Bundle,Durian Musang King,local farm,Fresh Produce,0.25,True
+PRD-292,local,Pandan Leaves Bundle,Durian D24,local farm,Fresh Produce,0.25,True
+PRD-312,nestle,Koko Krunch Duo 330g,Nestle Natural Set Yogurt,nestle,Dairy & Chilled,0.25,True
+PRD-312,nestle,Koko Krunch Duo 330g,Nestle Fruity Yogurt Strawberry,nestle,Dairy & Chilled,0.25,True
+PRD-320,nestle bear brand,Bear Brand Sterilised Milk 300g,Nestle Natural Set Yogurt,nestle,Dairy & Chilled,0.25,True
+PRD-320,nestle bear brand,Bear Brand Sterilised Milk 300g,Nestle Fruity Yogurt Strawberry,nestle,Dairy & Chilled,0.25,True

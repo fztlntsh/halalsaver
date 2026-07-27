@@ -1,27 +1,27 @@
 /* ============================================================
    HalalSaver MY — Service Worker (PWA)
-   Caches core assets for offline use on mobile browsers.
+   Only caches truly static assets (CSS/JS/manifest/icons) so the
+   installed app still loads instantly on a slow connection. Pages and
+   API calls are session-based and personalised (dashboard, saved list,
+   recommendations), so they are always fetched fresh from the network —
+   caching those would show stale data forever once cached.
    ============================================================ */
 
-const CACHE_NAME = 'halalsaver-my-v1';
+const CACHE_NAME = 'halalsaver-my-v2';
 
-/* Assets to cache on install */
 const PRECACHE_URLS = [
-  './',
-  './index.html',
-  './login.html',
-  './register.html',
-  './preferences.html',
-  './dashboard.html',
-  './products.html',
-  './comparison.html',
-  './ranking.html',
-  './css/styles.css',
-  './js/main.js',
-  './manifest.json'
+  '/css/styles.css',
+  '/static/css/app.css',
+  '/static/css/toggle.css',
+  '/js/functions.js',
+  '/manifest.json',
+  '/frontend/assets/icons/icon-192.png',
+  '/frontend/assets/icons/icon-512.png',
 ];
 
-/* ── Install: pre-cache shell assets ── */
+/* Only these path prefixes are safe to cache-first — static, non-personalised. */
+const STATIC_PREFIXES = ['/css/', '/static/', '/js/', '/frontend/assets/'];
+
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -30,53 +30,33 @@ self.addEventListener('install', event => {
   );
 });
 
-/* ── Activate: remove stale caches ── */
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      )
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
 
-/* ── Fetch: cache-first for local assets, network-first for remote ── */
 self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-
-  /* Only handle GET requests */
   if (event.request.method !== 'GET') return;
 
-  /* Network-first for CDN (Bootstrap, Font Awesome) */
-  const isCDN = url.hostname.includes('cdn.jsdelivr.net') ||
-                url.hostname.includes('cdnjs.cloudflare.com');
-  if (isCDN) {
-    event.respondWith(
-      fetch(event.request)
-        .then(res => {
-          const clone = res.clone();
-          caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
-          return res;
-        })
-        .catch(() => caches.match(event.request))
-    );
-    return;
-  }
+  const url = new URL(event.request.url);
+  const isStaticAsset = url.origin === self.location.origin &&
+    STATIC_PREFIXES.some(prefix => url.pathname.startsWith(prefix));
 
-  /* Cache-first for local assets */
+  if (!isStaticAsset) return; // let the browser handle pages/API calls natively
+
   event.respondWith(
     caches.match(event.request).then(cached => {
-      if (cached) return cached;
-      return fetch(event.request).then(res => {
+      const fetchPromise = fetch(event.request).then(res => {
         if (res && res.status === 200) {
           const clone = res.clone();
           caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
         }
         return res;
-      });
+      }).catch(() => cached);
+      return cached || fetchPromise;
     })
   );
 });

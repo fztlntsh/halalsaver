@@ -26,9 +26,13 @@
           <i class="fas fa-people-roof"></i> Family Groceries
           <small>Budget: RM200, All categories</small>
         </button>
-        <button type="button" class="preset-btn" onclick="applyPreset('premium')">
-          <i class="fas fa-star"></i> Premium Shopper
-          <small>Budget: RM500, Best quality</small>
+        <button type="button" class="preset-btn" onclick="applyPreset('healthy')">
+          <i class="fas fa-leaf"></i> Healthy Living
+          <small>Budget: RM150, Fresh &amp; wholesome</small>
+        </button>
+        <button type="button" class="preset-btn" onclick="applyPreset('quickmeals')">
+          <i class="fas fa-clock"></i> Quick Meals
+          <small>Budget: RM80, Frozen &amp; convenience</small>
         </button>
       </div>
     </div>
@@ -184,10 +188,24 @@ function applyPreset(type) {
     setBudget(200);
     document.getElementById('halalToggle').checked = true;
     selectAllCategories(true);
-  } else if (type === 'premium') {
-    setBudget(500);
-    document.getElementById('halalToggle').checked = false;
-    selectAllCategories(true);
+  } else if (type === 'healthy') {
+    setBudget(150);
+    document.getElementById('halalToggle').checked = true;
+    selectAllCategories(false);
+    ['Dairy & Eggs','Meat & Poultry','Rice & Grains'].forEach(function(cat) {
+      document.querySelectorAll('input[name="categories"]').forEach(function(cb) {
+        if (cb.value === cat) cb.checked = true;
+      });
+    });
+  } else if (type === 'quickmeals') {
+    setBudget(80);
+    document.getElementById('halalToggle').checked = true;
+    selectAllCategories(false);
+    ['Frozen Foods','Snacks & Confectionery','Cooking Essentials'].forEach(function(cat) {
+      document.querySelectorAll('input[name="categories"]').forEach(function(cb) {
+        if (cb.value === cat) cb.checked = true;
+      });
+    });
   }
 }
 </script>
