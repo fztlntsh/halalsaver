@@ -11,12 +11,14 @@ outputs/
 # Large model file not needed at runtime (303 MB)
 models/cosine_sim_matrix.pkl
 
-# Generated data files not needed in deployment
-data/gen_products.py
-data/gen_products.js
-data/gen_products2.js
-data/generate_datasets.js
-data/preprocess.js
+# Archived one-time dataset-generation pipeline (see data/pipeline/README.md)
+# — not needed in deployment, kept locally/untracked for reproducibility.
+data/pipeline/*.py
+data/pipeline/*.js
+data/pipeline/products_aeon.csv
+data/pipeline/products_lotus.csv
+data/pipeline/products_mydin.csv
+data/pipeline/products_combined.csv
 
 # Local safety backup made before bulk data edits — not needed in the repo
 data/cleaned_dataset.csv.bak
