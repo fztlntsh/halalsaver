@@ -614,8 +614,8 @@
       html += '</div>';
       html += '<div class="qv-actions">';
       html += isLoggedIn
-        ? '<button class="icon-btn fav-btn" onclick="toggleFav(\'' + pid + '\')"><i class="fas fa-heart"></i> Favourite</button>'
-        : '<button class="icon-btn fav-btn guest-locked" onclick="showGuestPrompt()"><i class="fas fa-heart"></i> Favourite</button>';
+        ? '<button class="icon-btn fav-btn" title="Favourite" aria-label="Favourite" onclick="toggleFav(\'' + pid + '\')"><i class="fas fa-heart"></i></button>'
+        : '<button class="icon-btn fav-btn guest-locked" title="Favourite" aria-label="Favourite" onclick="showGuestPrompt()"><i class="fas fa-heart"></i></button>';
       html += isLoggedIn
         ? '<button class="btn-view list-btn" onclick="addToList(\'' + pid + '\')"><i class="fas fa-list-check"></i> Add to List</button>'
         : '<button class="btn-view list-btn guest-locked" onclick="showGuestPrompt()"><i class="fas fa-list-check"></i> Add to List</button>';
