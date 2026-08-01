@@ -14,15 +14,15 @@ Products in `data/cleaned_dataset.csv` with no real photo yet. Each row already 
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
-| [ ] | `PRD-419.jpg` | `Ariel` | `Ariel Detergent Powder Original 1L` |
+| [x] | `PRD-419.jpg` | `Ariel` | `Ariel Detergent Powder Original 1L` |
 | [x] | `PRD-420.jpg` | `Ariel` | `Ariel Detergent Powder Original 1kg` |
-| [ ] | `PRD-421.jpg` | `Ariel` | `Ariel Detergent Powder Original 2L` |
+| [x] | `PRD-421.jpg` | `Ariel` | `Ariel Detergent Powder Original 2L` |
 | [x] | `PRD-422.jpg` | `Ariel` | `Ariel Detergent Powder Original 2kg` |
-| [ ] | `PRD-423.jpg` | `Ariel` | `Ariel Detergent Powder Original 5L` |
+| [x] | `PRD-423.jpg` | `Ariel` | `Ariel Detergent Powder Original 5L` |
 | [x] | `PRD-424.jpg` | `Ariel` | `Ariel Liquid Detergent 1L` |
-| [ ] | `PRD-425.jpg` | `Ariel` | `Ariel Liquid Detergent 1kg` |
+| [x] | `PRD-425.jpg` | `Ariel` | `Ariel Liquid Detergent 1kg` |
 | [x] | `PRD-426.jpg` | `Ariel` | `Ariel Liquid Detergent 2L` |
-| [ ] | `PRD-427.jpg` | `Ariel` | `Ariel Liquid Detergent 2kg` |
+| [x] | `PRD-427.jpg` | `Ariel` | `Ariel Liquid Detergent 2kg` |
 | [x] | `PRD-428.jpg` | `Ariel` | `Ariel Liquid Detergent 5L` |
 | [ ] | `PRD-429.jpg` | `Attack` | `Attack Detergent Powder 1L` |
 | [ ] | `PRD-430.jpg` | `Attack` | `Attack Detergent Powder 2L` |
@@ -176,7 +176,7 @@ Products in `data/cleaned_dataset.csv` with no real photo yet. Each row already 
 | [x] | `PRD-578.jpg` | `Softlan` | `Softlan Fabric Softener Spring Fresh 500ml` |
 | [x] | `PRD-579.jpg` | `Sunlight` | `Sunlight Dishwashing Liquid` |
 | [x] | `PRD-580.jpg` | `Sunlight` | `Sunlight Dishwashing Liquid 1L` |
-| [ ] | `PRD-581.jpg` | `Sunlight` | `Sunlight Dishwashing Liquid 1kg` |
+| [x] | `PRD-581.jpg` | `Sunlight` | `Sunlight Dishwashing Liquid 1kg` |
 | [x] | `PRD-582.jpg` | `Sunlight` | `Sunlight Dishwashing Liquid 2L` |
 | [x] | `PRD-583.jpg` | `Sunlight` | `Sunlight Dishwashing Liquid 5L` |
 | [ ] | `PRD-584.jpg` | `Tesco` | `Canister Vacuum Dust Bag 1kg` |
@@ -366,246 +366,246 @@ Products in `data/cleaned_dataset.csv` with no real photo yet. Each row already 
 | [ ] | `PRD-763.jpg` | `Power Root` | `Teh Tarik Power Root 2L` |
 | [ ] | `PRD-764.jpg` | `Power Root` | `Teh Tarik Power Root 300ml` |
 | [ ] | `PRD-765.jpg` | `Power Root` | `Teh Tarik Power Root 300ml x24` |
-| [ ] | `PRD-766.jpg` | `Red Bull` | `Red Bull Energy Drink` |
+| [x] | `PRD-766.jpg` | `Red Bull` | `Red Bull Energy Drink` |
 | [x] | `PRD-767.jpg` | `Red Bull` | `Red Bull Energy Drink 250ml` |
 | [x] | `PRD-768.jpg` | `Red Bull` | `Red Bull Energy Drink 250ml x6` |
-| [ ] | `PRD-769.jpg` | `Red Bull` | `Red Bull Energy Drink 2L` |
-| [ ] | `PRD-770.jpg` | `Red Bull` | `Red Bull Energy Drink 300ml` |
+| [x] | `PRD-769.jpg` | `Red Bull` | `Red Bull Energy Drink 2L` |
+| [x] | `PRD-770.jpg` | `Red Bull` | `Red Bull Energy Drink 300ml` |
 | [x] | `PRD-771.jpg` | `Red Bull` | `Red Bull Energy Drink 300ml x24` |
-| [ ] | `PRD-772.jpg` | `Tesco` | `Tesco Own Brand Mineral Water` |
+| [x] | `PRD-772.jpg` | `Tesco` | `Tesco Own Brand Mineral Water` |
 | [x] | `PRD-773.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 1L` |
-| [ ] | `PRD-774.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 250ml` |
-| [ ] | `PRD-775.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 300ml` |
-| [ ] | `PRD-776.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 325ml` |
+| [x] | `PRD-774.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 250ml` |
+| [x] | `PRD-775.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 300ml` |
+| [x] | `PRD-776.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 325ml` |
 | [x] | `PRD-777.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 500ml` |
-| [ ] | `PRD-778.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 600ml` |
+| [x] | `PRD-778.jpg` | `Tesco` | `Tesco Own Brand Mineral Water 600ml` |
 | [x] | `PRD-779.jpg` | `Twister` | `Twister Orange Fizzy` |
 | [x] | `PRD-780.jpg` | `Twister` | `Twister Orange Fizzy 1.5L` |
-| [ ] | `PRD-781.jpg` | `Twister` | `Twister Orange Fizzy 1L` |
-| [ ] | `PRD-782.jpg` | `Twister` | `Twister Orange Fizzy 250ml x6` |
-| [ ] | `PRD-783.jpg` | `Twister` | `Twister Orange Fizzy 2L` |
+| [x] | `PRD-781.jpg` | `Twister` | `Twister Orange Fizzy 1L` |
+| [x] | `PRD-782.jpg` | `Twister` | `Twister Orange Fizzy 250ml x6` |
+| [x] | `PRD-783.jpg` | `Twister` | `Twister Orange Fizzy 2L` |
 | [x] | `PRD-784.jpg` | `Twister` | `Twister Orange Fizzy 300ml x24` |
-| [ ] | `PRD-785.jpg` | `Twister` | `Twister Orange Fizzy 600ml` |
+| [x] | `PRD-785.jpg` | `Twister` | `Twister Orange Fizzy 600ml` |
 | [x] | `PRD-786.jpg` | `Yakult` | `Yakult Original` |
-| [ ] | `PRD-787.jpg` | `Yakult` | `Yakult Original 1.5L` |
-| [ ] | `PRD-788.jpg` | `Yakult` | `Yakult Original 1L` |
-| [ ] | `PRD-789.jpg` | `Yakult` | `Yakult Original 250ml` |
-| [ ] | `PRD-790.jpg` | `Yakult` | `Yakult Original 250ml x6` |
-| [ ] | `PRD-791.jpg` | `Yakult` | `Yakult Original 2L` |
-| [ ] | `PRD-792.jpg` | `Yakult` | `Yakult Original 300ml x24` |
+| [x] | `PRD-787.jpg` | `Yakult` | `Yakult Original 1.5L` |
+| [x] | `PRD-788.jpg` | `Yakult` | `Yakult Original 1L` |
+| [x] | `PRD-789.jpg` | `Yakult` | `Yakult Original 250ml` |
+| [x] | `PRD-790.jpg` | `Yakult` | `Yakult Original 250ml x6` |
+| [x] | `PRD-791.jpg` | `Yakult` | `Yakult Original 2L` |
+| [x] | `PRD-792.jpg` | `Yakult` | `Yakult Original 300ml x24` |
 
 ## Personal Care (0/166 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
 | [x] | `PRD-793.jpg` | `Axe` | `Axe Dark Temptation Deodorant 200ml` |
-| [ ] | `PRD-794.jpg` | `Axe` | `Axe Dark Temptation Deodorant 250ml` |
-| [ ] | `PRD-795.jpg` | `Axe` | `Axe Dark Temptation Deodorant 400ml` |
-| [ ] | `PRD-796.jpg` | `BIC` | `BIC Disposable Shaver 150ml` |
+| [x] | `PRD-794.jpg` | `Axe` | `Axe Dark Temptation Deodorant 250ml` |
+| [x] | `PRD-795.jpg` | `Axe` | `Axe Dark Temptation Deodorant 400ml` |
+| [x] | `PRD-796.jpg` | `BIC` | `BIC Disposable Shaver 150ml` |
 | [x] | `PRD-797.jpg` | `BIC` | `BIC Disposable Shaver 200ml` |
-| [ ] | `PRD-798.jpg` | `BIC` | `BIC Disposable Shaver 250ml` |
-| [ ] | `PRD-799.jpg` | `Brylcreem` | `Brylcreem Original Hair Cream 100ml` |
+| [x] | `PRD-798.jpg` | `BIC` | `BIC Disposable Shaver 250ml` |
+| [x] | `PRD-799.jpg` | `Brylcreem` | `Brylcreem Original Hair Cream 100ml` |
 | [x] | `PRD-800.jpg` | `Brylcreem` | `Brylcreem Original Hair Cream 150ml` |
-| [ ] | `PRD-801.jpg` | `Brylcreem` | `Brylcreem Original Hair Cream 200ml` |
-| [ ] | `PRD-802.jpg` | `Brylcreem` | `Brylcreem Original Hair Cream 250ml` |
-| [ ] | `PRD-803.jpg` | `Carefree` | `Carefree Panty Liner Regular 100ml` |
-| [ ] | `PRD-804.jpg` | `Carefree` | `Carefree Panty Liner Regular 150ml` |
-| [ ] | `PRD-805.jpg` | `Carefree` | `Carefree Panty Liner Regular 200ml` |
-| [ ] | `PRD-806.jpg` | `Carefree` | `Carefree Panty Liner Regular 400ml` |
+| [x] | `PRD-801.jpg` | `Brylcreem` | `Brylcreem Original Hair Cream 200ml` |
+| [x] | `PRD-802.jpg` | `Brylcreem` | `Brylcreem Original Hair Cream 250ml` |
+| [x] | `PRD-803.jpg` | `Carefree` | `Carefree Panty Liner Regular 100ml` |
+| [x] | `PRD-804.jpg` | `Carefree` | `Carefree Panty Liner Regular 150ml` |
+| [x] | `PRD-805.jpg` | `Carefree` | `Carefree Panty Liner Regular 200ml` |
+| [x] | `PRD-806.jpg` | `Carefree` | `Carefree Panty Liner Regular 400ml` |
 | [x] | `PRD-807.jpg` | `Carefree` | `Carefree Panty Liner Regular 500g` |
-| [ ] | `PRD-808.jpg` | `Clear` | `Clear Cool Sport Shampoo 200ml` |
-| [ ] | `PRD-809.jpg` | `Clear` | `Clear Cool Sport Shampoo 250ml` |
+| [x] | `PRD-808.jpg` | `Clear` | `Clear Cool Sport Shampoo 200ml` |
+| [x] | `PRD-809.jpg` | `Clear` | `Clear Cool Sport Shampoo 250ml` |
 | [x] | `PRD-810.jpg` | `Clear` | `Clear Cool Sport Shampoo 400ml` |
-| [ ] | `PRD-811.jpg` | `Clear` | `Clear Cool Sport Shampoo 500g` |
-| [ ] | `PRD-812.jpg` | `Darlie` | `Darlie All Shiny White 100ml` |
+| [x] | `PRD-811.jpg` | `Clear` | `Clear Cool Sport Shampoo 500g` |
+| [x] | `PRD-812.jpg` | `Darlie` | `Darlie All Shiny White 100ml` |
 | [x] | `PRD-813.jpg` | `Darlie` | `Darlie All Shiny White 400ml` |
-| [ ] | `PRD-814.jpg` | `Darlie` | `Darlie All Shiny White 500g` |
-| [ ] | `PRD-815.jpg` | `Darlie` | `Darlie Double Action 150ml` |
-| [ ] | `PRD-816.jpg` | `Darlie` | `Darlie Double Action 200ml` |
+| [x] | `PRD-814.jpg` | `Darlie` | `Darlie All Shiny White 500g` |
+| [x] | `PRD-815.jpg` | `Darlie` | `Darlie Double Action 150ml` |
+| [x] | `PRD-816.jpg` | `Darlie` | `Darlie Double Action 200ml` |
 | [x] | `PRD-817.jpg` | `Darlie` | `Darlie Double Action 250ml` |
-| [ ] | `PRD-818.jpg` | `Darlie` | `Darlie Double Action 400ml` |
-| [ ] | `PRD-819.jpg` | `Dettol` | `Dettol Original Bar Soap 400ml` |
+| [x] | `PRD-818.jpg` | `Darlie` | `Darlie Double Action 400ml` |
+| [x] | `PRD-819.jpg` | `Dettol` | `Dettol Original Bar Soap 400ml` |
 | [x] | `PRD-820.jpg` | `Dettol` | `Dettol Original Bar Soap 500g` |
-| [ ] | `PRD-821.jpg` | `Dettol` | `Dettol Original Body Wash 100ml` |
-| [ ] | `PRD-822.jpg` | `Dettol` | `Dettol Original Body Wash 150ml` |
-| [ ] | `PRD-823.jpg` | `Dettol` | `Dettol Original Body Wash 200ml` |
+| [x] | `PRD-821.jpg` | `Dettol` | `Dettol Original Body Wash 100ml` |
+| [x] | `PRD-822.jpg` | `Dettol` | `Dettol Original Body Wash 150ml` |
+| [x] | `PRD-823.jpg` | `Dettol` | `Dettol Original Body Wash 200ml` |
 | [x] | `PRD-824.jpg` | `Dettol` | `Dettol Original Body Wash 250ml` |
-| [ ] | `PRD-825.jpg` | `Dove` | `Dove Beauty Cream Women Deodorant 100ml` |
+| [x] | `PRD-825.jpg` | `Dove` | `Dove Beauty Cream Women Deodorant 100ml` |
 | [x] | `PRD-826.jpg` | `Dove` | `Dove Beauty Cream Women Deodorant 150ml` |
-| [ ] | `PRD-827.jpg` | `Dove` | `Dove Beauty Cream Women Deodorant 200ml` |
-| [ ] | `PRD-828.jpg` | `Dove` | `Dove Beauty Cream Women Deodorant 500g` |
-| [ ] | `PRD-829.jpg` | `Dove` | `Dove Moisturising Shampoo 100ml` |
-| [ ] | `PRD-830.jpg` | `Dove` | `Dove Moisturising Shampoo 150ml` |
+| [x] | `PRD-827.jpg` | `Dove` | `Dove Beauty Cream Women Deodorant 200ml` |
+| [x] | `PRD-828.jpg` | `Dove` | `Dove Beauty Cream Women Deodorant 500g` |
+| [x] | `PRD-829.jpg` | `Dove` | `Dove Moisturising Shampoo 100ml` |
+| [x] | `PRD-830.jpg` | `Dove` | `Dove Moisturising Shampoo 150ml` |
 | [x] | `PRD-831.jpg` | `Dove` | `Dove Moisturising Shampoo 250ml` |
-| [ ] | `PRD-832.jpg` | `Dove` | `Dove Moisturising Shampoo 400ml` |
-| [ ] | `PRD-833.jpg` | `Dove` | `Dove Moisturising Shampoo 500g` |
-| [ ] | `PRD-834.jpg` | `Fa` | `Fa Women Deodorant Aqua 100ml` |
+| [x] | `PRD-832.jpg` | `Dove` | `Dove Moisturising Shampoo 400ml` |
+| [x] | `PRD-833.jpg` | `Dove` | `Dove Moisturising Shampoo 500g` |
+| [x] | `PRD-834.jpg` | `Fa` | `Fa Women Deodorant Aqua 100ml` |
 | [x] | `PRD-835.jpg` | `Fa` | `Fa Women Deodorant Aqua 150ml` |
-| [ ] | `PRD-836.jpg` | `Fa` | `Fa Women Deodorant Aqua 400ml` |
-| [ ] | `PRD-837.jpg` | `Fa` | `Fa Women Deodorant Aqua 500g` |
-| [ ] | `PRD-838.jpg` | `Gatsby` | `Gatsby Styling Wax Mat & Hard 150ml` |
+| [x] | `PRD-836.jpg` | `Fa` | `Fa Women Deodorant Aqua 400ml` |
+| [x] | `PRD-837.jpg` | `Fa` | `Fa Women Deodorant Aqua 500g` |
+| [x] | `PRD-838.jpg` | `Gatsby` | `Gatsby Styling Wax Mat & Hard 150ml` |
 | [x] | `PRD-839.jpg` | `Gatsby` | `Gatsby Styling Wax Mat & Hard 200ml` |
-| [ ] | `PRD-840.jpg` | `Gatsby` | `Gatsby Styling Wax Mat & Hard 250ml` |
-| [ ] | `PRD-841.jpg` | `Gatsby` | `Gatsby Styling Wax Mat & Hard 400ml` |
-| [ ] | `PRD-842.jpg` | `Gillette` | `Gillette Fusion Razor 100ml` |
-| [ ] | `PRD-843.jpg` | `Gillette` | `Gillette Fusion Razor 150ml` |
-| [ ] | `PRD-844.jpg` | `Gillette` | `Gillette Fusion Razor 200ml` |
-| [ ] | `PRD-845.jpg` | `Gillette` | `Gillette Fusion Razor 250ml` |
-| [ ] | `PRD-846.jpg` | `Gillette` | `Gillette Fusion Razor 400ml` |
+| [x] | `PRD-840.jpg` | `Gatsby` | `Gatsby Styling Wax Mat & Hard 250ml` |
+| [x] | `PRD-841.jpg` | `Gatsby` | `Gatsby Styling Wax Mat & Hard 400ml` |
+| [x] | `PRD-842.jpg` | `Gillette` | `Gillette Fusion Razor 100ml` |
+| [x] | `PRD-843.jpg` | `Gillette` | `Gillette Fusion Razor 150ml` |
+| [x] | `PRD-844.jpg` | `Gillette` | `Gillette Fusion Razor 200ml` |
+| [x] | `PRD-845.jpg` | `Gillette` | `Gillette Fusion Razor 250ml` |
+| [x] | `PRD-846.jpg` | `Gillette` | `Gillette Fusion Razor 400ml` |
 | [x] | `PRD-847.jpg` | `Gillette` | `Gillette Fusion Razor 500g` |
-| [ ] | `PRD-848.jpg` | `Gillette` | `Gillette Mach3 Razor 100ml` |
-| [ ] | `PRD-849.jpg` | `Gillette` | `Gillette Mach3 Razor 150ml` |
-| [ ] | `PRD-850.jpg` | `Gillette` | `Gillette Mach3 Razor 200ml` |
+| [x] | `PRD-848.jpg` | `Gillette` | `Gillette Mach3 Razor 100ml` |
+| [x] | `PRD-849.jpg` | `Gillette` | `Gillette Mach3 Razor 150ml` |
+| [x] | `PRD-850.jpg` | `Gillette` | `Gillette Mach3 Razor 200ml` |
 | [x] | `PRD-851.jpg` | `Gillette` | `Gillette Mach3 Razor 500g` |
 | [x] | `PRD-852.jpg` | `Hazeline` | `Hazeline Snow Moisturiser 100ml` |
-| [ ] | `PRD-853.jpg` | `Hazeline` | `Hazeline Snow Moisturiser 150ml` |
-| [ ] | `PRD-854.jpg` | `Hazeline` | `Hazeline Snow Moisturiser 250ml` |
-| [ ] | `PRD-855.jpg` | `Hazeline` | `Hazeline Snow Moisturiser 400ml` |
-| [ ] | `PRD-856.jpg` | `Hazeline` | `Hazeline Snow Moisturiser 500g` |
-| [ ] | `PRD-857.jpg` | `Head & Shoulders` | `Head & Shoulders Classic Clean 100ml` |
-| [ ] | `PRD-858.jpg` | `Head & Shoulders` | `Head & Shoulders Classic Clean 200ml` |
+| [x] | `PRD-853.jpg` | `Hazeline` | `Hazeline Snow Moisturiser 150ml` |
+| [x] | `PRD-854.jpg` | `Hazeline` | `Hazeline Snow Moisturiser 250ml` |
+| [x] | `PRD-855.jpg` | `Hazeline` | `Hazeline Snow Moisturiser 400ml` |
+| [x] | `PRD-856.jpg` | `Hazeline` | `Hazeline Snow Moisturiser 500g` |
+| [x] | `PRD-857.jpg` | `Head & Shoulders` | `Head & Shoulders Classic Clean 100ml` |
+| [x] | `PRD-858.jpg` | `Head & Shoulders` | `Head & Shoulders Classic Clean 200ml` |
 | [x] | `PRD-859.jpg` | `Head & Shoulders` | `Head & Shoulders Classic Clean 250ml` |
-| [ ] | `PRD-860.jpg` | `Head & Shoulders` | `Head & Shoulders Classic Clean 400ml` |
-| [ ] | `PRD-861.jpg` | `Head & Shoulders` | `Head & Shoulders Classic Clean 500g` |
-| [ ] | `PRD-862.jpg` | `Kotex` | `Kotex Ultra Thin Pads 100ml` |
-| [ ] | `PRD-863.jpg` | `Kotex` | `Kotex Ultra Thin Pads 150ml` |
-| [ ] | `PRD-864.jpg` | `Kotex` | `Kotex Ultra Thin Pads 250ml` |
-| [ ] | `PRD-865.jpg` | `Kotex` | `Kotex Ultra Thin Pads 400ml` |
+| [x] | `PRD-860.jpg` | `Head & Shoulders` | `Head & Shoulders Classic Clean 400ml` |
+| [x] | `PRD-861.jpg` | `Head & Shoulders` | `Head & Shoulders Classic Clean 500g` |
+| [x] | `PRD-862.jpg` | `Kotex` | `Kotex Ultra Thin Pads 100ml` |
+| [x] | `PRD-863.jpg` | `Kotex` | `Kotex Ultra Thin Pads 150ml` |
+| [x] | `PRD-864.jpg` | `Kotex` | `Kotex Ultra Thin Pads 250ml` |
+| [x] | `PRD-865.jpg` | `Kotex` | `Kotex Ultra Thin Pads 400ml` |
 | [x] | `PRD-866.jpg` | `Kotex` | `Kotex Ultra Thin Pads 500g` |
 | [x] | `PRD-867.jpg` | `Laurier` | `Laurier Active Body Fit 100ml` |
-| [ ] | `PRD-868.jpg` | `Laurier` | `Laurier Active Body Fit 150ml` |
-| [ ] | `PRD-869.jpg` | `Laurier` | `Laurier Active Body Fit 200ml` |
-| [ ] | `PRD-870.jpg` | `Laurier` | `Laurier Active Body Fit 250ml` |
-| [ ] | `PRD-871.jpg` | `Laurier` | `Laurier Active Body Fit 500g` |
+| [x] | `PRD-868.jpg` | `Laurier` | `Laurier Active Body Fit 150ml` |
+| [x] | `PRD-869.jpg` | `Laurier` | `Laurier Active Body Fit 200ml` |
+| [x] | `PRD-870.jpg` | `Laurier` | `Laurier Active Body Fit 250ml` |
+| [x] | `PRD-871.jpg` | `Laurier` | `Laurier Active Body Fit 500g` |
 | [x] | `PRD-872.jpg` | `Lifebuoy` | `Lifebuoy Germ Protection Bar Soap 100ml` |
-| [ ] | `PRD-873.jpg` | `Lifebuoy` | `Lifebuoy Germ Protection Bar Soap 150ml` |
-| [ ] | `PRD-874.jpg` | `Lifebuoy` | `Lifebuoy Germ Protection Bar Soap 200ml` |
-| [ ] | `PRD-875.jpg` | `Lifebuoy` | `Lifebuoy Germ Protection Bar Soap 250ml` |
-| [ ] | `PRD-876.jpg` | `Lifebuoy` | `Lifebuoy Total 10 Body Wash 200ml` |
+| [x] | `PRD-873.jpg` | `Lifebuoy` | `Lifebuoy Germ Protection Bar Soap 150ml` |
+| [x] | `PRD-874.jpg` | `Lifebuoy` | `Lifebuoy Germ Protection Bar Soap 200ml` |
+| [x] | `PRD-875.jpg` | `Lifebuoy` | `Lifebuoy Germ Protection Bar Soap 250ml` |
+| [x] | `PRD-876.jpg` | `Lifebuoy` | `Lifebuoy Total 10 Body Wash 200ml` |
 | [x] | `PRD-877.jpg` | `Lifebuoy` | `Lifebuoy Total 10 Body Wash 250ml` |
-| [ ] | `PRD-878.jpg` | `Lifebuoy` | `Lifebuoy Total 10 Body Wash 400ml` |
-| [ ] | `PRD-879.jpg` | `Lifebuoy` | `Lifebuoy Total 10 Body Wash 500g` |
-| [ ] | `PRD-880.jpg` | `Listerine` | `Listerine Cool Mint Mouthwash 150ml` |
-| [ ] | `PRD-881.jpg` | `Listerine` | `Listerine Cool Mint Mouthwash 200ml` |
+| [x] | `PRD-878.jpg` | `Lifebuoy` | `Lifebuoy Total 10 Body Wash 400ml` |
+| [x] | `PRD-879.jpg` | `Lifebuoy` | `Lifebuoy Total 10 Body Wash 500g` |
+| [x] | `PRD-880.jpg` | `Listerine` | `Listerine Cool Mint Mouthwash 150ml` |
+| [x] | `PRD-881.jpg` | `Listerine` | `Listerine Cool Mint Mouthwash 200ml` |
 | [x] | `PRD-882.jpg` | `Listerine` | `Listerine Cool Mint Mouthwash 250ml` |
-| [ ] | `PRD-883.jpg` | `Listerine` | `Listerine Cool Mint Mouthwash 400ml` |
-| [ ] | `PRD-884.jpg` | `Listerine` | `Listerine Cool Mint Mouthwash 500g` |
-| [ ] | `PRD-885.jpg` | `Lux` | `Lux Soft Rose Body Wash 100ml` |
+| [x] | `PRD-883.jpg` | `Listerine` | `Listerine Cool Mint Mouthwash 400ml` |
+| [x] | `PRD-884.jpg` | `Listerine` | `Listerine Cool Mint Mouthwash 500g` |
+| [x] | `PRD-885.jpg` | `Lux` | `Lux Soft Rose Body Wash 100ml` |
 | [x] | `PRD-886.jpg` | `Lux` | `Lux Soft Rose Body Wash 150ml` |
 | [x] | `PRD-887.jpg` | `Nivea` | `Nivea Body Lotion Original` |
-| [ ] | `PRD-888.jpg` | `Nivea` | `Nivea Body Lotion Original 100ml` |
-| [ ] | `PRD-889.jpg` | `Nivea` | `Nivea Body Lotion Original 150ml` |
-| [ ] | `PRD-890.jpg` | `Nivea` | `Nivea Body Lotion Original 200ml` |
-| [ ] | `PRD-891.jpg` | `Nivea` | `Nivea Body Lotion Original 250ml` |
-| [ ] | `PRD-892.jpg` | `Nivea` | `Nivea Body Lotion Original 400ml` |
-| [ ] | `PRD-893.jpg` | `Nivea` | `Nivea Body Lotion Original 500g` |
+| [x] | `PRD-888.jpg` | `Nivea` | `Nivea Body Lotion Original 100ml` |
+| [x] | `PRD-889.jpg` | `Nivea` | `Nivea Body Lotion Original 150ml` |
+| [x] | `PRD-890.jpg` | `Nivea` | `Nivea Body Lotion Original 200ml` |
+| [x] | `PRD-891.jpg` | `Nivea` | `Nivea Body Lotion Original 250ml` |
+| [x] | `PRD-892.jpg` | `Nivea` | `Nivea Body Lotion Original 400ml` |
+| [x] | `PRD-893.jpg` | `Nivea` | `Nivea Body Lotion Original 500g` |
 | [x] | `PRD-894.jpg` | `Nivea` | `Nivea Men Ice Cool Deodorant` |
-| [ ] | `PRD-895.jpg` | `Nivea` | `Nivea Men Ice Cool Deodorant 100ml` |
-| [ ] | `PRD-896.jpg` | `Nivea` | `Nivea Men Ice Cool Deodorant 400ml` |
-| [ ] | `PRD-897.jpg` | `Nivea` | `Nivea Men Ice Cool Deodorant 500g` |
+| [x] | `PRD-895.jpg` | `Nivea` | `Nivea Men Ice Cool Deodorant 100ml` |
+| [x] | `PRD-896.jpg` | `Nivea` | `Nivea Men Ice Cool Deodorant 400ml` |
+| [x] | `PRD-897.jpg` | `Nivea` | `Nivea Men Ice Cool Deodorant 500g` |
 | [x] | `PRD-898.jpg` | `Oral-B` | `Oral B Toothbrush Soft` |
-| [ ] | `PRD-899.jpg` | `Oral-B` | `Oral B Toothbrush Soft 150ml` |
-| [ ] | `PRD-900.jpg` | `Oral-B` | `Oral B Toothbrush Soft 200ml` |
-| [ ] | `PRD-901.jpg` | `Oral-B` | `Oral B Toothbrush Soft 250ml` |
-| [ ] | `PRD-902.jpg` | `Oral-B` | `Oral B Toothbrush Soft 400ml` |
-| [ ] | `PRD-903.jpg` | `Oral-B` | `Oral B Toothbrush Soft 500g` |
+| [x] | `PRD-899.jpg` | `Oral-B` | `Oral B Toothbrush Soft 150ml` |
+| [x] | `PRD-900.jpg` | `Oral-B` | `Oral B Toothbrush Soft 200ml` |
+| [x] | `PRD-901.jpg` | `Oral-B` | `Oral B Toothbrush Soft 250ml` |
+| [x] | `PRD-902.jpg` | `Oral-B` | `Oral B Toothbrush Soft 400ml` |
+| [x] | `PRD-903.jpg` | `Oral-B` | `Oral B Toothbrush Soft 500g` |
 | [x] | `PRD-904.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash` |
-| [ ] | `PRD-905.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 100ml` |
-| [ ] | `PRD-906.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 150ml` |
-| [ ] | `PRD-907.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 250ml` |
-| [ ] | `PRD-908.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 400ml` |
-| [ ] | `PRD-909.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 500g` |
+| [x] | `PRD-905.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 100ml` |
+| [x] | `PRD-906.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 150ml` |
+| [x] | `PRD-907.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 250ml` |
+| [x] | `PRD-908.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 400ml` |
+| [x] | `PRD-909.jpg` | `Palmolive` | `Palmolive Naturals Milk Body Wash 500g` |
 | [x] | `PRD-910.jpg` | `Pantene` | `Pantene Anti-Dandruff Shampoo` |
-| [ ] | `PRD-911.jpg` | `Pantene` | `Pantene Anti-Dandruff Shampoo 200ml` |
-| [ ] | `PRD-912.jpg` | `Pantene` | `Pantene Anti-Dandruff Shampoo 250ml` |
-| [ ] | `PRD-913.jpg` | `Pantene` | `Pantene Anti-Dandruff Shampoo 400ml` |
-| [ ] | `PRD-914.jpg` | `Pantene` | `Pantene Anti-Dandruff Shampoo 500g` |
+| [x] | `PRD-911.jpg` | `Pantene` | `Pantene Anti-Dandruff Shampoo 200ml` |
+| [x] | `PRD-912.jpg` | `Pantene` | `Pantene Anti-Dandruff Shampoo 250ml` |
+| [x] | `PRD-913.jpg` | `Pantene` | `Pantene Anti-Dandruff Shampoo 400ml` |
+| [x] | `PRD-914.jpg` | `Pantene` | `Pantene Anti-Dandruff Shampoo 500g` |
 | [x] | `PRD-915.jpg` | `Pantene` | `Pantene Smooth Shampoo` |
-| [ ] | `PRD-916.jpg` | `Pantene` | `Pantene Smooth Shampoo 150ml` |
-| [ ] | `PRD-917.jpg` | `Pantene` | `Pantene Smooth Shampoo 200ml` |
-| [ ] | `PRD-918.jpg` | `Pantene` | `Pantene Smooth Shampoo 250ml` |
-| [ ] | `PRD-919.jpg` | `Pantene` | `Pantene Smooth Shampoo 400ml` |
-| [ ] | `PRD-920.jpg` | `Pantene` | `Pantene Smooth Shampoo 500g` |
+| [x] | `PRD-916.jpg` | `Pantene` | `Pantene Smooth Shampoo 150ml` |
+| [x] | `PRD-917.jpg` | `Pantene` | `Pantene Smooth Shampoo 200ml` |
+| [x] | `PRD-918.jpg` | `Pantene` | `Pantene Smooth Shampoo 250ml` |
+| [x] | `PRD-919.jpg` | `Pantene` | `Pantene Smooth Shampoo 400ml` |
+| [x] | `PRD-920.jpg` | `Pantene` | `Pantene Smooth Shampoo 500g` |
 | [x] | `PRD-921.jpg` | `Pond's` | `Pond's White Beauty BB Cream` |
-| [ ] | `PRD-922.jpg` | `Pond's` | `Pond's White Beauty BB Cream 150ml` |
-| [ ] | `PRD-923.jpg` | `Pond's` | `Pond's White Beauty BB Cream 200ml` |
-| [ ] | `PRD-924.jpg` | `Pond's` | `Pond's White Beauty BB Cream 250ml` |
-| [ ] | `PRD-925.jpg` | `Pond's` | `Pond's White Beauty BB Cream 400ml` |
+| [x] | `PRD-922.jpg` | `Pond's` | `Pond's White Beauty BB Cream 150ml` |
+| [x] | `PRD-923.jpg` | `Pond's` | `Pond's White Beauty BB Cream 200ml` |
+| [x] | `PRD-924.jpg` | `Pond's` | `Pond's White Beauty BB Cream 250ml` |
+| [x] | `PRD-925.jpg` | `Pond's` | `Pond's White Beauty BB Cream 400ml` |
 | [x] | `PRD-926.jpg` | `Rexona` | `Rexona Men Sport Deodorant` |
-| [ ] | `PRD-927.jpg` | `Rexona` | `Rexona Men Sport Deodorant 150ml` |
-| [ ] | `PRD-928.jpg` | `Rexona` | `Rexona Men Sport Deodorant 200ml` |
-| [ ] | `PRD-929.jpg` | `Rexona` | `Rexona Men Sport Deodorant 250ml` |
-| [ ] | `PRD-930.jpg` | `Rexona` | `Rexona Men Sport Deodorant 400ml` |
+| [x] | `PRD-927.jpg` | `Rexona` | `Rexona Men Sport Deodorant 150ml` |
+| [x] | `PRD-928.jpg` | `Rexona` | `Rexona Men Sport Deodorant 200ml` |
+| [x] | `PRD-929.jpg` | `Rexona` | `Rexona Men Sport Deodorant 250ml` |
+| [x] | `PRD-930.jpg` | `Rexona` | `Rexona Men Sport Deodorant 400ml` |
 | [x] | `PRD-931.jpg` | `Savlon` | `Savlon Antiseptic Soap` |
-| [ ] | `PRD-932.jpg` | `Savlon` | `Savlon Antiseptic Soap 150ml` |
-| [ ] | `PRD-933.jpg` | `Savlon` | `Savlon Antiseptic Soap 200ml` |
-| [ ] | `PRD-934.jpg` | `Savlon` | `Savlon Antiseptic Soap 250ml` |
-| [ ] | `PRD-935.jpg` | `Savlon` | `Savlon Antiseptic Soap 400ml` |
+| [x] | `PRD-932.jpg` | `Savlon` | `Savlon Antiseptic Soap 150ml` |
+| [x] | `PRD-933.jpg` | `Savlon` | `Savlon Antiseptic Soap 200ml` |
+| [x] | `PRD-934.jpg` | `Savlon` | `Savlon Antiseptic Soap 250ml` |
+| [x] | `PRD-935.jpg` | `Savlon` | `Savlon Antiseptic Soap 400ml` |
 | [x] | `PRD-936.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo` |
-| [ ] | `PRD-937.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 150ml` |
-| [ ] | `PRD-938.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 200ml` |
-| [ ] | `PRD-939.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 250ml` |
-| [ ] | `PRD-940.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 400ml` |
-| [ ] | `PRD-941.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 500g` |
+| [x] | `PRD-937.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 150ml` |
+| [x] | `PRD-938.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 200ml` |
+| [x] | `PRD-939.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 250ml` |
+| [x] | `PRD-940.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 400ml` |
+| [x] | `PRD-941.jpg` | `Sunsilk` | `Sunsilk Soft & Smooth Shampoo 500g` |
 | [x] | `PRD-942.jpg` | `Systema` | `Systema Toothbrush Medium` |
-| [ ] | `PRD-943.jpg` | `Systema` | `Systema Toothbrush Medium 100ml` |
-| [ ] | `PRD-944.jpg` | `Systema` | `Systema Toothbrush Medium 150ml` |
-| [ ] | `PRD-945.jpg` | `Systema` | `Systema Toothbrush Medium 250ml` |
-| [ ] | `PRD-946.jpg` | `Systema` | `Systema Toothbrush Medium 400ml` |
-| [ ] | `PRD-947.jpg` | `Systema` | `Systema Toothbrush Medium 500g` |
+| [x] | `PRD-943.jpg` | `Systema` | `Systema Toothbrush Medium 100ml` |
+| [x] | `PRD-944.jpg` | `Systema` | `Systema Toothbrush Medium 150ml` |
+| [x] | `PRD-945.jpg` | `Systema` | `Systema Toothbrush Medium 250ml` |
+| [x] | `PRD-946.jpg` | `Systema` | `Systema Toothbrush Medium 400ml` |
+| [x] | `PRD-947.jpg` | `Systema` | `Systema Toothbrush Medium 500g` |
 | [x] | `PRD-948.jpg` | `Vaseline` | `Vaseline Intensive Care Lotion` |
-| [ ] | `PRD-949.jpg` | `Vaseline` | `Vaseline Intensive Care Lotion 200ml` |
-| [ ] | `PRD-950.jpg` | `Vaseline` | `Vaseline Intensive Care Lotion 250ml` |
-| [ ] | `PRD-951.jpg` | `Vaseline` | `Vaseline Intensive Care Lotion 400ml` |
-| [ ] | `PRD-952.jpg` | `Vaseline` | `Vaseline Intensive Care Lotion 500g` |
+| [x] | `PRD-949.jpg` | `Vaseline` | `Vaseline Intensive Care Lotion 200ml` |
+| [x] | `PRD-950.jpg` | `Vaseline` | `Vaseline Intensive Care Lotion 250ml` |
+| [x] | `PRD-951.jpg` | `Vaseline` | `Vaseline Intensive Care Lotion 400ml` |
+| [x] | `PRD-952.jpg` | `Vaseline` | `Vaseline Intensive Care Lotion 500g` |
 | [x] | `PRD-953.jpg` | `Veet` | `Veet Hair Removal Cream` |
 | [x] | `PRD-954.jpg` | `Veet` | `Veet Hair Removal Cream 100ml` |
-| [ ] | `PRD-955.jpg` | `Veet` | `Veet Hair Removal Cream 200ml` |
-| [ ] | `PRD-956.jpg` | `Veet` | `Veet Hair Removal Cream 250ml` |
-| [ ] | `PRD-957.jpg` | `Veet` | `Veet Hair Removal Cream 400ml` |
-| [ ] | `PRD-958.jpg` | `Veet` | `Veet Hair Removal Cream 500g` |
+| [x] | `PRD-955.jpg` | `Veet` | `Veet Hair Removal Cream 200ml` |
+| [x] | `PRD-956.jpg` | `Veet` | `Veet Hair Removal Cream 250ml` |
+| [x] | `PRD-957.jpg` | `Veet` | `Veet Hair Removal Cream 400ml` |
+| [x] | `PRD-958.jpg` | `Veet` | `Veet Hair Removal Cream 500g` |
 
 ## Fresh Produce (0/120 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
 | [x] | `PRD-959.jpg` | `Imported` | `Carrot Australian 1kg` |
-| [ ] | `PRD-960.jpg` | `Imported` | `Carrot Australian 300g` |
-| [ ] | `PRD-961.jpg` | `Imported` | `Carrot Australian 500g` |
+| [x] | `PRD-960.jpg` | `Imported` | `Carrot Australian 300g` |
+| [x] | `PRD-961.jpg` | `Imported` | `Carrot Australian 500g` |
 | [x] | `PRD-962.jpg` | `Imported` | `Grape Green Seedless 1kg` |
-| [ ] | `PRD-963.jpg` | `Imported` | `Grape Green Seedless 300g` |
-| [ ] | `PRD-964.jpg` | `Imported` | `Grape Green Seedless 500g` |
+| [x] | `PRD-963.jpg` | `Imported` | `Grape Green Seedless 300g` |
+| [x] | `PRD-964.jpg` | `Imported` | `Grape Green Seedless 500g` |
 | [x] | `PRD-965.jpg` | `Imported` | `Grape Red Seedless 1kg` |
-| [ ] | `PRD-966.jpg` | `Imported` | `Grape Red Seedless 300g` |
-| [ ] | `PRD-967.jpg` | `Imported` | `Grape Red Seedless 500g` |
+| [x] | `PRD-966.jpg` | `Imported` | `Grape Red Seedless 300g` |
+| [x] | `PRD-967.jpg` | `Imported` | `Grape Red Seedless 500g` |
 | [x] | `PRD-968.jpg` | `Imported` | `Green Apple Granny Smith 1kg` |
-| [ ] | `PRD-969.jpg` | `Imported` | `Green Apple Granny Smith 300g` |
-| [ ] | `PRD-970.jpg` | `Imported` | `Green Apple Granny Smith 500g` |
+| [x] | `PRD-969.jpg` | `Imported` | `Green Apple Granny Smith 300g` |
+| [x] | `PRD-970.jpg` | `Imported` | `Green Apple Granny Smith 500g` |
 | [x] | `PRD-971.jpg` | `Imported` | `Mushroom Button` |
-| [ ] | `PRD-972.jpg` | `Imported` | `Mushroom Button 1kg` |
-| [ ] | `PRD-973.jpg` | `Imported` | `Mushroom Button 300g` |
-| [ ] | `PRD-974.jpg` | `Imported` | `Mushroom Button 500g` |
+| [x] | `PRD-972.jpg` | `Imported` | `Mushroom Button 1kg` |
+| [x] | `PRD-973.jpg` | `Imported` | `Mushroom Button 300g` |
+| [x] | `PRD-974.jpg` | `Imported` | `Mushroom Button 500g` |
 | [x] | `PRD-975.jpg` | `Imported` | `Orange Navel` |
-| [ ] | `PRD-976.jpg` | `Imported` | `Orange Navel 1kg` |
-| [ ] | `PRD-977.jpg` | `Imported` | `Orange Navel 300g` |
-| [ ] | `PRD-978.jpg` | `Imported` | `Orange Navel 500g` |
+| [x] | `PRD-976.jpg` | `Imported` | `Orange Navel 1kg` |
+| [x] | `PRD-977.jpg` | `Imported` | `Orange Navel 300g` |
+| [x] | `PRD-978.jpg` | `Imported` | `Orange Navel 500g` |
 | [x] | `PRD-979.jpg` | `Imported` | `Potato Australian` |
-| [ ] | `PRD-980.jpg` | `Imported` | `Potato Australian 1kg` |
-| [ ] | `PRD-981.jpg` | `Imported` | `Potato Australian 300g` |
-| [ ] | `PRD-982.jpg` | `Imported` | `Potato Australian 500g` |
+| [x] | `PRD-980.jpg` | `Imported` | `Potato Australian 1kg` |
+| [x] | `PRD-981.jpg` | `Imported` | `Potato Australian 300g` |
+| [x] | `PRD-982.jpg` | `Imported` | `Potato Australian 500g` |
 | [x] | `PRD-983.jpg` | `Imported` | `Washington Apple Red` |
 | [x] | `PRD-984.jpg` | `Imported` | `Washington Apple Red 1kg` |
-| [ ] | `PRD-985.jpg` | `Imported` | `Washington Apple Red 300g` |
-| [ ] | `PRD-986.jpg` | `Imported` | `Washington Apple Red 500g` |
+| [x] | `PRD-985.jpg` | `Imported` | `Washington Apple Red 300g` |
+| [x] | `PRD-986.jpg` | `Imported` | `Washington Apple Red 500g` |
 | [x] | `PRD-987.jpg` | `Local Farm` | `Bayam Hijau 1kg` |
-| [ ] | `PRD-988.jpg` | `Local Farm` | `Bayam Hijau 300g` |
-| [ ] | `PRD-989.jpg` | `Local Farm` | `Bayam Hijau 500g` |
+| [x] | `PRD-988.jpg` | `Local Farm` | `Bayam Hijau 300g` |
+| [x] | `PRD-989.jpg` | `Local Farm` | `Bayam Hijau 500g` |
 | [x] | `PRD-990.jpg` | `Local Farm` | `Beef Slice Local 1kg` |
 | [x] | `PRD-991.jpg` | `Local Farm` | `Beef Slice Local 300g` |
 | [x] | `PRD-992.jpg` | `Local Farm` | `Beef Slice Local 500g` |
 | [x] | `PRD-993.jpg` | `Local Farm` | `Capsicum Green 1kg` |
-| [ ] | `PRD-994.jpg` | `Local Farm` | `Capsicum Green 300g` |
-| [ ] | `PRD-995.jpg` | `Local Farm` | `Capsicum Green 500g` |
+| [x] | `PRD-994.jpg` | `Local Farm` | `Capsicum Green 300g` |
+| [x] | `PRD-995.jpg` | `Local Farm` | `Capsicum Green 500g` |
 | [x] | `PRD-996.jpg` | `Local Farm` | `Cauliflower 1kg` |
 | [x] | `PRD-997.jpg` | `Local Farm` | `Cauliflower 300g` |
 | [x] | `PRD-998.jpg` | `Local Farm` | `Cauliflower 500g` |
@@ -619,40 +619,40 @@ Products in `data/cleaned_dataset.csv` with no real photo yet. Each row already 
 | [x] | `PRD-1006.jpg` | `Local Farm` | `Chicken Whole Fresh 300g` |
 | [x] | `PRD-1007.jpg` | `Local Farm` | `Chicken Whole Fresh 500g` |
 | [x] | `PRD-1008.jpg` | `Local Farm` | `Chilli Red Large 1kg` |
-| [ ] | `PRD-1009.jpg` | `Local Farm` | `Chilli Red Large 300g` |
-| [ ] | `PRD-1010.jpg` | `Local Farm` | `Chilli Red Large 500g` |
+| [x] | `PRD-1009.jpg` | `Local Farm` | `Chilli Red Large 300g` |
+| [x] | `PRD-1010.jpg` | `Local Farm` | `Chilli Red Large 500g` |
 | [x] | `PRD-1011.jpg` | `Local Farm` | `Corn Jagung Manis 1kg` |
-| [ ] | `PRD-1012.jpg` | `Local Farm` | `Corn Jagung Manis 300g` |
-| [ ] | `PRD-1013.jpg` | `Local Farm` | `Corn Jagung Manis 500g` |
+| [x] | `PRD-1012.jpg` | `Local Farm` | `Corn Jagung Manis 300g` |
+| [x] | `PRD-1013.jpg` | `Local Farm` | `Corn Jagung Manis 500g` |
 | [x] | `PRD-1014.jpg` | `Local Farm` | `Dragon Fruit Red 1kg` |
-| [ ] | `PRD-1015.jpg` | `Local Farm` | `Dragon Fruit Red 300g` |
-| [ ] | `PRD-1016.jpg` | `Local Farm` | `Dragon Fruit Red 500g` |
+| [x] | `PRD-1015.jpg` | `Local Farm` | `Dragon Fruit Red 300g` |
+| [x] | `PRD-1016.jpg` | `Local Farm` | `Dragon Fruit Red 500g` |
 | [x] | `PRD-1017.jpg` | `Local Farm` | `Dragon Fruit White 1kg` |
-| [ ] | `PRD-1018.jpg` | `Local Farm` | `Dragon Fruit White 300g` |
-| [ ] | `PRD-1019.jpg` | `Local Farm` | `Dragon Fruit White 500g` |
+| [x] | `PRD-1018.jpg` | `Local Farm` | `Dragon Fruit White 300g` |
+| [x] | `PRD-1019.jpg` | `Local Farm` | `Dragon Fruit White 500g` |
 | [x] | `PRD-1020.jpg` | `Local Farm` | `Durian D24 1kg` |
-| [ ] | `PRD-1021.jpg` | `Local Farm` | `Durian D24 300g` |
-| [ ] | `PRD-1022.jpg` | `Local Farm` | `Durian D24 500g` |
-| [ ] | `PRD-1023.jpg` | `Local Farm` | `Durian Musang King 1kg` |
+| [x] | `PRD-1021.jpg` | `Local Farm` | `Durian D24 300g` |
+| [x] | `PRD-1022.jpg` | `Local Farm` | `Durian D24 500g` |
+| [x] | `PRD-1023.jpg` | `Local Farm` | `Durian Musang King 1kg` |
 | [x] | `PRD-1024.jpg` | `Local Farm` | `Durian Musang King 300g` |
-| [ ] | `PRD-1025.jpg` | `Local Farm` | `Durian Musang King 500g` |
+| [x] | `PRD-1025.jpg` | `Local Farm` | `Durian Musang King 500g` |
 | [x] | `PRD-1026.jpg` | `Local Farm` | `Egg Grade A 1kg` |
-| [ ] | `PRD-1027.jpg` | `Local Farm` | `Egg Grade A 300g` |
+| [x] | `PRD-1027.jpg` | `Local Farm` | `Egg Grade A 300g` |
 | [x] | `PRD-1028.jpg` | `Local Farm` | `Egg Omega-3 1kg` |
-| [ ] | `PRD-1029.jpg` | `Local Farm` | `Egg Omega-3 300g` |
-| [ ] | `PRD-1030.jpg` | `Local Farm` | `Egg Omega-3 500g` |
+| [x] | `PRD-1029.jpg` | `Local Farm` | `Egg Omega-3 300g` |
+| [x] | `PRD-1030.jpg` | `Local Farm` | `Egg Omega-3 500g` |
 | [x] | `PRD-1031.jpg` | `Local Farm` | `Fish Siakap Fresh 1kg` |
-| [ ] | `PRD-1032.jpg` | `Local Farm` | `Fish Siakap Fresh 300g` |
-| [ ] | `PRD-1033.jpg` | `Local Farm` | `Fish Siakap Fresh 500g` |
+| [x] | `PRD-1032.jpg` | `Local Farm` | `Fish Siakap Fresh 300g` |
+| [x] | `PRD-1033.jpg` | `Local Farm` | `Fish Siakap Fresh 500g` |
 | [x] | `PRD-1034.jpg` | `Local Farm` | `Fish Tilapia Fresh 1kg` |
-| [ ] | `PRD-1035.jpg` | `Local Farm` | `Fish Tilapia Fresh 300g` |
-| [ ] | `PRD-1036.jpg` | `Local Farm` | `Fish Tilapia Fresh 500g` |
+| [x] | `PRD-1035.jpg` | `Local Farm` | `Fish Tilapia Fresh 300g` |
+| [x] | `PRD-1036.jpg` | `Local Farm` | `Fish Tilapia Fresh 500g` |
 | [x] | `PRD-1037.jpg` | `Local Farm` | `Honeydew Melon 1kg` |
-| [ ] | `PRD-1038.jpg` | `Local Farm` | `Honeydew Melon 300g` |
-| [ ] | `PRD-1039.jpg` | `Local Farm` | `Honeydew Melon 500g` |
+| [x] | `PRD-1038.jpg` | `Local Farm` | `Honeydew Melon 300g` |
+| [x] | `PRD-1039.jpg` | `Local Farm` | `Honeydew Melon 500g` |
 | [x] | `PRD-1040.jpg` | `Local Farm` | `Mangosteen 1kg` |
-| [ ] | `PRD-1041.jpg` | `Local Farm` | `Mangosteen 300g` |
-| [ ] | `PRD-1042.jpg` | `Local Farm` | `Mangosteen 500g` |
+| [x] | `PRD-1041.jpg` | `Local Farm` | `Mangosteen 300g` |
+| [x] | `PRD-1042.jpg` | `Local Farm` | `Mangosteen 500g` |
 | [x] | `PRD-1043.jpg` | `Local Farm` | `Mushroom Oyster` |
 | [x] | `PRD-1044.jpg` | `Local Farm` | `Mushroom Oyster 1kg` |
 | [x] | `PRD-1045.jpg` | `Local Farm` | `Mushroom Oyster 300g` |
@@ -662,23 +662,23 @@ Products in `data/cleaned_dataset.csv` with no real photo yet. Each row already 
 | [x] | `PRD-1049.jpg` | `Local Farm` | `Mutton Bone-in 300g` |
 | [x] | `PRD-1050.jpg` | `Local Farm` | `Mutton Bone-in 500g` |
 | [x] | `PRD-1051.jpg` | `Local Farm` | `Pineapple Morris` |
-| [ ] | `PRD-1052.jpg` | `Local Farm` | `Pineapple Morris 1kg` |
-| [ ] | `PRD-1053.jpg` | `Local Farm` | `Pineapple Morris 300g` |
-| [ ] | `PRD-1054.jpg` | `Local Farm` | `Pineapple Morris 500g` |
+| [x] | `PRD-1052.jpg` | `Local Farm` | `Pineapple Morris 1kg` |
+| [x] | `PRD-1053.jpg` | `Local Farm` | `Pineapple Morris 300g` |
+| [x] | `PRD-1054.jpg` | `Local Farm` | `Pineapple Morris 500g` |
 | [x] | `PRD-1055.jpg` | `Local Farm` | `Prawn Medium Fresh` |
-| [ ] | `PRD-1056.jpg` | `Local Farm` | `Prawn Medium Fresh 1kg` |
-| [ ] | `PRD-1057.jpg` | `Local Farm` | `Prawn Medium Fresh 300g` |
-| [ ] | `PRD-1058.jpg` | `Local Farm` | `Prawn Medium Fresh 500g` |
+| [x] | `PRD-1056.jpg` | `Local Farm` | `Prawn Medium Fresh 1kg` |
+| [x] | `PRD-1057.jpg` | `Local Farm` | `Prawn Medium Fresh 300g` |
+| [x] | `PRD-1058.jpg` | `Local Farm` | `Prawn Medium Fresh 500g` |
 | [x] | `PRD-1059.jpg` | `Local Farm` | `Sawi Hijau` |
 | [x] | `PRD-1060.jpg` | `Local Farm` | `Sawi Hijau 1kg` |
 | [x] | `PRD-1061.jpg` | `Local Farm` | `Sawi Hijau 300g` |
 | [x] | `PRD-1062.jpg` | `Local Farm` | `Sawi Hijau 500g` |
 | [x] | `PRD-1063.jpg` | `Local Farm` | `Squid Fresh` |
-| [ ] | `PRD-1064.jpg` | `Local Farm` | `Squid Fresh 1kg` |
-| [ ] | `PRD-1065.jpg` | `Local Farm` | `Squid Fresh 300g` |
-| [ ] | `PRD-1066.jpg` | `Local Farm` | `Squid Fresh 500g` |
+| [x] | `PRD-1064.jpg` | `Local Farm` | `Squid Fresh 1kg` |
+| [x] | `PRD-1065.jpg` | `Local Farm` | `Squid Fresh 300g` |
+| [x] | `PRD-1066.jpg` | `Local Farm` | `Squid Fresh 500g` |
 | [x] | `PRD-1067.jpg` | `Local Farm` | `Tempeh` |
-| [ ] | `PRD-1068.jpg` | `Local Farm` | `Tempeh 1kg` |
+| [x] | `PRD-1068.jpg` | `Local Farm` | `Tempeh 1kg` |
 | [x] | `PRD-1069.jpg` | `Local Farm` | `Tempeh 300g` |
 | [x] | `PRD-1070.jpg` | `Local Farm` | `Tempeh 500g` |
 | [x] | `PRD-1071.jpg` | `Local Farm` | `Tofu Firm` |
