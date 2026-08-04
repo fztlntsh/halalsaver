@@ -8,11 +8,11 @@ Products in `data/cleaned_dataset.csv` with no real photo yet. Each row already 
 
 **Merged rows:** many "missing" products were really just the same item at a different (sometimes nonsensical, e.g. powder detergent labelled "1L") pack size — a side effect of the dataset generator picking units at random. Where a whole group had no photo yet, the redundant rows were removed and folded into one representative row per group; see `data/photo_group_map.json` for exactly which product names each remaining filename also covers once photographed. Where a sibling size was *already* photographed, the missing one was linked straight to it — no new photo needed, nothing to do here.
 
-**Total remaining: 240**  |  **332 photographed/linked, 572 tracked overall**
+**Total remaining: 2**  |  **549 photographed/linked, 551 tracked overall**
 
 ---
 
-## Household (19/55 done)
+## Household (55/55 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
@@ -26,37 +26,37 @@ Products in `data/cleaned_dataset.csv` with no real photo yet. Each row already 
 | [x] | `PRD-426.jpg` | `Ariel` | `Ariel Liquid Detergent 2L` |
 | [x] | `PRD-427.jpg` | `Ariel` | `Ariel Liquid Detergent 2kg` |
 | [x] | `PRD-428.jpg` | `Ariel` | `Ariel Liquid Detergent 5L` |
-| [ ] | `PRD-429.jpg` | `Attack` | `Attack Detergent Powder 1L` |
-| [ ] | `PRD-432.jpg` | `Axion` | `Axion Cream Dishwashing 1L` |
-| [ ] | `PRD-437.jpg` | `Baygon` | `Baygon Insecticide Spray 1kg` |
-| [ ] | `PRD-442.jpg` | `Breeze` | `Breeze Detergent Powder 1L` |
-| [ ] | `PRD-446.jpg` | `Cif` | `Cif Cream Cleanser Lemon 1L` |
-| [ ] | `PRD-451.jpg` | `Comfort` | `Comfort Fabric Softener Lilac 1kg` |
-| [ ] | `PRD-455.jpg` | `Daia` | `Daia Detergent Powder 1L` |
-| [ ] | `PRD-460.jpg` | `Dapur` | `Dapur Heavy Duty Trash Bag 1L` |
-| [ ] | `PRD-465.jpg` | `Dettol` | `Dettol Antiseptic Liquid 1L` |
-| [ ] | `PRD-469.jpg` | `Dettol` | `Dettol Original Floor Cleaner 1L` |
-| [ ] | `PRD-473.jpg` | `Downy` | `Downy Fabric Softener Passion 1L` |
-| [ ] | `PRD-477.jpg` | `Fab` | `Fab Detergent Powder 1L` |
-| [ ] | `PRD-482.jpg` | `Febreze` | `Febreze Air Freshener Fabric 1kg` |
-| [ ] | `PRD-485.jpg` | `Glad` | `Glad Press n Seal 1kg` |
-| [ ] | `PRD-490.jpg` | `Glad` | `Glad Trash Bag Large 1L` |
-| [ ] | `PRD-495.jpg` | `Harpic` | `Harpic Toilet Cleaner Original 1L` |
-| [ ] | `PRD-498.jpg` | `Huggies` | `Huggies Diapers Dry Pants M 1kg` |
-| [ ] | `PRD-502.jpg` | `Lion` | `Lion Floor Wiper Sponge Mop 1L` |
-| [ ] | `PRD-508.jpg` | `Mama Lemon` | `Mama Lemon Dishwashing Lime 1kg` |
-| [ ] | `PRD-512.jpg` | `Mamypoko` | `Mamypoko Diapers Pants L 1L` |
-| [ ] | `PRD-517.jpg` | `Mr. Muscle` | `Mr. Muscle Kitchen Cleaner` |
-| [ ] | `PRD-522.jpg` | `Nice` | `Nice Toilet Roll 10+2` |
-| [ ] | `PRD-525.jpg` | `Party` | `Candle Lilin Birthday 1L` |
-| [ ] | `PRD-530.jpg` | `Paseo` | `Paseo Facial Tissue` |
-| [ ] | `PRD-536.jpg` | `Reynolds` | `Reynolds Aluminium Foil` |
-| [ ] | `PRD-541.jpg` | `Ridsect` | `Ridsect Insektisid Spray` |
-| [ ] | `PRD-548.jpg` | `Scotch-Brite` | `Scotch Brite Sponge Scourer` |
-| [ ] | `PRD-553.jpg` | `Scotch-Brite` | `Scotch Brite Steel Wool Soap Pad` |
-| [ ] | `PRD-559.jpg` | `Scott` | `Scott 1-Ply Toilet Tissue` |
-| [ ] | `PRD-565.jpg` | `Shieldtox` | `Shieldtox Mosquito Coil` |
-| [ ] | `PRD-570.jpg` | `Softex` | `Softex Tissue Facial` |
+| [x] | `PRD-429.jpg` | `Attack` | `Attack Detergent Powder 1L` |
+| [x] | `PRD-432.jpg` | `Axion` | `Axion Cream Dishwashing 1L` |
+| [x] | `PRD-437.jpg` | `Baygon` | `Baygon Insecticide Spray 1kg` |
+| [x] | `PRD-442.jpg` | `Breeze` | `Breeze Detergent Powder 1L` |
+| [x] | `PRD-446.jpg` | `Cif` | `Cif Cream Cleanser Lemon 1L` |
+| [x] | `PRD-451.jpg` | `Comfort` | `Comfort Fabric Softener Lilac 1kg` |
+| [x] | `PRD-455.jpg` | `Daia` | `Daia Detergent Powder 1L` |
+| [x] | `PRD-460.jpg` | `Dapur` | `Dapur Heavy Duty Trash Bag 1L` |
+| [x] | `PRD-465.jpg` | `Dettol` | `Dettol Antiseptic Liquid 1L` |
+| [x] | `PRD-469.jpg` | `Dettol` | `Dettol Original Floor Cleaner 1L` |
+| [x] | `PRD-473.jpg` | `Downy` | `Downy Fabric Softener Passion 1L` |
+| [x] | `PRD-477.jpg` | `Fab` | `Fab Detergent Powder 1L` |
+| [x] | `PRD-482.jpg` | `Febreze` | `Febreze Air Freshener Fabric 1kg` |
+| [x] | `PRD-485.jpg` | `Glad` | `Glad Press n Seal 1kg` |
+| [x] | `PRD-490.jpg` | `Glad` | `Glad Trash Bag Large 1L` |
+| [x] | `PRD-495.jpg` | `Harpic` | `Harpic Toilet Cleaner Original 1L` |
+| [x] | `PRD-498.jpg` | `Huggies` | `Huggies Diapers Dry Pants M 1kg` |
+| [x] | `PRD-502.jpg` | `Lion` | `Lion Floor Wiper Sponge Mop 1L` |
+| [x] | `PRD-508.jpg` | `Mama Lemon` | `Mama Lemon Dishwashing Lime 1kg` |
+| [x] | `PRD-512.jpg` | `Mamypoko` | `Mamypoko Diapers Pants L 1L` |
+| [x] | `PRD-517.jpg` | `Mr. Muscle` | `Mr. Muscle Kitchen Cleaner` |
+| [x] | `PRD-522.jpg` | `Nice` | `Nice Toilet Roll 10+2` |
+| [x] | `PRD-525.jpg` | `Party` | `Candle Lilin Birthday 1L` |
+| [x] | `PRD-530.jpg` | `Paseo` | `Paseo Facial Tissue` |
+| [x] | `PRD-536.jpg` | `Reynolds` | `Reynolds Aluminium Foil` |
+| [x] | `PRD-541.jpg` | `Ridsect` | `Ridsect Insektisid Spray` |
+| [x] | `PRD-548.jpg` | `Scotch-Brite` | `Scotch Brite Sponge Scourer` |
+| [x] | `PRD-553.jpg` | `Scotch-Brite` | `Scotch Brite Steel Wool Soap Pad` |
+| [x] | `PRD-559.jpg` | `Scott` | `Scott 1-Ply Toilet Tissue` |
+| [x] | `PRD-565.jpg` | `Shieldtox` | `Shieldtox Mosquito Coil` |
+| [x] | `PRD-570.jpg` | `Softex` | `Softex Tissue Facial` |
 | [x] | `PRD-575.jpg` | `Softlan` | `Softlan Fabric Softener Spring Fresh` |
 | [x] | `PRD-576.jpg` | `Softlan` | `Softlan Fabric Softener Spring Fresh 1L` |
 | [x] | `PRD-577.jpg` | `Softlan` | `Softlan Fabric Softener Spring Fresh 2kg` |
@@ -66,43 +66,43 @@ Products in `data/cleaned_dataset.csv` with no real photo yet. Each row already 
 | [x] | `PRD-581.jpg` | `Sunlight` | `Sunlight Dishwashing Liquid 1kg` |
 | [x] | `PRD-582.jpg` | `Sunlight` | `Sunlight Dishwashing Liquid 2L` |
 | [x] | `PRD-583.jpg` | `Sunlight` | `Sunlight Dishwashing Liquid 5L` |
-| [ ] | `PRD-584.jpg` | `Tesco` | `Canister Vacuum Dust Bag 1kg` |
-| [ ] | `PRD-588.jpg` | `Tesco` | `Tesco Plastic Wrap` |
-| [ ] | `PRD-593.jpg` | `Toilet Duck` | `Toilet Duck Gel Cleaner` |
-| [ ] | `PRD-599.jpg` | `Zip` | `Zip Dishwashing Liquid` |
-| [ ] | `PRD-605.jpg` | `Ziploc` | `Ziplock Bags Medium` |
+| [x] | `PRD-584.jpg` | `Tesco` | `Canister Vacuum Dust Bag 1kg` |
+| [x] | `PRD-588.jpg` | `Tesco` | `Tesco Plastic Wrap` |
+| [x] | `PRD-593.jpg` | `Toilet Duck` | `Toilet Duck Gel Cleaner` |
+| [x] | `PRD-599.jpg` | `Zip` | `Zip Dishwashing Liquid` |
+| [x] | `PRD-605.jpg` | `Ziploc` | `Ziplock Bags Medium` |
 
-## Beverages (27/54 done)
+## Beverages (54/54 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
-| [ ] | `PRD-610.jpg` | `100 Plus` | `100 Plus Lemon Isotonic Drink 250ml` |
-| [ ] | `PRD-614.jpg` | `100 Plus` | `100 Plus Original Isotonic Drink 1.5L` |
-| [ ] | `PRD-620.jpg` | `7UP` | `7UP Can 1.5L` |
-| [ ] | `PRD-627.jpg` | `Calpis` | `Calpis Water Original 250ml` |
-| [ ] | `PRD-634.jpg` | `Coca-Cola` | `Coke Original Can 1L` |
-| [ ] | `PRD-640.jpg` | `Dutch Lady` | `Dutch Lady Full Cream Milk 250ml` |
-| [ ] | `PRD-645.jpg` | `Dutch Lady` | `Dutch Lady Low Fat Milk 250ml` |
-| [ ] | `PRD-651.jpg` | `Dutch Lady` | `Dutch Lady Strawberry Flavoured Milk 1L` |
-| [ ] | `PRD-656.jpg` | `Evian` | `Evian Natural Mineral Water 1.5L` |
-| [ ] | `PRD-660.jpg` | `HL Milk` | `HL Milk Low Fat 1.5L` |
-| [ ] | `PRD-665.jpg` | `Jalen` | `Jalen Carbonated Drink Lime 1.5L` |
-| [ ] | `PRD-671.jpg` | `Kickapoo` | `Kickapoo Joy Juice 1L` |
-| [ ] | `PRD-676.jpg` | `Livita` | `Livita Energy Drink 1.5L` |
-| [ ] | `PRD-680.jpg` | `Marigold` | `Marigold Full Cream UHT Milk 250ml` |
-| [ ] | `PRD-685.jpg` | `Milo` | `Milo Activ-Go 3-in-1 Chocolate Drink 1L` |
-| [ ] | `PRD-692.jpg` | `Milo` | `Milo Activ-Go Tin 1.5L` |
-| [ ] | `PRD-698.jpg` | `Milo` | `Milo Fuze Choc Malt Drink 1.5L` |
-| [ ] | `PRD-704.jpg` | `Minute Maid` | `Minute Maid Pulpy Orange 250ml` |
-| [ ] | `PRD-709.jpg` | `Monster` | `Monster Energy Original 1L` |
-| [ ] | `PRD-715.jpg` | `Nescafe` | `Nescafe 3-in-1 Original` |
-| [ ] | `PRD-721.jpg` | `Nescafe` | `Nescafe Ice Blend Original` |
-| [ ] | `PRD-727.jpg` | `Nescafe` | `Nescafe Tarik Kaw` |
-| [ ] | `PRD-734.jpg` | `Nutrigen` | `Nutrigen Grape Juice` |
-| [ ] | `PRD-740.jpg` | `Pepsi` | `Pepsi Original Can` |
-| [ ] | `PRD-747.jpg` | `Pokka` | `Pokka Iced Coffee` |
-| [ ] | `PRD-754.jpg` | `Power Root` | `Ali Cafe White Coffee 1.5L` |
-| [ ] | `PRD-760.jpg` | `Power Root` | `Teh Tarik Power Root` |
+| [x] | `PRD-610.jpg` | `100 Plus` | `100 Plus Lemon Isotonic Drink 250ml` |
+| [x] | `PRD-614.jpg` | `100 Plus` | `100 Plus Original Isotonic Drink 1.5L` |
+| [x] | `PRD-620.jpg` | `7UP` | `7UP Can 1.5L` |
+| [x] | `PRD-627.jpg` | `Calpis` | `Calpis Water Original 250ml` |
+| [x] | `PRD-634.jpg` | `Coca-Cola` | `Coke Original Can 1L` |
+| [x] | `PRD-640.jpg` | `Dutch Lady` | `Dutch Lady Full Cream Milk 250ml` |
+| [x] | `PRD-645.jpg` | `Dutch Lady` | `Dutch Lady Low Fat Milk 250ml` |
+| [x] | `PRD-651.jpg` | `Dutch Lady` | `Dutch Lady Strawberry Flavoured Milk 1L` |
+| [x] | `PRD-656.jpg` | `Evian` | `Evian Natural Mineral Water 1.5L` |
+| [x] | `PRD-660.jpg` | `HL Milk` | `HL Milk Low Fat 1.5L` |
+| [x] | `PRD-665.jpg` | `Jalen` | `Jalen Carbonated Drink Lime 1.5L` |
+| [x] | `PRD-671.jpg` | `Kickapoo` | `Kickapoo Joy Juice 1L` |
+| [x] | `PRD-676.jpg` | `Livita` | `Livita Energy Drink 1.5L` |
+| [x] | `PRD-680.jpg` | `Marigold` | `Marigold Full Cream UHT Milk 250ml` |
+| [x] | `PRD-685.jpg` | `Milo` | `Milo Activ-Go 3-in-1 Chocolate Drink 1L` |
+| [x] | `PRD-692.jpg` | `Milo` | `Milo Activ-Go Tin 1.5L` |
+| [x] | `PRD-698.jpg` | `Milo` | `Milo Fuze Choc Malt Drink 1.5L` |
+| [x] | `PRD-704.jpg` | `Minute Maid` | `Minute Maid Pulpy Orange 250ml` |
+| [x] | `PRD-709.jpg` | `Monster` | `Monster Energy Original 1L` |
+| [x] | `PRD-715.jpg` | `Nescafe` | `Nescafe 3-in-1 Original` |
+| [x] | `PRD-721.jpg` | `Nescafe` | `Nescafe Ice Blend Original` |
+| [x] | `PRD-727.jpg` | `Nescafe` | `Nescafe Tarik Kaw` |
+| [x] | `PRD-734.jpg` | `Nutrigen` | `Nutrigen Grape Juice` |
+| [x] | `PRD-740.jpg` | `Pepsi` | `Pepsi Original Can` |
+| [x] | `PRD-747.jpg` | `Pokka` | `Pokka Iced Coffee` |
+| [x] | `PRD-754.jpg` | `Power Root` | `Ali Cafe White Coffee 1.5L` |
+| [x] | `PRD-760.jpg` | `Power Root` | `Teh Tarik Power Root` |
 | [x] | `PRD-766.jpg` | `Red Bull` | `Red Bull Energy Drink` |
 | [x] | `PRD-767.jpg` | `Red Bull` | `Red Bull Energy Drink 250ml` |
 | [x] | `PRD-768.jpg` | `Red Bull` | `Red Bull Energy Drink 250ml x6` |
@@ -427,224 +427,203 @@ Products in `data/cleaned_dataset.csv` with no real photo yet. Each row already 
 | [x] | `PRD-1077.jpg` | `Local Farm` | `Tofu Silken 300g` |
 | [x] | `PRD-1078.jpg` | `Local Farm` | `Tofu Silken 500g` |
 
-## Dairy & Chilled (0/21 done)
+## Dairy & Chilled (21/21 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
-| [ ] | `PRD-1079.jpg` | `Carnation` | `Carnation Evaporated Milk 125g` |
-| [ ] | `PRD-1084.jpg` | `Chesdale` | `Chesdale Processed Cheese 125g` |
-| [ ] | `PRD-1090.jpg` | `Dairy Champ` | `Dairy Champ Sweetened Condensed Milk 125g` |
-| [ ] | `PRD-1096.jpg` | `Dutch Lady` | `Dutch Lady Pure Farm Milk 125g` |
-| [ ] | `PRD-1101.jpg` | `Emborg` | `Emborg Mozzarella Cheese 130g` |
-| [ ] | `PRD-1106.jpg` | `Farm Fresh` | `Farm Fresh Low Fat Milk 1L` |
-| [ ] | `PRD-1110.jpg` | `Farmhouse` | `Farmhouse Fresh Milk 130g` |
-| [ ] | `PRD-1115.jpg` | `Farmhouse` | `Farmhouse UHT Milk Full Cream 125g` |
-| [ ] | `PRD-1119.jpg` | `King` | `King Butter Salted 125g` |
-| [ ] | `PRD-1125.jpg` | `Kraft` | `Kraft Cheddar Slices 125g` |
-| [ ] | `PRD-1131.jpg` | `Lurpak` | `Lurpak Butter Spreadable 125g` |
-| [ ] | `PRD-1137.jpg` | `Magnolia` | `Magnolia Pasteurised Milk 125g` |
-| [ ] | `PRD-1143.jpg` | `Meadow Gold` | `Meadow Gold Ice Cream Tub Vanilla 125g` |
-| [ ] | `PRD-1148.jpg` | `Milkana` | `Milkana Cheese Spread 125g` |
-| [ ] | `PRD-1153.jpg` | `Nestle` | `Nestle Coffee-Mate Creamer` |
-| [ ] | `PRD-1158.jpg` | `Nestle` | `Nestle Drumstick Vanilla` |
-| [ ] | `PRD-1163.jpg` | `Nestle` | `Nestle Fruity Yogurt Strawberry` |
-| [ ] | `PRD-1169.jpg` | `Nestle` | `Nestle Natural Set Yogurt` |
-| [ ] | `PRD-1176.jpg` | `Philadelphia` | `Philadelphia Cream Cheese` |
-| [ ] | `PRD-1182.jpg` | `Puck` | `Puck Cream Cheese Spread` |
-| [ ] | `PRD-1188.jpg` | `Wall's` | `Wall's Paddle Pop Chocolate` |
+| [x] | `PRD-1079.jpg` | `Carnation` | `Carnation Evaporated Milk 125g` |
+| [x] | `PRD-1084.jpg` | `Chesdale` | `Chesdale Processed Cheese 125g` |
+| [x] | `PRD-1090.jpg` | `Dairy Champ` | `Dairy Champ Sweetened Condensed Milk 125g` |
+| [x] | `PRD-1096.jpg` | `Dutch Lady` | `Dutch Lady Pure Farm Milk 125g` |
+| [x] | `PRD-1101.jpg` | `Emborg` | `Emborg Mozzarella Cheese 130g` |
+| [x] | `PRD-1106.jpg` | `Farm Fresh` | `Farm Fresh Low Fat Milk 1L` |
+| [x] | `PRD-1110.jpg` | `Farmhouse` | `Farmhouse Fresh Milk 130g` |
+| [x] | `PRD-1115.jpg` | `Farmhouse` | `Farmhouse UHT Milk Full Cream 125g` |
+| [x] | `PRD-1119.jpg` | `King` | `King Butter Salted 125g` |
+| [x] | `PRD-1125.jpg` | `Kraft` | `Kraft Cheddar Slices 125g` |
+| [x] | `PRD-1131.jpg` | `Lurpak` | `Lurpak Butter Spreadable 125g` |
+| [x] | `PRD-1137.jpg` | `Magnolia` | `Magnolia Pasteurised Milk 125g` |
+| [x] | `PRD-1143.jpg` | `Meadow Gold` | `Meadow Gold Ice Cream Tub Vanilla 125g` |
+| [x] | `PRD-1148.jpg` | `Milkana` | `Milkana Cheese Spread 125g` |
+| [x] | `PRD-1153.jpg` | `Nestle` | `Nestle Coffee-Mate Creamer` |
+| [x] | `PRD-1158.jpg` | `Nestle` | `Nestle Drumstick Vanilla` |
+| [x] | `PRD-1163.jpg` | `Nestle` | `Nestle Fruity Yogurt Strawberry` |
+| [x] | `PRD-1169.jpg` | `Nestle` | `Nestle Natural Set Yogurt` |
+| [x] | `PRD-1176.jpg` | `Philadelphia` | `Philadelphia Cream Cheese` |
+| [x] | `PRD-1182.jpg` | `Puck` | `Puck Cream Cheese Spread` |
+| [x] | `PRD-1188.jpg` | `Wall's` | `Wall's Paddle Pop Chocolate` |
 
-## Cooking Essentials (0/23 done)
-
-| Done | Save As | Brand | Product Name |
-|---|---|---|---|
-| [ ] | `PRD-1195.jpg` | `ABC` | `ABC Sambal Oelek 1L` |
-| [ ] | `PRD-1201.jpg` | `Adabi` | `Adabi Rempah Kari Ayam 1L` |
-| [ ] | `PRD-1205.jpg` | `Adabi` | `Kicap Manis Adabi 250ml` |
-| [ ] | `PRD-1208.jpg` | `Angel` | `Angel Yeast Instant Dry Yeast 1L` |
-| [ ] | `PRD-1214.jpg` | `Bakers` | `Bakers Vanilla Essence 1L` |
-| [ ] | `PRD-1217.jpg` | `Borges` | `Minyak Zaitun Borges 1L` |
-| [ ] | `PRD-1222.jpg` | `Cap Kipas Udang` | `Cap Kipas Udang Blachan 1L` |
-| [ ] | `PRD-1225.jpg` | `Cap Kipas Udang` | `Kicap Pekat Cap Kipas Udang 1L` |
-| [ ] | `PRD-1229.jpg` | `Crisco` | `Crisco Butter Flavour 1L` |
-| [ ] | `PRD-1235.jpg` | `HP` | `HP Brown Sauce 1L` |
-| [ ] | `PRD-1240.jpg` | `Heinz` | `Heinz Tomato Ketchup 1kg` |
-| [ ] | `PRD-1245.jpg` | `Lam Soon` | `Lam Soon Canola Cooking Oil 1L` |
-| [ ] | `PRD-1250.jpg` | `Lea & Perrins` | `Worcestershire Sauce Lea Perrins` |
-| [ ] | `PRD-1254.jpg` | `Maggi` | `Maggi Pati Ayam Seasoning 1L` |
-| [ ] | `PRD-1259.jpg` | `Maggi` | `Maggi Sos Cili 1L` |
-| [ ] | `PRD-1264.jpg` | `Maggi` | `Maggi Tomyam Paste 1L` |
-| [ ] | `PRD-1269.jpg` | `RHB` | `RHB Flour Plain Tepung` |
-| [ ] | `PRD-1275.jpg` | `Rose Brand` | `Rose Brand Salt Table` |
-| [ ] | `PRD-1281.jpg` | `SCS` | `SCS Butter Salted` |
-| [ ] | `PRD-1286.jpg` | `SCS` | `SCS Unsalted Butter` |
-| [ ] | `PRD-1293.jpg` | `Seri Murni` | `Seri Murni Palm Cooking Oil` |
-| [ ] | `PRD-1298.jpg` | `Sunco` | `Sunco Cooking Oil` |
-| [ ] | `PRD-1302.jpg` | `Yeo's` | `Yeo's Coconut Cream` |
-
-## Canned & Preserved (0/15 done)
+## Cooking Essentials (23/23 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
-| [ ] | `PRD-1307.jpg` | `Adabi` | `Adabi Kari Ikan Canned 155g` |
-| [ ] | `PRD-1311.jpg` | `Champion` | `Champion Corned Beef 155g` |
-| [ ] | `PRD-1316.jpg` | `Golden Circle` | `Golden Circle Peach Slices 155g` |
-| [ ] | `PRD-1320.jpg` | `Heinz` | `Heinz Cream of Mushroom Soup 155g` |
-| [ ] | `PRD-1324.jpg` | `Hershey's` | `Hershey's Chocolate Spread 155g` |
-| [ ] | `PRD-1328.jpg` | `Jif` | `Jif Creamy Peanut Butter 155g` |
-| [ ] | `PRD-1334.jpg` | `Kia Ora` | `Kia Ora Orange Jam 155g` |
-| [ ] | `PRD-1339.jpg` | `Magi` | `Magi Macaroni Elbow Pasta 300g` |
-| [ ] | `PRD-1343.jpg` | `Marriott` | `Marriott Strawberry Jam 155g` |
-| [ ] | `PRD-1349.jpg` | `Sara Lee` | `Sara Lee Strawberry Jam` |
-| [ ] | `PRD-1354.jpg` | `Skippy` | `Skippy Peanut Butter Creamy` |
-| [ ] | `PRD-1361.jpg` | `Tesco` | `Tesco Vegetable Soup` |
-| [ ] | `PRD-1367.jpg` | `Tiger Brand` | `Tiger Brand Meat Luncheon` |
-| [ ] | `PRD-1373.jpg` | `Tulip` | `Tulip Pork Luncheon Meat` |
-| [ ] | `PRD-1379.jpg` | `Yeo's` | `Yeos Green Pea Canned` |
+| [x] | `PRD-1195.jpg` | `ABC` | `ABC Sambal Oelek 1L` |
+| [x] | `PRD-1201.jpg` | `Adabi` | `Adabi Rempah Kari Ayam 1L` |
+| [x] | `PRD-1205.jpg` | `Adabi` | `Kicap Manis Adabi 250ml` |
+| [x] | `PRD-1208.jpg` | `Angel` | `Angel Yeast Instant Dry Yeast 1L` |
+| [x] | `PRD-1214.jpg` | `Bakers` | `Bakers Vanilla Essence 1L` |
+| [x] | `PRD-1217.jpg` | `Borges` | `Minyak Zaitun Borges 1L` |
+| [x] | `PRD-1222.jpg` | `Cap Kipas Udang` | `Cap Kipas Udang Blachan 1L` |
+| [x] | `PRD-1225.jpg` | `Cap Kipas Udang` | `Kicap Pekat Cap Kipas Udang 1L` |
+| [x] | `PRD-1229.jpg` | `Crisco` | `Crisco Butter Flavour 1L` |
+| [x] | `PRD-1235.jpg` | `HP` | `HP Brown Sauce 1L` |
+| [x] | `PRD-1240.jpg` | `Heinz` | `Heinz Tomato Ketchup 1kg` |
+| [x] | `PRD-1245.jpg` | `Lam Soon` | `Lam Soon Canola Cooking Oil 1L` |
+| [x] | `PRD-1250.jpg` | `Lea & Perrins` | `Worcestershire Sauce Lea Perrins` |
+| [x] | `PRD-1254.jpg` | `Maggi` | `Maggi Pati Ayam Seasoning 1L` |
+| [x] | `PRD-1259.jpg` | `Maggi` | `Maggi Sos Cili 1L` |
+| [x] | `PRD-1264.jpg` | `Maggi` | `Maggi Tomyam Paste 1L` |
+| [x] | `PRD-1269.jpg` | `RHB` | `RHB Flour Plain Tepung` |
+| [x] | `PRD-1275.jpg` | `Rose Brand` | `Rose Brand Salt Table` |
+| [x] | `PRD-1281.jpg` | `SCS` | `SCS Butter Salted` |
+| [x] | `PRD-1286.jpg` | `SCS` | `SCS Unsalted Butter` |
+| [x] | `PRD-1293.jpg` | `Seri Murni` | `Seri Murni Palm Cooking Oil` |
+| [x] | `PRD-1298.jpg` | `Sunco` | `Sunco Cooking Oil` |
+| [x] | `PRD-1302.jpg` | `Yeo's` | `Yeo's Coconut Cream` |
 
-## Health & Wellness (0/57 done)
+## Canned & Preserved (15/15 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
-| [ ] | `PRD-1385.jpg` | `Appeton` | `Appeton Vitamin C Chewable 100 tablets` |
-| [ ] | `PRD-1386.jpg` | `Appeton` | `Appeton Vitamin C Chewable 250ml` |
-| [ ] | `PRD-1387.jpg` | `Appeton` | `Appeton Vitamin C Chewable 30 tablets` |
-| [ ] | `PRD-1389.jpg` | `Appeton` | `Appeton Vitamin C Chewable 60 tablets` |
+| [x] | `PRD-1307.jpg` | `Adabi` | `Adabi Kari Ikan Canned 155g` |
+| [x] | `PRD-1311.jpg` | `Champion` | `Champion Corned Beef 155g` |
+| [x] | `PRD-1316.jpg` | `Golden Circle` | `Golden Circle Peach Slices 155g` |
+| [x] | `PRD-1320.jpg` | `Heinz` | `Heinz Cream of Mushroom Soup 155g` |
+| [x] | `PRD-1324.jpg` | `Hershey's` | `Hershey's Chocolate Spread 155g` |
+| [x] | `PRD-1328.jpg` | `Jif` | `Jif Creamy Peanut Butter 155g` |
+| [x] | `PRD-1334.jpg` | `Kia Ora` | `Kia Ora Orange Jam 155g` |
+| [x] | `PRD-1339.jpg` | `Magi` | `Magi Macaroni Elbow Pasta 300g` |
+| [x] | `PRD-1343.jpg` | `Marriott` | `Marriott Strawberry Jam 155g` |
+| [x] | `PRD-1349.jpg` | `Sara Lee` | `Sara Lee Strawberry Jam` |
+| [x] | `PRD-1354.jpg` | `Skippy` | `Skippy Peanut Butter Creamy` |
+| [x] | `PRD-1361.jpg` | `Tesco` | `Tesco Vegetable Soup` |
+| [x] | `PRD-1367.jpg` | `Tiger Brand` | `Tiger Brand Meat Luncheon` |
+| [x] | `PRD-1373.jpg` | `Tulip` | `Tulip Pork Luncheon Meat` |
+| [x] | `PRD-1379.jpg` | `Yeo's` | `Yeos Green Pea Canned` |
+
+## Health & Wellness (34/36 done)
+
+| Done | Save As | Brand | Product Name |
+|---|---|---|---|
+| [x] | `PRD-1385.jpg` | `Appeton` | `Appeton Vitamin C Chewable 100 tablets` |
+| [x] | `PRD-1389.jpg` | `Appeton` | `Appeton Vitamin C Chewable 60 tablets` |
 | [ ] | `PRD-1390.jpg` | `Appeton` | `Appeton Weight Gain Chocolate 100 tablets` |
-| [ ] | `PRD-1391.jpg` | `Appeton` | `Appeton Weight Gain Chocolate 250ml` |
-| [ ] | `PRD-1392.jpg` | `Appeton` | `Appeton Weight Gain Chocolate 30 tablets` |
-| [ ] | `PRD-1393.jpg` | `Appeton` | `Appeton Weight Gain Chocolate 60 tablets` |
-| [ ] | `PRD-1394.jpg` | `Axe Brand` | `Axe Brand Universal Oil 100 tablets` |
-| [ ] | `PRD-1395.jpg` | `Axe Brand` | `Axe Brand Universal Oil 250ml` |
-| [ ] | `PRD-1396.jpg` | `Axe Brand` | `Axe Brand Universal Oil 30 tablets` |
-| [ ] | `PRD-1398.jpg` | `Axe Brand` | `Axe Brand Universal Oil 60 tablets` |
-| [ ] | `PRD-1399.jpg` | `Biogesic` | `Biogesic Paracetamol 500mg 100 tablets` |
-| [ ] | `PRD-1400.jpg` | `Biogesic` | `Biogesic Paracetamol 500mg 250ml` |
-| [ ] | `PRD-1401.jpg` | `Biogesic` | `Biogesic Paracetamol 500mg 30 tablets` |
-| [ ] | `PRD-1403.jpg` | `Biogesic` | `Biogesic Paracetamol 500mg 60 tablets` |
-| [ ] | `PRD-1404.jpg` | `Brand's` | `Brands Vita B Complex 100 tablets` |
-| [ ] | `PRD-1405.jpg` | `Brand's` | `Brands Vita B Complex 250ml` |
-| [ ] | `PRD-1407.jpg` | `Brand's` | `Brands Vita B Complex 60 tablets` |
+| [x] | `PRD-1394.jpg` | `Axe Brand` | `Axe Brand Universal Oil 100 tablets` |
+| [x] | `PRD-1395.jpg` | `Axe Brand` | `Axe Brand Universal Oil 250ml` |
+| [x] | `PRD-1396.jpg` | `Axe Brand` | `Axe Brand Universal Oil 30 tablets` |
+| [x] | `PRD-1398.jpg` | `Axe Brand` | `Axe Brand Universal Oil 60 tablets` |
+| [x] | `PRD-1399.jpg` | `Biogesic` | `Biogesic Paracetamol 500mg 100 tablets` |
+| [x] | `PRD-1400.jpg` | `Biogesic` | `Biogesic Paracetamol 500mg 250ml` |
+| [x] | `PRD-1401.jpg` | `Biogesic` | `Biogesic Paracetamol 500mg 30 tablets` |
+| [x] | `PRD-1404.jpg` | `Brand's` | `Brands Vita B Complex 100 tablets` |
+| [x] | `PRD-1405.jpg` | `Brand's` | `Brands Vita B Complex 250ml` |
+| [x] | `PRD-1407.jpg` | `Brand's` | `Brands Vita B Complex 60 tablets` |
 | [ ] | `PRD-1408.jpg` | `Cap Kapak` | `Minyak Angin Cap Kapak 100 tablets` |
-| [ ] | `PRD-1409.jpg` | `Cap Kapak` | `Minyak Angin Cap Kapak 250ml` |
-| [ ] | `PRD-1410.jpg` | `Cap Kapak` | `Minyak Angin Cap Kapak 30 tablets` |
-| [ ] | `PRD-1411.jpg` | `Cap Kapak` | `Minyak Angin Cap Kapak 60 tablets` |
-| [ ] | `PRD-1412.jpg` | `Celeteque` | `Celeteque Moisturizer SPF15 100 tablets` |
-| [ ] | `PRD-1413.jpg` | `Celeteque` | `Celeteque Moisturizer SPF15 250ml` |
-| [ ] | `PRD-1414.jpg` | `Celeteque` | `Celeteque Moisturizer SPF15 30 tablets` |
-| [ ] | `PRD-1416.jpg` | `Celeteque` | `Celeteque Moisturizer SPF15 60 tablets` |
-| [ ] | `PRD-1417.jpg` | `Eno` | `Antacid Eno Fruity 100 tablets` |
-| [ ] | `PRD-1418.jpg` | `Eno` | `Antacid Eno Fruity 250ml` |
-| [ ] | `PRD-1419.jpg` | `Eno` | `Antacid Eno Fruity 30 tablets` |
-| [ ] | `PRD-1421.jpg` | `Eno` | `Antacid Eno Fruity 60 tablets` |
-| [ ] | `PRD-1422.jpg` | `Enrich` | `Enrich Multivitamin Adult 100 tablets` |
-| [ ] | `PRD-1423.jpg` | `Enrich` | `Enrich Multivitamin Adult 30 tablets` |
-| [ ] | `PRD-1424.jpg` | `Enrich` | `Enrich Multivitamin Adult 60 tablets` |
-| [ ] | `PRD-1425.jpg` | `Panadol` | `Panadol Extra Tablets` |
-| [ ] | `PRD-1426.jpg` | `Panadol` | `Panadol Extra Tablets 100 tablets` |
-| [ ] | `PRD-1429.jpg` | `Panadol` | `Panadol Extra Tablets 60 tablets` |
-| [ ] | `PRD-1430.jpg` | `Panadol` | `Panadol Regular Tablets` |
-| [ ] | `PRD-1431.jpg` | `Panadol` | `Panadol Regular Tablets 100 tablets` |
-| [ ] | `PRD-1433.jpg` | `Panadol` | `Panadol Regular Tablets 30 tablets` |
-| [ ] | `PRD-1435.jpg` | `Panadol` | `Panadol Regular Tablets 60 tablets` |
-| [ ] | `PRD-1436.jpg` | `Scott's` | `Scott's Emulsion Pure Cod Liver` |
-| [ ] | `PRD-1437.jpg` | `Scott's` | `Scott's Emulsion Pure Cod Liver 100 tablets` |
-| [ ] | `PRD-1439.jpg` | `Scott's` | `Scott's Emulsion Pure Cod Liver 30 tablets` |
-| [ ] | `PRD-1441.jpg` | `Scott's` | `Scott's Emulsion Pure Cod Liver 60 tablets` |
-| [ ] | `PRD-1442.jpg` | `Scotts` | `Scotts DHA Emulsion Orange` |
-| [ ] | `PRD-1443.jpg` | `Scotts` | `Scotts DHA Emulsion Orange 100 tablets` |
-| [ ] | `PRD-1445.jpg` | `Scotts` | `Scotts DHA Emulsion Orange 30 tablets` |
-| [ ] | `PRD-1447.jpg` | `Scotts` | `Scotts DHA Emulsion Orange 60 tablets` |
-| [ ] | `PRD-1448.jpg` | `Tiger Balm` | `Tiger Balm Red Ointment` |
-| [ ] | `PRD-1449.jpg` | `Tiger Balm` | `Tiger Balm Red Ointment 100 tablets` |
-| [ ] | `PRD-1451.jpg` | `Tiger Balm` | `Tiger Balm Red Ointment 30 tablets` |
-| [ ] | `PRD-1453.jpg` | `Tiger Balm` | `Tiger Balm Red Ointment 60 tablets` |
-| [ ] | `PRD-1454.jpg` | `Watsons` | `Natural Honey Face Mask` |
-| [ ] | `PRD-1455.jpg` | `Watsons` | `Natural Honey Face Mask 100 tablets` |
-| [ ] | `PRD-1457.jpg` | `Watsons` | `Natural Honey Face Mask 30 tablets` |
-| [ ] | `PRD-1459.jpg` | `Watsons` | `Natural Honey Face Mask 60 tablets` |
+| [x] | `PRD-1412.jpg` | `Celeteque` | `Celeteque Moisturizer SPF15 100 tablets` |
+| [x] | `PRD-1413.jpg` | `Celeteque` | `Celeteque Moisturizer SPF15 250ml` |
+| [x] | `PRD-1417.jpg` | `Eno` | `Antacid Eno Fruity 100 tablets` |
+| [x] | `PRD-1418.jpg` | `Eno` | `Antacid Eno Fruity 250ml` |
+| [x] | `PRD-1419.jpg` | `Eno` | `Antacid Eno Fruity 30 tablets` |
+| [x] | `PRD-1422.jpg` | `Enrich` | `Enrich Multivitamin Adult 100 tablets` |
+| [x] | `PRD-1423.jpg` | `Enrich` | `Enrich Multivitamin Adult 30 tablets` |
+| [x] | `PRD-1425.jpg` | `Panadol` | `Panadol Extra Tablets` |
+| [x] | `PRD-1426.jpg` | `Panadol` | `Panadol Extra Tablets 100 tablets` |
+| [x] | `PRD-1430.jpg` | `Panadol` | `Panadol Regular Tablets` |
+| [x] | `PRD-1431.jpg` | `Panadol` | `Panadol Regular Tablets 100 tablets` |
+| [x] | `PRD-1436.jpg` | `Scott's` | `Scott's Emulsion Pure Cod Liver` |
+| [x] | `PRD-1437.jpg` | `Scott's` | `Scott's Emulsion Pure Cod Liver 100 tablets` |
+| [x] | `PRD-1442.jpg` | `Scotts` | `Scotts DHA Emulsion Orange` |
+| [x] | `PRD-1443.jpg` | `Scotts` | `Scotts DHA Emulsion Orange 100 tablets` |
+| [x] | `PRD-1448.jpg` | `Tiger Balm` | `Tiger Balm Red Ointment` |
+| [x] | `PRD-1449.jpg` | `Tiger Balm` | `Tiger Balm Red Ointment 100 tablets` |
+| [x] | `PRD-1451.jpg` | `Tiger Balm` | `Tiger Balm Red Ointment 30 tablets` |
+| [x] | `PRD-1453.jpg` | `Tiger Balm` | `Tiger Balm Red Ointment 60 tablets` |
+| [x] | `PRD-1454.jpg` | `Watsons` | `Natural Honey Face Mask` |
+| [x] | `PRD-1455.jpg` | `Watsons` | `Natural Honey Face Mask 100 tablets` |
+| [x] | `PRD-1457.jpg` | `Watsons` | `Natural Honey Face Mask 30 tablets` |
 
-## Snacks (0/15 done)
+## Snacks (15/15 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
-| [ ] | `PRD-1460.jpg` | `Apollo` | `Apollo Layer Cake Chocolate 100g` |
-| [ ] | `PRD-1462.jpg` | `Apollo` | `Apollo Swiss Roll Chocolate 100g` |
-| [ ] | `PRD-1467.jpg` | `Cadbury` | `Cadbury Crunchie 100g` |
-| [ ] | `PRD-1470.jpg` | `Ferrero Rocher` | `Ferrero Rocher 3 pieces 100g` |
-| [ ] | `PRD-1476.jpg` | `Hershey's` | `Hershey's Kisses Milk Chocolate 250g` |
-| [ ] | `PRD-1479.jpg` | `Jacob's` | `Jacob's Cream Crackers 100g` |
-| [ ] | `PRD-1483.jpg` | `KitKat` | `KitKat 4 Fingers 150g` |
-| [ ] | `PRD-1488.jpg` | `Lay's` | `Lays Barbecue Flavour 100g` |
-| [ ] | `PRD-1493.jpg` | `Lay's` | `Lays Classic Potato Chips 200g` |
-| [ ] | `PRD-1498.jpg` | `Malkist` | `Malkist Crackers 100g` |
-| [ ] | `PRD-1502.jpg` | `Mamee` | `Mamee O-Corn Snack 100g` |
-| [ ] | `PRD-1506.jpg` | `Nips` | `Nips Peanuts Coated` |
-| [ ] | `PRD-1512.jpg` | `Oishi` | `Oishi Prawn Crackers` |
-| [ ] | `PRD-1516.jpg` | `Ritz` | `Ritz Crackers Original` |
-| [ ] | `PRD-1521.jpg` | `Toblerone` | `Toblerone Milk Chocolate` |
+| [x] | `PRD-1460.jpg` | `Apollo` | `Apollo Layer Cake Chocolate 100g` |
+| [x] | `PRD-1462.jpg` | `Apollo` | `Apollo Swiss Roll Chocolate 100g` |
+| [x] | `PRD-1467.jpg` | `Cadbury` | `Cadbury Crunchie 100g` |
+| [x] | `PRD-1470.jpg` | `Ferrero Rocher` | `Ferrero Rocher 3 pieces 100g` |
+| [x] | `PRD-1476.jpg` | `Hershey's` | `Hershey's Kisses Milk Chocolate 250g` |
+| [x] | `PRD-1479.jpg` | `Jacob's` | `Jacob's Cream Crackers 100g` |
+| [x] | `PRD-1483.jpg` | `KitKat` | `KitKat 4 Fingers 150g` |
+| [x] | `PRD-1488.jpg` | `Lay's` | `Lays Barbecue Flavour 100g` |
+| [x] | `PRD-1493.jpg` | `Lay's` | `Lays Classic Potato Chips 200g` |
+| [x] | `PRD-1498.jpg` | `Malkist` | `Malkist Crackers 100g` |
+| [x] | `PRD-1502.jpg` | `Mamee` | `Mamee O-Corn Snack 100g` |
+| [x] | `PRD-1506.jpg` | `Nips` | `Nips Peanuts Coated` |
+| [x] | `PRD-1512.jpg` | `Oishi` | `Oishi Prawn Crackers` |
+| [x] | `PRD-1516.jpg` | `Ritz` | `Ritz Crackers Original` |
+| [x] | `PRD-1521.jpg` | `Toblerone` | `Toblerone Milk Chocolate` |
 
-## Baby & Kids (0/14 done)
-
-| Done | Save As | Brand | Product Name |
-|---|---|---|---|
-| [ ] | `PRD-1525.jpg` | `Anmum` | `Anmum Lacta Chocolate 100g` |
-| [ ] | `PRD-1529.jpg` | `Cetaphil` | `Cetaphil Baby Gentle Wash 100g` |
-| [ ] | `PRD-1532.jpg` | `Enfamil` | `Enfagrow A+ Stage 3 Chocolate 200ml` |
-| [ ] | `PRD-1535.jpg` | `Friso` | `Friso Gold Step 3 100g` |
-| [ ] | `PRD-1539.jpg` | `Gerber` | `Gerber Puffs Strawberry 200ml` |
-| [ ] | `PRD-1542.jpg` | `Heinz` | `Heinz Cereals Rice with Apple 100g` |
-| [ ] | `PRD-1545.jpg` | `Huggies` | `Huggies Dry Fit NB Diapers 100g` |
-| [ ] | `PRD-1548.jpg` | `Johnson's` | `Johnsons Baby Lotion 200ml` |
-| [ ] | `PRD-1551.jpg` | `Johnson's` | `Johnsons Baby Powder 200g` |
-| [ ] | `PRD-1555.jpg` | `Mamypoko` | `Mamypoko Newborn Diapers 100g` |
-| [ ] | `PRD-1559.jpg` | `Nestle` | `Nestle NAN HA 1` |
-| [ ] | `PRD-1564.jpg` | `Pigeon` | `Pigeon Baby Shampoo` |
-| [ ] | `PRD-1570.jpg` | `Pigeon` | `Pigeon Baby Wash` |
-| [ ] | `PRD-1576.jpg` | `Similac` | `Similac Step 2 Stage 2` |
-
-## Frozen Food (0/13 done)
+## Baby & Kids (14/14 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
-| [ ] | `PRD-1582.jpg` | `Baskin-Robbins` | `Baskin Robbins Pint Vanilla 1kg` |
-| [ ] | `PRD-1585.jpg` | `Bird's Eye` | `Birds Eye Fish Fingers 1kg` |
-| [ ] | `PRD-1589.jpg` | `Caesar` | `Caesar Fish Cake Seafood 1kg` |
-| [ ] | `PRD-1593.jpg` | `Farm's Best` | `Farm's Best Chicken Sausage 1kg` |
-| [ ] | `PRD-1597.jpg` | `Haagen-Dazs` | `Haagen-Dazs Vanilla Ice Cream 1kg` |
-| [ ] | `PRD-1601.jpg` | `IKEA` | `Ikea Veggie Balls Frozen 200g` |
-| [ ] | `PRD-1604.jpg` | `McCain` | `McCain Crinkle Cut Fries 1kg` |
-| [ ] | `PRD-1608.jpg` | `Nestle` | `Nestle Drumstick Mini Cones` |
-| [ ] | `PRD-1613.jpg` | `Peel Fresh` | `Peel Fresh Frozen Durian Puree` |
-| [ ] | `PRD-1618.jpg` | `Pokka` | `Pokka Sorbet Mango` |
-| [ ] | `PRD-1623.jpg` | `Simplot` | `Simplot Straight Cut Fries` |
-| [ ] | `PRD-1628.jpg` | `VM` | `VM Chicken Frankfurt Sausage` |
-| [ ] | `PRD-1633.jpg` | `Wall's` | `Walls Oreo Ice Cream Tub` |
+| [x] | `PRD-1525.jpg` | `Anmum` | `Anmum Lacta Chocolate 100g` |
+| [x] | `PRD-1529.jpg` | `Cetaphil` | `Cetaphil Baby Gentle Wash 100g` |
+| [x] | `PRD-1532.jpg` | `Enfamil` | `Enfagrow A+ Stage 3 Chocolate 200ml` |
+| [x] | `PRD-1535.jpg` | `Friso` | `Friso Gold Step 3 100g` |
+| [x] | `PRD-1539.jpg` | `Gerber` | `Gerber Puffs Strawberry 200ml` |
+| [x] | `PRD-1542.jpg` | `Heinz` | `Heinz Cereals Rice with Apple 100g` |
+| [x] | `PRD-1545.jpg` | `Huggies` | `Huggies Dry Fit NB Diapers 100g` |
+| [x] | `PRD-1548.jpg` | `Johnson's` | `Johnsons Baby Lotion 200ml` |
+| [x] | `PRD-1551.jpg` | `Johnson's` | `Johnsons Baby Powder 200g` |
+| [x] | `PRD-1555.jpg` | `Mamypoko` | `Mamypoko Newborn Diapers 100g` |
+| [x] | `PRD-1559.jpg` | `Nestle` | `Nestle NAN HA 1` |
+| [x] | `PRD-1564.jpg` | `Pigeon` | `Pigeon Baby Shampoo` |
+| [x] | `PRD-1570.jpg` | `Pigeon` | `Pigeon Baby Wash` |
+| [x] | `PRD-1576.jpg` | `Similac` | `Similac Step 2 Stage 2` |
 
-## Rice & Grains (0/12 done)
-
-| Done | Save As | Brand | Product Name |
-|---|---|---|---|
-| [ ] | `PRD-1638.jpg` | `Barilla` | `Penne Pasta` |
-| [ ] | `PRD-1643.jpg` | `Barilla` | `Spaghetti No 5 Barilla` |
-| [ ] | `PRD-1648.jpg` | `Bob Red Mill` | `Bob Red Mill Rolled Oats 10kg` |
-| [ ] | `PRD-1652.jpg` | `Cap Ayam` | `Beras Tempatan Biasa 10kg` |
-| [ ] | `PRD-1656.jpg` | `Cap Nona` | `Beras Jasmine 5% Broken 10kg` |
-| [ ] | `PRD-1660.jpg` | `Golden Grain` | `Golden Grain Mee Kuning 10kg` |
-| [ ] | `PRD-1664.jpg` | `Ibumie` | `Ibumie Mi Goreng Penang 10kg` |
-| [ ] | `PRD-1668.jpg` | `Kellogg's` | `Kellogg's Corn Flakes 10kg` |
-| [ ] | `PRD-1670.jpg` | `Naturel` | `Brown Rice Beras Perang 10kg` |
-| [ ] | `PRD-1674.jpg` | `Pagoda` | `Bee Hoon Rice Vermicelli 1kg` |
-| [ ] | `PRD-1677.jpg` | `Super Special` | `Super Special Thai Rice` |
-| [ ] | `PRD-1682.jpg` | `Tilda` | `Beras Basmati Import 10kg` |
-
-## Bakery (0/7 done)
+## Frozen Food (13/13 done)
 
 | Done | Save As | Brand | Product Name |
 |---|---|---|---|
-| [ ] | `PRD-1686.jpg` | `Gardenia` | `Gardenia Bun Kaya 350g` |
-| [ ] | `PRD-1690.jpg` | `Gardenia` | `Gardenia Croissant 350g` |
-| [ ] | `PRD-1694.jpg` | `Local Bakery` | `Baguette French Bread 350g` |
-| [ ] | `PRD-1698.jpg` | `Local Bakery` | `Kaya Kopitiam Bread 350g` |
-| [ ] | `PRD-1702.jpg` | `Local Bakery` | `Roti Benggali Local` |
-| [ ] | `PRD-1707.jpg` | `Local Bakery` | `Tart Egg Portuguese` |
-| [ ] | `PRD-1712.jpg` | `Tesco` | `Sandwich White Bread Sliced` |
+| [x] | `PRD-1582.jpg` | `Baskin-Robbins` | `Baskin Robbins Pint Vanilla 1kg` |
+| [x] | `PRD-1585.jpg` | `Bird's Eye` | `Birds Eye Fish Fingers 1kg` |
+| [x] | `PRD-1589.jpg` | `Caesar` | `Caesar Fish Cake Seafood 1kg` |
+| [x] | `PRD-1593.jpg` | `Farm's Best` | `Farm's Best Chicken Sausage 1kg` |
+| [x] | `PRD-1597.jpg` | `Haagen-Dazs` | `Haagen-Dazs Vanilla Ice Cream 1kg` |
+| [x] | `PRD-1601.jpg` | `IKEA` | `Ikea Veggie Balls Frozen 200g` |
+| [x] | `PRD-1604.jpg` | `McCain` | `McCain Crinkle Cut Fries 1kg` |
+| [x] | `PRD-1608.jpg` | `Nestle` | `Nestle Drumstick Mini Cones` |
+| [x] | `PRD-1613.jpg` | `Peel Fresh` | `Peel Fresh Frozen Durian Puree` |
+| [x] | `PRD-1618.jpg` | `Pokka` | `Pokka Sorbet Mango` |
+| [x] | `PRD-1623.jpg` | `Simplot` | `Simplot Straight Cut Fries` |
+| [x] | `PRD-1628.jpg` | `VM` | `VM Chicken Frankfurt Sausage` |
+| [x] | `PRD-1633.jpg` | `Wall's` | `Walls Oreo Ice Cream Tub` |
+
+## Rice & Grains (12/12 done)
+
+| Done | Save As | Brand | Product Name |
+|---|---|---|---|
+| [x] | `PRD-1638.jpg` | `Barilla` | `Penne Pasta` |
+| [x] | `PRD-1643.jpg` | `Barilla` | `Spaghetti No 5 Barilla` |
+| [x] | `PRD-1648.jpg` | `Bob Red Mill` | `Bob Red Mill Rolled Oats 10kg` |
+| [x] | `PRD-1652.jpg` | `Cap Ayam` | `Beras Tempatan Biasa 10kg` |
+| [x] | `PRD-1656.jpg` | `Cap Nona` | `Beras Jasmine 5% Broken 10kg` |
+| [x] | `PRD-1660.jpg` | `Golden Grain` | `Golden Grain Mee Kuning 10kg` |
+| [x] | `PRD-1664.jpg` | `Ibumie` | `Ibumie Mi Goreng Penang 10kg` |
+| [x] | `PRD-1668.jpg` | `Kellogg's` | `Kellogg's Corn Flakes 10kg` |
+| [x] | `PRD-1670.jpg` | `Naturel` | `Brown Rice Beras Perang 10kg` |
+| [x] | `PRD-1674.jpg` | `Pagoda` | `Bee Hoon Rice Vermicelli 1kg` |
+| [x] | `PRD-1677.jpg` | `Super Special` | `Super Special Thai Rice` |
+| [x] | `PRD-1682.jpg` | `Tilda` | `Beras Basmati Import 10kg` |
+
+## Bakery (7/7 done)
+
+| Done | Save As | Brand | Product Name |
+|---|---|---|---|
+| [x] | `PRD-1686.jpg` | `Gardenia` | `Gardenia Bun Kaya 350g` |
+| [x] | `PRD-1690.jpg` | `Gardenia` | `Gardenia Croissant 350g` |
+| [x] | `PRD-1694.jpg` | `Local Bakery` | `Baguette French Bread 350g` |
+| [x] | `PRD-1698.jpg` | `Local Bakery` | `Kaya Kopitiam Bread 350g` |
+| [x] | `PRD-1702.jpg` | `Local Bakery` | `Roti Benggali Local` |
+| [x] | `PRD-1707.jpg` | `Local Bakery` | `Tart Egg Portuguese` |
+| [x] | `PRD-1712.jpg` | `Tesco` | `Sandwich White Bread Sliced` |
