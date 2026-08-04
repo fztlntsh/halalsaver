@@ -218,12 +218,13 @@ Every template shows `p.image_local` if present, otherwise falls back to a
 ```
 Then restart `app.py` so it picks up the new `product_images.json`.
 
-Current coverage: **700 of 2,292 unique live-catalog products** (≈31%)
-have a real photo, which covers about **1,943 of the 6,300 rows** once you
-count all three store variants of each matched product. 688 of those come
-from the automated brand+name matcher; 12 come from
-`data/manual_image_overrides.json` — a short, hand-reviewed list of pairs
-the automated matcher was too conservative to catch on its own (see §9.1).
+Current coverage: **2,155 of 2,163 unique live-catalog products** (≈99.6%)
+have a real photo, which covers **6,288 of the 6,300 rows** once you count
+all three store variants of each matched product. 831 of those come from
+the automated brand+name matcher; 1,324 come from
+`data/manual_image_overrides.json` — most of those via sibling-linking
+(reusing an already-photographed size variant's photo for the same base
+product, see §9) rather than one-by-one hand review.
 
 **A note on matching quality:** a shared brand does not mean a safe photo
 swap — e.g. Nestlé makes cereal, ice cream, *and* baby formula, so
@@ -251,27 +252,22 @@ For an actual working checklist (checkbox per product, grouped by category
 It's a one-time generated starting point (`data\generate_missing_images_checklist.py`)
 meant to be checked off by hand as you source photos — don't re-run the
 generator carelessly once you've started checking boxes, since it
-overwrites the file from scratch (all unchecked). As of the last run:
+overwrites the file from scratch (all unchecked). As of the last run,
+**only 2 products remain** (both Health & Wellness — Appeton Weight Gain
+Chocolate and Minyak Angin Cap Kapak), down from an original 1,592.
 
-| Category | Missing | Category | Missing |
-|---|---|---|---|
-| Household | 216 | Canned & Preserved | 87 |
-| Beverages | 211 | Health & Wellness | 86 |
-| Fresh Produce | 196 | Snacks | 80 |
-| Personal Care | 193 | Baby & Kids | 73 |
-| Dairy & Chilled | 140 | Frozen Food | 73 |
-| Cooking Essentials | 132 | Rice & Grains | 62 |
-| | | Bakery | 43 |
-| | | **Total** | **1,592** |
-
-Pack-size variants of an already-photographed product (e.g. "... Bundle
-Pack", "... Twin Pack" — the dataset generator pads the catalogue with
-these) are auto-matched to their base product's photo already, so they
-don't need a separate one. The 1,592 remaining are genuinely different
-products with no photographed counterpart — the biggest wins would come
-from photographing more of the common brands repeated across many
-`Bundle/Twin/Family/...` variants (check `products_missing_images.csv` for
-the full list, sorted by category then brand).
+**Why the count dropped so much more than photos taken:** `generate_datasets.js`
+assigns each synthetic size variant a random pack unit (`extraUnits`,
+mixing L/ml with kg/g) with no regard for whether the product is even a
+liquid or solid — so the same base product often shows up as several
+"different" catalogue rows (e.g. a powder detergent labelled both "1kg"
+and a nonsensical "1L"). Rather than editing those units in the live
+dataset, `data/photo_group_map.json` records which product names each
+checklist filename also covers once photographed, so one photo resolves
+every size variant of that product at once. This is why the checklist
+shrank from 1,592 to 2 while nowhere near 1,590 individual photos were
+taken — see the note block at the top of
+`MISSING_IMAGES_CHECKLIST.md` itself for the mechanism.
 
 ### 9.1 Reviewing near-miss candidates (unused real photos)
 
@@ -329,6 +325,35 @@ by every Flask-rendered page via `base.html`.
 If you want to change a colour, corner radius, or animation speed
 **everywhere at once**, edit the tokens in `css/styles.css` `:root` rather
 than hunting through `app.css`.
+
+### 10.1 Mobile/web feature-parity fixes
+
+`static/css/toggle.css` controls `.web-only` / `.mobile-only` via a
+`max-width: 768px` media query (replaced an older manual JS class-toggle
+system — see the comment at the top of that file). Three sections had a
+leftover `web-only` class from before that replacement that hid content
+on mobile the responsive CSS was already fully set up to handle (the
+mobile-width grid/column rules existed and were simply unused) — fixed:
+
+- **Dashboard** (`templates/dashboard.html`) — the "Edit Preferences"
+  header button and the entire right sidebar (My Preferences summary +
+  Quick Actions cards) were `web-only` with no mobile equivalent. Removed
+  the class; `.dashboard-widgets`' existing 1-column mobile layout stacks
+  them correctly below the main content, no CSS changes needed.
+- **Products page** (`templates/products.html`) — the desktop "Sort by"
+  dropdown had no mobile equivalent (the mobile filter drawer only had
+  Category/Store/Price/Halal). Added a matching Sort control at the top
+  of the drawer, calling the same `sortProducts()` JS function. While
+  there, also fixed `sortProducts()` silently ignoring the `discount` sort
+  key (the "Biggest Discount" option did nothing on desktop either) using
+  the `data-discount` attribute already present on `.product-card`.
+- **Homepage** (`templates/home.html`) — the "How HalalSaver MY Works"
+  4-step explainer section was entirely `web-only`; first-time mobile
+  visitors never saw it. Removed the class; `.how-steps`' existing
+  responsive `grid-template-columns` rules (2 cols → 1 col) handle it.
+
+All three verified by driving a headless browser at a 390×844 mobile
+viewport against the actual running app, not just read from the CSS.
 
 ---
 

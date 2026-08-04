@@ -236,6 +236,17 @@
   <div class="drawer-handle"></div>
   <h6><i class="fas fa-sliders"></i> Filter Products</h6>
 
+  <div class="form-group mb-3">
+    <label class="form-label">Sort By</label>
+    <select class="form-control filter-select" onchange="sortProducts(this.value)">
+      <option value="">Sort by: Default</option>
+      <option value="price_asc">Price: Low to High</option>
+      <option value="price_desc">Price: High to Low</option>
+      <option value="discount">Biggest Discount</option>
+      <option value="name">Name A–Z</option>
+    </select>
+  </div>
+
   <form method="GET" action="/products" id="mobileFilterForm">
     {% if args.get('q') %}
     <input type="hidden" name="q" value="{{ args.get('q') }}" />
@@ -306,9 +317,12 @@ function sortProducts(sortKey) {
     const priceB = parseFloat(b.querySelector('.product-price').textContent.replace('RM','').trim());
     const nameA  = a.querySelector('.product-name').textContent.trim();
     const nameB  = b.querySelector('.product-name').textContent.trim();
+    const discA  = parseFloat(a.dataset.discount || '0');
+    const discB  = parseFloat(b.dataset.discount || '0');
     if (sortKey === 'price_asc')  return priceA - priceB;
     if (sortKey === 'price_desc') return priceB - priceA;
     if (sortKey === 'name')       return nameA.localeCompare(nameB);
+    if (sortKey === 'discount')   return discB - discA;
     return 0;
   });
   cards.forEach(function(c) { grid.appendChild(c); });
