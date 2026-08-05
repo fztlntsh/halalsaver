@@ -39,6 +39,14 @@ import database as db_layer
 app = Flask(__name__, static_folder='static')
 app.secret_key = os.environ.get('SECRET_KEY', 'halalsaver-fyp-dev-secret')
 
+# Client-side Firebase SDK config (Google Sign-In button on login/signup —
+# see templates/base.html, templates/login.html). Read via db_layer so this
+# stays in sync with whichever credential source it resolved (env var or
+# local serviceAccountKey.json) instead of re-reading os.environ here.
+app.config['FIREBASE_WEB_API_KEY'] = db_layer.FIREBASE_WEB_API_KEY
+app.config['FIREBASE_PROJECT_ID']  = db_layer.FIREBASE_PROJECT_ID
+app.config['FIREBASE_AUTH_DOMAIN'] = db_layer.FIREBASE_AUTH_DOMAIN
+
 # ─── STATIC FILE ROUTES (serve existing css/js from non-static folders) ──────
 
 @app.route('/css/<path:filename>')

@@ -58,6 +58,7 @@ FIREBASE_ENABLED = False
 db  = None   # Firestore client
 rdb = None   # Realtime Database client
 _fb_auth = None
+_project_id = ""  # populated below if credentials are found; exposed after the try block
 
 try:
     import firebase_admin
@@ -103,6 +104,13 @@ try:
         )
 except Exception as _e:
     logger.warning(f"[DB] Firebase init failed: {_e} — running in local/demo mode.")
+
+# Exposed for app.py to pass into Flask's app.config, which the login/signup
+# templates read (client-side Firebase SDK init, used for Google Sign-In —
+# see templates/base.html and templates/login.html). Derived from the same
+# service account credentials already loaded above, no separate env var needed.
+FIREBASE_PROJECT_ID = _project_id
+FIREBASE_AUTH_DOMAIN = f"{_project_id}.firebaseapp.com" if _project_id else ""
 
 
 # ─── Local in-memory fallback stores ─────────────────────────────────────────
